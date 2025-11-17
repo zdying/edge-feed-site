@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <style>
+    .macbook-pro {
+      position: relative;
+      width: 1008px;
+      height: 581px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .macbook-pro .lid {
+      /* Lid */
+      box-sizing: border-box;
+      width: 816px;
+      height: 554px;
+      /* default/gray/900 */
+      background: #1A202C;
+      /* default/gray/700 */
+      border: 2px solid #4A5568;
+      border-radius: 28px 28px 4px 4px;
+      padding-top: 26px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .macbook-pro .lid .screen-wrap {
+      width: 770px;
+      height: 480px;
+      background-color: white;
+    }
+
+    .macbook-pro .lid::after {
+      content: "Macbook Pro";
+      font-size: 13px;
+      margin-top: 23px;
+      color: #A0AEC0;
+    }
+
+    .macbook-pro .bottom-base {
+      position: relative;
+      width: 1008px;
+      height: 18px;
+      margin-top: -3px;
+      border-radius: 2px 2px 0px 0px;
+      background: linear-gradient(90deg, #0D1012 0%, #CAD4DB 2.95%, #242729 6.25%, #A3ACB1 13.36%, #A3ACB1 86.6%, #242729 94.19%, #CAD4DB 97.13%, #0D1012 99.64%), #A3ACB1;
+    }
+
+    .macbook-pro .bottom-base::before {
+      content: "";
+      display: block;
+      width: 167px;
+      height: 14px;
+      border-radius: 0 0 14px 14px;
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%);
+      background: linear-gradient(90deg, #3C3C3C 9.86%, rgba(60, 60, 60, 0.00) 35.92%, rgba(60, 60, 60, 0.00) 64.08%, #444 91.93%), #96A1A8;
+    }
+
+    .macbook-pro .bottom-base::after {
+      content: "";
+      display: block;
+      width: 1008px;
+      height: 12px;
+      border-radius: 0 0 14px 14px;
+      position: absolute;
+      left: 0;
+      top: 18px;
+      background: linear-gradient(180deg, #7A7F83 0%, #0B0B0E 100%), #647279;
+      clip-path: path('M0 0H1008L987.646 4.10502C961.613 9.35529 935.123 12 908.566 12H97.9089C68.724 12 39.6267 8.80592 11.1367 2.47482L0 0Z');
+    }
+  </style>
+</head>
+
+<body>
+  <div class="macbook-pro">
+    <div class="lid">
+      <div class="screen-wrap"></div>
+    </div>
+    <div class="bottom-base"></div>
+  </div>
+</body>
+
+</html>

@@ -30,9 +30,7 @@
 
       target.classList.toggle('active');
 
-      setTimeout(() => {
-        target.scrollIntoViewIf({ behavior: 'smooth', block: 'center' });
-      }, 300);
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
       e.stopPropagation();
     }

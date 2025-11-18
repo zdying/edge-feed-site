@@ -421,6 +421,7 @@ body {
 }
 
 .m-faq .list li .title {
+  scroll-margin-block: 100px;
   font-size: 20px;
   line-height: 1.1;
   margin-bottom: 20px;
@@ -430,6 +431,7 @@ body {
   padding-right: 25px;
   margin: 0;
   position: relative;
+  cursor: pointer;
 }
 
 .m-faq .list li .title::after {
@@ -575,7 +577,7 @@ body {
   .m-header .nav {
     display: none;
     position: absolute;
-    top: 60px;
+    top: 95px;
     left: 0;
     flex-direction: column;
     width: 100%;

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    <%= title %>
+  </title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/assets/posts.css">
+</head>
+
+<body>
+
+  <%- include('header') %>
+
+    <main class="m-post">
+      <% if (isIndex) { %>
+        <h1 class="page-title">Market Insights & Catalysts</h1>
+        <div class="post-list">
+          <% posts.forEach(function(post) { %>
+            <article class="post-card">
+              <span class="date">
+                <%= post.date %>
+              </span>
+              <h2><a href="<%= post.link %>">
+                  <%= post.title %>
+                </a></h2>
+              <p>
+                <%= post.desc %>
+              </p>
+            </article>
+            <% }); %>
+        </div>
+        <% } else { %>
+          <article class="blog-post">
+            <header class="post-header">
+              <h1>
+                <%= meta.title %>
+              </h1>
+              <div class="meta">Published on <%= meta.date %>
+              </div>
+            </header>
+            <div class="markdown-body">
+              <%- content %>
+            </div>
+          </article>
+          <% } %>
+    </main>
+
+    <%- include('footer') %>
+
+</body>
+
+</html>

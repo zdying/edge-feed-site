@@ -1,0 +1,55 @@
+@font-face {
+  font-family: 'Slabo 27px';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Slabo 27px'), local('Slabo27px-Regular'), url(/assets/Slabo27px-Regular.woff2) format('woff');
+}
+
+body {
+  font-family: "Slabo 27px", Georgia, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.m-post {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.m-post h1, .m-post h2, .m-post h3, .m-post h4, .m-post h5, .m-post h6 {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.m-post h1 {
+  font-size: 2em;
+}
+
+.m-post h2 {
+  font-size: 1.5em;
+}
+
+.m-post p {
+  margin-bottom: 1em;
+}
+
+.m-post a {
+  color: #ab370d;
+  text-decoration: none;
+}
+
+.m-post a:hover {
+  text-decoration: underline;
+}
+
+.m-post hr {
+  border: none;
+  border-top: 1px solid #4f4c4c;
+  margin: 2em 0;
+}
+
+.m-post img {
+  max-width: 100%;
+  height: auto;
+}

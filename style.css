@@ -710,6 +710,11 @@ body {
     font-size: 30px;
   }
 
+  .m-header .logo-image {
+    width: 120px;
+    height: auto;
+  }
+
   .m-banner .banner-imgs {
     position: relative;
     width: 375px;
@@ -748,6 +753,11 @@ body {
 @media (max-width: 375px) {
   .section-title {
     font-size: 28px;
+  }
+
+  .m-header .logo-image {
+    width: 100px;
+    height: auto;
   }
 
   .m-banner .banner-content .title {

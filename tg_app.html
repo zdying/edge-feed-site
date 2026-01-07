@@ -13,6 +13,17 @@
       font-size: 14px;
     }
 
+    .header {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .header img {
+      width: 50px;
+      height: 50px;
+      margin-right: 15px;
+    }
+
     .title {
       font-weight: 700;
       font-size: 16px;
@@ -38,12 +49,22 @@
       font-weight: 700;
       color: #028f7e;
     }
+
+    .tips {
+      font-size: 14px;
+      color: #7c0606;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <p class="item title" id="ticker"></p>
-    <p class="item time" id="time"></p>
+    <div class="header">
+      <img src="/assets/kairalert_english.png" />
+      <div class="info">
+        <p class="item title" id="ticker"></p>
+        <p class="item time" id="time"></p>
+      </div>
+    </div>
     <p class="item" id="marketCap"></p>
     <p class="item" id="volume"></p>
     <p class="item" id="price"></p>

@@ -11,12 +11,66 @@
     <p>Your one-stop solution for all alert needs.</p>
     <p>Ticker: <span id="ticker"></span></p>
     <p>Price: <span id="price"></span></p>
+    <h2 id="title"></h2>
+    <h3 id="analysis"></h3>
+    <h4 id="risk"></h4>
+    <p>内容仅供参考，不作为投资依据。</p>
   </div>
 
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
   <script>
-    let params = new URLSearchParams(window.location.search);
-    document.getElementById("ticker").innerText = params.get("ticker");
-    document.getElementById("price").innerText = params.get("price");
+    // let params = new URLSearchParams(window.location.search);
+    // document.getElementById("ticker").innerText = params.get("ticker");
+    // document.getElementById("price").innerText = params.get("price");
+
+    const webApp = window.Telegram.WebApp;
+
+    webApp.ready(); // 通知 Telegram 小程序已准备好
+    webApp.expand(); // 建议自动全屏展开
+
+    // 获取参数
+    const safePayload = webApp.initDataUnsafe.start_param;
+
+    if (safePayload) {
+        try {
+            // --- 这里是之前的解码逻辑 ---
+
+            // 1. 还原字符 (- 转 +, _ 转 /)
+            let base64Str = safePayload.replace(/-/g, '+').replace(/_/g, '/');
+
+            // 2. 补全 Padding (=)
+            const pad = base64Str.length % 4;
+            if (pad) {
+                base64Str += '='.repeat(4 - pad);
+            }
+
+            // 3. UTF-8 解码 (完美支持中文)
+            const binaryString = atob(base64Str);
+            const bytes = new Uint8Array(binaryString.length);
+            for (let i = 0; i < binaryString.length; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            const decodedString = new TextDecoder('utf-8').decode(bytes);
+
+            // 4. 拆分数据 (按照 ||| 拆分)
+            // 顺序: [0]代码, [1]量, [2]换手, [3]价格, [4]标题, [5]逻辑, [6]风险
+            const parts = decodedString.split('|||');
+
+            // --- 渲染到页面 ---
+            document.getElementById('ticker').innerText = parts[0] + " 异动详情";
+            document.getElementById('price').innerText = parts[3];
+            document.getElementById('title').innerText = parts[4];
+            document.getElementById('analysis').innerText = "深度逻辑：\n" + parts[5];
+            document.getElementById('risk').innerText = "⚠️ 风险提示：" + parts[6];
+
+        } catch (e) {
+            document.getElementById('title').innerText = "数据解析错误";
+            console.error(e);
+        }
+    } else {
+        document.getElementById('title').innerText = "未检测到参数";
+    }
   </script>
 </body>
 </html>

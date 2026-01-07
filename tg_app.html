@@ -10,18 +10,33 @@
       color: white;
       font-size: 14px;
     }
+
+    .item {
+      margin-bottom: 8px;
+    }
+
+    .item strong {
+      font-weight: 700;
+      color: white;
+    }
+
+    .item .highlight {
+      font-size: 16px;
+      font-weight: 700;
+      color: #028f7e;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Welcome to KairAlert</h1>
-    <p>Your one-stop solution for all alert needs.</p>
-    <p>Ticker: <span id="ticker"></span></p>
-    <p>Price: <span id="price"></span></p>
-    <h2 id="title"></h2>
-    <h3 id="analysis"></h3>
-    <h4 id="risk"></h4>
-    <p>内容仅供参考，不作为投资依据。</p>
+    <p class="item" id="ticker"></p>
+    <p class="item" id="marketCap"></p>
+    <p class="item" id="volume"></p>
+    <p class="item" id="price"></p>
+    <p class="item highlight" id="title"></p>
+    <p class="item" id="analysis"></p>
+    <p class="item" id="risk"></p>
+    <p class="tips">内容仅供参考，不作为投资依据。</p>
   </div>
 
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -61,15 +76,17 @@
             const decodedString = new TextDecoder('utf-8').decode(bytes);
 
             // 4. 拆分数据 (按照 ||| 拆分)
-            // 顺序: [0]代码, [1]量, [2]换手, [3]价格, [4]标题, [5]逻辑, [6]风险
+            // 顺序: [0]代码, [1]市值, [2]成交量, [3]价格, [4]标题, [5]逻辑, [6]风险
             const parts = decodedString.split('|||');
 
             // --- 渲染到页面 ---
-            document.getElementById('ticker').innerText = parts[0] + " 异动详情";
-            document.getElementById('price').innerText = parts[3];
-            document.getElementById('title').innerText = parts[4];
-            document.getElementById('analysis').innerText = "深度逻辑：\n" + parts[5];
-            document.getElementById('risk').innerText = "⚠️ 风险提示：" + parts[6];
+            document.getElementById('ticker').innerHTML = '<strong>股票代码:</strong> ' + parts[0];
+            document.getElementById('marketCap').innerHTML = '<strong>公司市值:</strong> ' + parts[1];
+            document.getElementById('volume').innerHTML = '<strong>盘中成交:</strong> ' + parts[2];
+            document.getElementById('price').innerHTML = '<strong>当前价格:</strong> ' + parts[3];
+            document.getElementById('title').innerHTML = '<strong>新闻标题:</strong> ' + parts[4];
+            document.getElementById('analysis').innerHTML = '<strong>初步分析:</strong> ' + parts[5];
+            document.getElementById('risk').innerHTML = '<strong>风险提示:</strong> ' + parts[6];
 
         } catch (e) {
             document.getElementById('title').innerText = "数据解析错误";

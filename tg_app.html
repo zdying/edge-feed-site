@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KairAlert App</title>
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome to KairAlert</h1>
+    <p>Your one-stop solution for all alert needs.</p>
+    <p>Ticker: <span id="ticker"></span></p>
+    <p>Price: <span id="price"></span></p>
+  </div>
+
+  <script>
+    let params = new URLSearchParams(window.location.search);
+    document.getElementById("ticker").innerText = params.get("ticker");
+    document.getElementById("price").innerText = params.get("price");
+  </script>
+</body>
+</html>

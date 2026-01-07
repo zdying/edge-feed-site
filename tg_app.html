@@ -80,6 +80,7 @@
     <p class="item" id="analysis"></p>
     <p class="item" id="risk"></p>
     <p class="tips">内容仅供参考，不作为投资依据。</p>
+    <p id="footer"></p>
   </div>
 
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -140,6 +141,18 @@
     } else {
         document.getElementById('title').innerText = "未检测到参数";
     }
+
+    let userId = webApp.initDataUnsafe.user.id;
+    let random = Math.floor(Math.random() * 1000000);
+
+    let clientID = localStorage.getItem('clientID');
+
+    if (!clientID) {
+        clientID = random;
+        localStorage.setItem('clientID', clientID);
+    }
+
+    document.getElementById('footer').innerText = "Client ID: " + clientID;
   </script>
 </body>
 </html>

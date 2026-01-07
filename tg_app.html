@@ -7,10 +7,21 @@
   <style>
     html, body {
       padding: 0;
-      margin: 0;
+      margin: 15px;
       background-color: black;
       color: white;
       font-size: 14px;
+    }
+
+    .title {
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+
+    .time {
+      font-size: 14px;
+      color: #4a4a4a;
     }
 
     .item {
@@ -23,7 +34,7 @@
     }
 
     .highlight {
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 700;
       color: #028f7e;
     }
@@ -31,7 +42,8 @@
 </head>
 <body>
   <div class="container">
-    <p class="item" id="ticker"></p>
+    <p class="item title" id="ticker"></p>
+    <p class="item time" id="time"></p>
     <p class="item" id="marketCap"></p>
     <p class="item" id="volume"></p>
     <p class="item" id="price"></p>
@@ -89,6 +101,8 @@
             document.getElementById('title').innerHTML = '<strong>新闻标题:</strong> ' + parts[4];
             document.getElementById('analysis').innerHTML = '<strong>初步分析:</strong> ' + parts[5];
             document.getElementById('risk').innerHTML = '<strong>风险提示:</strong> ' + parts[6];
+
+            document.getElementById('time').innerText = '更新时间: ' + new Date().toLocaleString();
 
         } catch (e) {
             document.getElementById('title').innerText = "数据解析错误";

@@ -13,9 +13,15 @@
       font-size: 14px;
     }
 
+    p {
+      margin: 0;
+      padding: 0;
+    }
+
     .header {
       display: flex;
       flex-direction: row;
+      align-items: center;
     }
 
     .header img {
@@ -61,8 +67,8 @@
     <div class="header">
       <img src="/assets/kairalert_english.png" />
       <div class="info">
-        <p class="item title" id="ticker"></p>
-        <p class="item time" id="time"></p>
+        <p class="title" id="ticker"></p>
+        <p class="time" id="time"></p>
       </div>
     </div>
     <p class="item" id="marketCap"></p>

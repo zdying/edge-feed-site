@@ -35,6 +35,10 @@
             --glow-color: rgba(45, 212, 191, 0.25);
         }
 
+        * {
+          box-sizing: border-box;
+        }
+
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
@@ -91,6 +95,7 @@
         }
 
         .ticker {
+            max-width: 150px;
             font-size: 32px;
             font-weight: 800;
             margin-top: 3px;
@@ -102,6 +107,9 @@
             display: flex;
             align-items: center;
             gap: 5px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
 
         .ticker:active {
@@ -133,6 +141,13 @@
 
         .ticker-logo.loaded {
             display: block;
+        }
+
+        .header-tips {
+          margin-top: -24px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
         }
 
         /* Toast Notification */
@@ -169,7 +184,7 @@
         }
 
         .price {
-            font-size: 26px;
+            font-size: 24px;
             font-weight: 600;
             text-align: right;
             letter-spacing: -0.5px;
@@ -177,7 +192,7 @@
         }
 
         .price-change {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
         }
 
@@ -201,7 +216,6 @@
         .header-label {
             font-size: 13px;
             color: var(--text-secondary);
-            margin-top: 7px;
             font-weight: 500;
         }
 
@@ -223,7 +237,7 @@
 
         .metric-label {
             font-size: 12px;
-            text-transform: uppercase;
+            /* text-transform: uppercase; */
             letter-spacing: 0.5px;
             color: var(--text-secondary);
             font-weight: 600;
@@ -250,7 +264,7 @@
 
         .news-tag {
             font-size: 12px;
-            text-transform: uppercase;
+            /* text-transform: uppercase; */
             letter-spacing: 0.5px;
             font-weight: 700;
             padding: 3px 6px;
@@ -260,7 +274,7 @@
 
         .section-label {
             font-size: 11px;
-            text-transform: uppercase;
+            /* text-transform: uppercase; */
             letter-spacing: 1px;
             color: var(--text-secondary);
             opacity: 0.8;
@@ -341,10 +355,6 @@
             position: relative;
             overflow: hidden;
             margin: 0;
-        }
-
-        * {
-            box-sizing: border-box;
         }
 
         /* Action Buttons */
@@ -505,13 +515,18 @@
                             </svg>
                         </div>
                     </div>
-                    <span class="header-label">Stock Ticker</span>
+                    <!-- <span class="header-label">Stock Ticker</span> -->
                 </div>
                 <div class="price-group">
                     <span class="price" id="price">--</span>
                     <span class="price-change" id="priceChange">--</span>
-                    <span class="price-label">--</span>
+                    <!-- <span class="price-label">--</span> -->
                 </div>
+            </div>
+
+            <div class="header-tips">
+                <span class="header-label">Stock Ticker</span>
+                <span class="price-label">Price at push, not real-time</span>
             </div>
 
             <!-- Metrics -->
@@ -638,7 +653,7 @@
                 latestInsight: "Latest Insight",
                 riskFactor: "Risk Factor",
                 disclaimerTitle: "Disclaimer",
-                disclaimerText: "This information is for reference only. NOT investment advice.",
+                disclaimerText: "For reference only. NOT investment advice.",
                 copied: "Copied to clipboard",
                 stockTicker: "Stock Ticker",
                 priceLabel: "Price at push, not real-time",

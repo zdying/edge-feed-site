@@ -309,7 +309,7 @@
             background: var(--disclaimer-bg);
             border: 1px solid var(--disclaimer-border);
             border-radius: 16px;
-            padding: 16px;
+            padding: 12px;
             display: flex;
             flex-direction: column;
             gap: 4px;
@@ -329,6 +329,7 @@
             transition: transform 0.2s, opacity 0.2s;
             position: relative;
             overflow: hidden;
+            margin: 0;
         }
 
         * {
@@ -337,10 +338,12 @@
 
         /* Action Buttons */
         .actions-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-top: 24px;
+            display: flex;
+            /* Changed from grid to flex */
+            gap: 12px;
+            margin-top: 16px;
+            margin-bottom: 8px;
+            /* Spacing before disclaimer */
             width: 100%;
         }
 
@@ -348,7 +351,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 44px;
+            height: 40px;
             border-radius: 12px;
             font-size: 14px;
             font-weight: 600;
@@ -357,10 +360,18 @@
             position: relative;
             overflow: hidden;
             letter-spacing: 0.5px;
+            flex: 1;
+            /* Default to flexible width */
+        }
+
+        .action-btn.fixed-width {
+            flex: 0 0 40px;
+            /* Fixed width for Settings */
+            width: 40px;
         }
 
         .action-btn:active {
-            transform: scale(0.98);
+            transform: scale(0.96);
         }
 
         .btn-glass {
@@ -377,17 +388,21 @@
             color: #fff;
         }
 
+        /* Softer Teal Style */
         .btn-primary {
-            background: linear-gradient(135deg, var(--accent-teal), #14b8a6);
-            border: 1px solid rgba(45, 212, 191, 0.5);
-            color: #000;
-            font-weight: 700;
-            box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
+            background: rgba(45, 212, 191, 0.15);
+            /* Tinted glass */
+            border: 1px solid rgba(45, 212, 191, 0.3);
+            color: var(--accent-teal);
+            box-shadow: 0 4px 12px rgba(20, 184, 166, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
         .btn-primary:hover {
-            opacity: 0.95;
-            box-shadow: 0 6px 16px rgba(20, 184, 166, 0.4);
+            background: rgba(45, 212, 191, 0.25);
+            border-color: rgba(45, 212, 191, 0.5);
+            box-shadow: 0 6px 16px rgba(20, 184, 166, 0.2);
             transform: translateY(-1px);
         }
 
@@ -396,12 +411,21 @@
         }
 
         .btn-icon {
-            width: 20px;
-            height: 20px;
-            margin-right: 8px;
+            width: 18px;
+            height: 18px;
+            margin-right: 6px;
             object-fit: contain;
             display: block;
-            /* Fix vertical align */
+        }
+
+        /* Adjust icon margin for icon-only buttons */
+        .action-btn.fixed-width .btn-icon {
+            margin-right: 0;
+            width: 22px;
+            height: 22px;
+            opacity: 0.8;
+            filter: grayscale(100%) brightness(200%);
+            /* Make it look like a white icon */
         }
 
         /* Footer */
@@ -486,6 +510,30 @@
                     <div class="risk-title">Risk Factor</div>
                     <div id="risk" class="risk-content">--</div>
                 </div>
+
+                <!-- Action Buttons (Analysis | Trade | Settings) -->
+                <div class="actions-grid">
+                    <!-- Analysis (Flex 1) -->
+                    <a href="#" id="btnAnalysis" class="action-btn btn-glass">
+                        <img src="https://www.futunn.com/favicon.ico" class="btn-icon" alt="Futu">
+                        <span class="btn-text">Analysis</span>
+                    </a>
+                    <!-- Trade (Flex 1) -->
+                    <a href="#" id="btnTrade" class="action-btn btn-primary">
+                        <img src="https://www.futunn.com/favicon.ico" class="btn-icon" alt="Futu">
+                        <span class="btn-text">Trade</span>
+                    </a>
+                    <!-- Settings (Fixed) -->
+                    <div id="btnSettings" class="action-btn btn-glass fixed-width" onclick="showSettingsToast()">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path
+                                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                            </path>
+                        </svg>
+                    </div>
+                </div>
             </div>
 
             <!-- Red Disclaimer Box -->
@@ -493,18 +541,7 @@
                 <div class="disclaimer-title">Disclaimer</div>
                 <p class="disclaimer-text">For reference only. NOT investment advice.</p>
             </div>
-
-            <!-- Futu App Actions -->
-            <div class="actions-grid">
-                <a href="#" id="btnAnalysis" class="action-btn btn-glass">
-                    <img src="https://www.futunn.com/favicon.ico" class="btn-icon" alt="Futu">
-                    <span class="btn-text">Analysis</span>
-                </a>
-                <a href="#" id="btnTrade" class="action-btn btn-primary">
-                    <img src="https://www.futunn.com/favicon.ico" class="btn-icon" alt="Futu">
-                    <span class="btn-text">Trade</span>
-                </a>
-            </div>
+            <!-- (Removed old actions-grid from here) -->
         </div>
 
         <div id="loading" class="state-message">Loading data...</div>
@@ -533,7 +570,8 @@
                 stockTicker: "Stock Ticker",
                 priceLabel: "Price at push, non-real-time",
                 btnAnalysis: "Analysis",
-                btnTrade: "Trade"
+                btnTrade: "Trade",
+                stayTuned: "Stay tuned..."
             },
             zh: {
                 marketCap: "市值",
@@ -546,7 +584,8 @@
                 stockTicker: "股票代码",
                 priceLabel: "推送时价格，非实时更新",
                 btnAnalysis: "行情分析",
-                btnTrade: "立即交易"
+                btnTrade: "立即交易",
+                stayTuned: "敬请期待..."
             }
         };
 
@@ -667,14 +706,23 @@
         function copyTicker() {
             const tickerText = $('tickerText').textContent;
             navigator.clipboard.writeText(tickerText).then(() => {
-                const toast = $('toast');
-                toast.classList.add('show');
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                }, 2000);
+                showToast(translations[currentLang].copied);
             }).catch(err => {
                 console.error('Failed to copy text: ', err);
             });
+        }
+
+        function showSettingsToast() {
+            showToast(translations[currentLang].stayTuned);
+        }
+
+        function showToast(message) {
+            const toast = $('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2000);
         }
 
         document.addEventListener('DOMContentLoaded', render);

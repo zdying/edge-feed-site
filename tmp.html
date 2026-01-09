@@ -1,0 +1,442 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Insight</title>
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --card-bg: rgba(20, 20, 25, 0.6);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-secondary: #a0a0a0;
+            /* Chinese/Asian Market Style: Red = Up, Green = Down */
+            --market-up: #fb7185;
+            /* Soft Red/Pink */
+            --market-down: #10b981;
+            /* Emerald Green */
+            --accent-teal: #2dd4bf;
+            --accent-red-bg: rgba(225, 29, 72, 0.15);
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --glow-color: rgba(45, 212, 191, 0.15);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+            background-image: radial-gradient(circle at 50% 0%, var(--glow-color) 0%, transparent 60%);
+            background-attachment: fixed;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Glassmorphism Card */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* Header Section */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            /* Changed to flex-start for better alignment with subtext */
+        }
+
+        .ticker-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ticker {
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            line-height: 1.1;
+        }
+
+        .price-group {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .price {
+            font-size: 32px;
+            font-weight: 600;
+            text-align: right;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+            /* Default color, JS will override */
+        }
+
+        .price-change {
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        .text-up {
+            color: var(--market-up);
+        }
+
+        .text-down {
+            color: var(--market-down);
+        }
+
+        .header-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+        }
+
+        .metric-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .metric-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .metric-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        /* News Section */
+        .news-section {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .news-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-teal);
+            font-weight: 700;
+        }
+
+        .news-timestamp {
+            font-size: 11px;
+            color: var(--text-secondary);
+            opacity: 0.8;
+            font-weight: 500;
+        }
+
+        .news-title {
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.4;
+            color: var(--accent-teal);
+            margin: 0;
+        }
+
+        .news-analysis {
+            font-size: 15px;
+            line-height: 1.6;
+            opacity: 0.9;
+            margin: 0;
+            color: #d4d4d4;
+        }
+
+        /* Risk Section */
+        .risk-container {
+            background: var(--accent-red-bg);
+            border: 1px solid rgba(225, 29, 72, 0.3);
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .risk-icon {
+            color: var(--market-up);
+            /* Using Red for Risk */
+            font-size: 18px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .risk-content {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .risk-title {
+            color: var(--market-up);
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .risk-text {
+            font-size: 13px;
+            line-height: 1.5;
+            color: #e5e5e5;
+            margin: 0;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 10px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .disclaimer {
+            font-size: 12px;
+            color: var(--text-secondary);
+            opacity: 0.7;
+            margin: 0;
+        }
+
+        .timestamp {
+            font-size: 11px;
+            color: var(--text-secondary);
+            opacity: 0.5;
+            font-family: monospace;
+        }
+
+        /* Loading/Error States */
+        .state-message {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+<style id="antigravity-scroll-lock-style">
+  html:root body.antigravity-scroll-lock {
+    overflow: hidden !important;
+  }
+</style></head>
+
+<body class="">
+
+    <div class="container">
+        <div id="mainCard" class="card">
+            <!-- Header -->
+            <div class="header">
+                <div class="ticker-group">
+                    <span id="ticker" class="ticker">TSLA</span>
+                    <span class="header-label">Stock Ticker</span>
+                </div>
+                <div class="price-group">
+                    <span class="price text-up" id="price">$245.80</span>
+                    <span class="price-change text-up" id="priceChange">+3.8%</span>
+                </div>
+            </div>
+
+            <!-- Metrics -->
+            <div class="metrics-grid">
+                <div class="metric-item">
+                    <span class="metric-label">Market Cap</span>
+                    <span id="marketCap" class="metric-value">780B USD</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-label">Volume</span>
+                    <span id="volume" class="metric-value">92.5M</span>
+                </div>
+            </div>
+
+            <!-- News -->
+            <div class="news-section">
+                <div class="news-header">
+                    <span class="section-label">Latest Insight</span>
+                    <span class="section-label">•</span>
+                    <span id="newsTimestamp" class="news-timestamp">14:45 EST</span>
+                </div>
+                <h2 id="newsTitle" class="news-title">Tesla Cybercab Unveil Event Confirmed</h2>
+                <p id="analysis" class="news-analysis">Anticipation builds as Tesla announces the official date for the Cybercab event. Analysts predict significant autonomy updates.</p>
+            </div>
+
+            <!-- Risk -->
+            <div class="risk-container">
+
+                <div class="risk-content">
+                    <div class="risk-title">Risk Factor</div>
+                    <p id="risk" class="risk-text">Volatility expected ahead of the event; execution risk remains high.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="loading" class="state-message hidden">Loading data...</div>
+        <div id="error" class="state-message hidden" style="color: var(--market-up);"></div>
+
+        <div class="footer">
+            <p class="disclaimer">Content for informational purposes only. Not investment advice.</p>
+            <span id="pageTimestamp" class="timestamp">Updated: 15:11</span>
+        </div>
+    </div>
+
+    <script>
+        function decodeData() {
+            try {
+                const params = new URLSearchParams(window.location.search);
+                let q = params.get('q');
+
+                if (!q) {
+                    throw new Error("No data parameter found");
+                }
+
+                // 1. Sanitize Base64
+                let base64Str = q.replace(/-/g, '+').replace(/_/g, '/');
+
+                // Add padding if missing
+                const pad = base64Str.length % 4;
+                if (pad) {
+                    base64Str += '='.repeat(4 - pad);
+                }
+
+                // 2. Decode Base64 to UTF-8
+                const binaryStr = atob(base64Str);
+                const bytes = new Uint8Array(binaryStr.length);
+                for (let i = 0; i < binaryStr.length; i++) {
+                    bytes[i] = binaryStr.charCodeAt(i);
+                }
+                const decodedStr = new TextDecoder('utf-8').decode(bytes);
+
+                // 3. Parse content
+                // Updated Format: Ticker|||MarketCap|||Volume|||Price|||Title|||Analysis|||Risk|||Change|||Timestamp
+                const parts = decodedStr.split('|||');
+
+                if (parts.length < 9) {
+                    throw new Error("Invalid data format: Expected 9 fields");
+                }
+
+                return {
+                    ticker: parts[0],
+                    marketCap: parts[1],
+                    volume: parts[2],
+                    price: parts[3],
+                    title: parts[4],
+                    analysis: parts[5],
+                    risk: parts[6],
+                    change: parts[7],
+                    timestamp: parts[8]
+                };
+
+            } catch (e) {
+                console.error("Decoding error:", e);
+                return null;
+            }
+        }
+
+        function render() {
+            const data = decodeData();
+
+            const loadingEl = document.getElementById('loading');
+            const errorEl = document.getElementById('error');
+            const cardEl = document.getElementById('mainCard');
+
+            if (!data) {
+                loadingEl.classList.add('hidden');
+                errorEl.textContent = "Unable to load market data.";
+                errorEl.classList.remove('hidden');
+                return;
+            }
+
+            // Populate fields
+            document.getElementById('ticker').textContent = data.ticker;
+            document.getElementById('marketCap').textContent = data.marketCap;
+            document.getElementById('volume').textContent = data.volume;
+            document.getElementById('price').textContent = data.price;
+            document.getElementById('newsTitle').textContent = data.title;
+            document.getElementById('analysis').textContent = data.analysis;
+            document.getElementById('risk').textContent = data.risk;
+            document.getElementById('newsTimestamp').textContent = data.timestamp;
+
+            // Handle Price Change Color Logic
+            const changeEl = document.getElementById('priceChange');
+            const priceEl = document.getElementById('price');
+            changeEl.textContent = data.change;
+
+            // Check if change is positive or negative
+            // We assume data.change string contains characters like "+5.2%" or "-1.2%"
+            const isPositive = data.change.includes('+');
+            const isNegative = data.change.includes('-');
+
+            // Reset classes
+            priceEl.className = 'price';
+            changeEl.className = 'price-change';
+
+            if (isPositive) {
+                priceEl.classList.add('text-up');
+                changeEl.classList.add('text-up');
+            } else if (isNegative) {
+                priceEl.classList.add('text-down');
+                changeEl.classList.add('text-down');
+            }
+            // else: remain default white if 0% or neutral
+
+            // Format Page Footer Timestamp
+            const now = new Date();
+            document.getElementById('pageTimestamp').textContent = "Updated: " + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            // Show card
+            loadingEl.classList.add('hidden');
+            cardEl.classList.remove('hidden');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', render);
+
+    </script>
+
+
+
+<div id="preact-border-shadow-host" popover="manual" style="border: none; padding: 0px; margin: 0px; inset: 0px; position: fixed; width: 100vw; height: 100vh; background: transparent; pointer-events: none;"></div></body></html>

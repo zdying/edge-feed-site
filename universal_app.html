@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Insight</title>
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --card-bg: rgba(20, 20, 25, 0.6);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-secondary: #a0a0a0;
+            /* Chinese/Asian Market Style: Red = Up, Green = Down */
+            --market-up: #fb7185;
+            /* Soft Red/Pink */
+            --market-down: #10b981;
+            /* Emerald Green */
+            --accent-teal: #2dd4bf;
+            --accent-red-bg: rgba(225, 29, 72, 0.15);
+
+            /* UI Features */
+            --risk-bg: rgba(245, 158, 11, 0.15);
+            /* Yellow/Amber */
+            --risk-text: #f59e0b;
+            --risk-border: rgba(245, 158, 11, 0.3);
+
+            --disclaimer-bg: rgba(225, 29, 72, 0.15);
+            /* Red/Alert */
+            --disclaimer-text: #fb7185;
+            --disclaimer-border: rgba(225, 29, 72, 0.3);
+
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --glow-color: rgba(45, 212, 191, 0.15);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+            background-image: radial-gradient(circle at 50% 0%, var(--glow-color) 0%, transparent 60%);
+            background-attachment: fixed;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Glassmorphism Card */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* Header Section */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .ticker-group {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .ticker-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ticker {
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            line-height: 1.1;
+            cursor: pointer;
+            position: relative;
+            transition: opacity 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ticker:active {
+            opacity: 0.7;
+        }
+
+        .copy-icon {
+            width: 20px;
+            height: 20px;
+            opacity: 0.5;
+            transition: opacity 0.2s;
+        }
+
+        .ticker:hover .copy-icon {
+            opacity: 1;
+        }
+
+        .ticker-logo {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: contain;
+            background: #fff;
+            /* Ensure transparency looks okay */
+            display: none;
+            /* Hidden by default until loaded */
+        }
+
+        .ticker-logo.loaded {
+            display: block;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            background: rgba(30, 30, 35, 0.9);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 500;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .price-group {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .price {
+            font-size: 32px;
+            font-weight: 600;
+            text-align: right;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+        }
+
+        .price-change {
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        .text-up {
+            color: var(--market-up);
+        }
+
+        .text-down {
+            color: var(--market-down);
+        }
+
+        .header-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+        }
+
+        .metric-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .metric-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .metric-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        /* News Section */
+        .news-section {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .news-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-teal);
+            font-weight: 700;
+        }
+
+        .news-timestamp {
+            font-size: 11px;
+            color: var(--text-secondary);
+            opacity: 0.8;
+            font-weight: 500;
+        }
+
+        .news-title {
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.4;
+            color: var(--accent-teal);
+            margin: 0;
+        }
+
+        .news-analysis {
+            font-size: 15px;
+            line-height: 1.6;
+            opacity: 0.9;
+            margin: 0;
+            color: #d4d4d4;
+        }
+
+        /* Yellow Risk Box */
+        .risk-box {
+            background: var(--risk-bg);
+            border: 1px solid var(--risk-border);
+            border-radius: 12px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin-top: 4px;
+        }
+
+        .risk-title {
+            color: var(--risk-text);
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .risk-content {
+            font-size: 13px;
+            color: #e5e5e5;
+            line-height: 1.4;
+        }
+
+        /* Red Disclaimer Box */
+        .disclaimer-box {
+            background: var(--disclaimer-bg);
+            border: 1px solid var(--disclaimer-border);
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .disclaimer-title {
+            color: var(--disclaimer-text);
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .disclaimer-text {
+            font-size: 12px;
+            line-height: 1.5;
+            color: #d4d4d4;
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 10px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .timestamp {
+            font-size: 11px;
+            color: var(--text-secondary);
+            opacity: 0.5;
+            font-family: monospace;
+        }
+
+        .state-message {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div id="mainCard" class="card hidden">
+            <!-- Header -->
+            <div class="header">
+                <div class="ticker-group">
+                    <div class="ticker-row">
+                        <img id="tickerLogo" class="ticker-logo" alt="" />
+                        <div id="ticker" class="ticker" onclick="copyTicker()">
+                            <span id="tickerText">--</span>
+                            <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <span class="header-label">Stock Ticker</span>
+                </div>
+                <div class="price-group">
+                    <span class="price" id="price">--</span>
+                    <span class="price-change" id="priceChange">--</span>
+                </div>
+            </div>
+
+            <!-- Metrics -->
+            <div class="metrics-grid">
+                <div class="metric-item">
+                    <span class="metric-label">Market Cap</span>
+                    <span id="marketCap" class="metric-value">--</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-label">Volume</span>
+                    <span id="volume" class="metric-value">--</span>
+                </div>
+            </div>
+
+            <!-- News & Analysis -->
+            <div class="news-section">
+                <div class="news-header">
+                    <span class="section-label">Latest Insight</span>
+                    <span class="section-label">•</span>
+                    <span id="newsTimestamp" class="news-timestamp">--</span>
+                </div>
+                <h2 id="newsTitle" class="news-title">--</h2>
+                <p id="analysis" class="news-analysis">--</p>
+
+                <!-- Yellow Risk Box -->
+                <div class="risk-box">
+                    <div class="risk-title">Risk Factor</div>
+                    <div id="risk" class="risk-content">--</div>
+                </div>
+            </div>
+
+            <!-- Red Disclaimer Box -->
+            <div class="disclaimer-box">
+                <div class="disclaimer-title">Disclaimer</div>
+                <p class="disclaimer-text">For reference only. NOT investment advice.</p>
+            </div>
+        </div>
+
+        <div id="loading" class="state-message">Loading data...</div>
+        <div id="error" class="state-message hidden" style="color: var(--market-up);"></div>
+
+        <div id="toast" class="toast">Copied to clipboard</div>
+
+        <div class="footer">
+            <span id="pageTimestamp" class="timestamp">--</span>
+        </div>
+    </div>
+
+    <script>
+        const $ = id => document.getElementById(id);
+
+        function decodeData() {
+            try {
+                const params = new URLSearchParams(window.location.search);
+                let q = params.get('q');
+                if (!q) throw new Error("No data parameter found");
+                let base64Str = q.replace(/-/g, '+').replace(/_/g, '/');
+                while (base64Str.length % 4) base64Str += '=';
+                const binaryStr = atob(base64Str);
+                const bytes = new Uint8Array(binaryStr.length);
+                for (let i = 0; i < binaryStr.length; i++) bytes[i] = binaryStr.charCodeAt(i);
+                const decodedStr = new TextDecoder('utf-8').decode(bytes);
+                const parts = decodedStr.split('|||');
+                if (parts.length < 9) throw new Error("Invalid format");
+                return {
+                    ticker: parts[0], marketCap: parts[1], volume: parts[2],
+                    price: parts[3], title: parts[4], analysis: parts[5],
+                    risk: parts[6], change: parts[7], timestamp: parts[8],
+                    logoid: parts[9]
+                };
+            } catch (e) {
+                console.error("Decoding error:", e);
+                return null;
+            }
+        }
+
+        function render() {
+            const data = decodeData();
+            const loadingEl = $('loading');
+            const cardEl = $('mainCard');
+
+            console.log(data);
+
+            if (!data) {
+                loadingEl.classList.add('hidden');
+                $('error').textContent = "Unable to load market data.";
+                $('error').classList.remove('hidden');
+                return;
+            }
+
+            $('tickerText').textContent = data.ticker;
+
+            // Set Logo (TradingView)
+            const logoEl = $('tickerLogo');
+            if (data.logoid) {
+                logoEl.src = `https://s3-symbol-logo.tradingview.com/${data.logoid}.svg`;
+                logoEl.onload = () => logoEl.classList.add('loaded');
+                logoEl.onerror = () => logoEl.classList.remove('loaded');
+            } else {
+                logoEl.classList.remove('loaded');
+            }
+
+            $('marketCap').textContent = data.marketCap;
+            $('volume').textContent = data.volume;
+            $('newsTitle').textContent = data.title;
+            $('analysis').textContent = data.analysis;
+            $('risk').textContent = data.risk; // Pure text
+            $('newsTimestamp').textContent = new Date(data.timestamp).toLocaleString();
+
+            const changeEl = $('priceChange');
+            const priceEl = $('price');
+
+            priceEl.textContent = data.price;
+            changeEl.textContent = data.change + '%';
+
+            priceEl.className = 'price ' + (data.change.includes('+') ? 'text-up' : data.change.includes('-') ? 'text-down' : '');
+            changeEl.className = 'price-change ' + (data.change.includes('+') ? 'text-up' : data.change.includes('-') ? 'text-down' : '');
+
+            $('pageTimestamp').textContent = "Updated: " + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            loadingEl.classList.add('hidden');
+            cardEl.classList.remove('hidden');
+        }
+
+        function copyTicker() {
+            const tickerText = $('tickerText').textContent;
+            navigator.clipboard.writeText(tickerText).then(() => {
+                const toast = $('toast');
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', render);
+    </script>
+</body>
+
+</html>

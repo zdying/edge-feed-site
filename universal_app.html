@@ -323,12 +323,85 @@
         }
 
         .disclaimer-text {
-            font-size: 13px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.2s, opacity 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        /* Action Buttons */
+        .actions-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 24px;
+            width: 100%;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 44px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.5px;
+        }
+
+        .action-btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-glass {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .btn-glass:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-teal), #14b8a6);
+            border: 1px solid rgba(45, 212, 191, 0.5);
+            color: #000;
             font-weight: 700;
-            line-height: 1.5;
-            color: #d4d4d4;
-            margin: 0;
-            opacity: 0.9;
+            box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
+        }
+
+        .btn-primary:hover {
+            opacity: 0.95;
+            box-shadow: 0 6px 16px rgba(20, 184, 166, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .btn-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+            object-fit: contain;
+            display: block;
+            /* Fix vertical align */
         }
 
         /* Footer */
@@ -420,6 +493,18 @@
                 <div class="disclaimer-title">Disclaimer</div>
                 <p class="disclaimer-text">For reference only. NOT investment advice.</p>
             </div>
+
+            <!-- Futu App Actions -->
+            <div class="actions-grid">
+                <a href="#" id="btnAnalysis" class="action-btn btn-glass">
+                    <img src="https://www.futunn.com/favicon.ico" class="btn-icon" alt="Futu">
+                    <span class="btn-text">Analysis</span>
+                </a>
+                <a href="#" id="btnTrade" class="action-btn btn-primary">
+                    <img src="https://www.futunn.com/favicon.ico" class="btn-icon" alt="Futu">
+                    <span class="btn-text">Trade</span>
+                </a>
+            </div>
         </div>
 
         <div id="loading" class="state-message">Loading data...</div>
@@ -446,7 +531,9 @@
                 disclaimerText: "This information is for reference only. NOT investment advice.",
                 copied: "Copied to clipboard",
                 stockTicker: "Stock Ticker",
-                priceLabel: "Price at push, non-real-time"
+                priceLabel: "Price at push, non-real-time",
+                btnAnalysis: "Analysis",
+                btnTrade: "Trade"
             },
             zh: {
                 marketCap: "市值",
@@ -457,7 +544,9 @@
                 disclaimerText: "推送信息仅供参考，不构成投资建议",
                 copied: "已复制到剪贴板",
                 stockTicker: "股票代码",
-                priceLabel: "推送时价格，非实时更新"
+                priceLabel: "推送时价格，非实时更新",
+                btnAnalysis: "行情分析",
+                btnTrade: "立即交易"
             }
         };
 
@@ -466,11 +555,11 @@
         function decodeData() {
             try {
                 const params = new URLSearchParams(window.location.search);
-                let q = params.get('q');
                 // Lang param
                 let lang = params.get('lang');
                 currentLang = (lang === 'zh') ? 'zh' : 'en';
 
+                let q = params.get('q');
                 if (!q) throw new Error("No data parameter found");
                 let base64Str = q.replace(/-/g, '+').replace(/_/g, '/');
                 while (base64Str.length % 4) base64Str += '=';
@@ -484,7 +573,7 @@
                     ticker: parts[0], marketCap: parts[1], volume: parts[2],
                     price: parts[3], title: parts[4], analysis: parts[5],
                     risk: parts[6], change: parts[7], timestamp: parts[8],
-                    logoid: parts[9]
+                    logoid: parts[9], futuid: parts[10]
                 };
             } catch (e) {
                 console.error("Decoding error:", e);
@@ -514,6 +603,11 @@
             document.querySelector('.disclaimer-text').textContent = t.disclaimerText;
             document.querySelector('.header-label').textContent = t.stockTicker;
             document.querySelector('.price-label').textContent = t.priceLabel;
+
+            // Button Text
+            document.querySelector('#btnAnalysis .btn-text').textContent = t.btnAnalysis;
+            document.querySelector('#btnTrade .btn-text').textContent = t.btnTrade;
+
             $('toast').textContent = t.copied;
 
             $('tickerText').textContent = data.ticker;
@@ -555,6 +649,16 @@
             changeEl.className = 'price-change ' + upDownCls;
 
             $('pageTimestamp').textContent = "Version: " + VERSION;
+
+            // Set Action Links
+            // Analysis: ftnn://quote/stockDetail/{futuid}/1
+            // Trade: futunn://trade/US/{ticker}/1/0
+            if (data.futuid) {
+                $('btnAnalysis').href = `ftnn://quote/stockDetail/${data.futuid}/1`;
+            } else {
+                $('btnAnalysis').style.display = 'none'; // Basic fallback
+            }
+            $('btnTrade').href = `futunn://trade/US/${data.ticker}/1/0`;
 
             loadingEl.classList.add('hidden');
             cardEl.classList.remove('hidden');

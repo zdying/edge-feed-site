@@ -108,8 +108,8 @@
         }
 
         .copy-icon {
-            width: 20px;
-            height: 20px;
+            width: 16px;
+            height: 16px;
             opacity: 0.5;
             transition: opacity 0.2s;
         }
@@ -167,7 +167,7 @@
         }
 
         .price {
-            font-size: 32px;
+            font-size: 26px;
             font-weight: 600;
             text-align: right;
             letter-spacing: -0.5px;
@@ -177,7 +177,6 @@
         .price-change {
             font-size: 14px;
             font-weight: 600;
-            margin-top: 4px;
         }
 
         .text-up {
@@ -186,6 +185,15 @@
 
         .text-down {
             color: var(--market-down);
+        }
+
+        .price-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            opacity: 0.6;
+            margin-top: 2px;
+            text-align: right;
+            font-weight: 400;
         }
 
         .header-label {
@@ -372,6 +380,7 @@
                 <div class="price-group">
                     <span class="price" id="price">--</span>
                     <span class="price-change" id="priceChange">--</span>
+                    <span class="price-label">--</span>
                 </div>
             </div>
 
@@ -432,9 +441,10 @@
                 latestInsight: "Latest Insight",
                 riskFactor: "Risk Factor",
                 disclaimerTitle: "Disclaimer",
-                disclaimerText: "For reference only. NOT investment advice.",
+                disclaimerText: "This information is for reference only. NOT investment advice.",
                 copied: "Copied to clipboard",
-                stockTicker: "Stock Ticker"
+                stockTicker: "Stock Ticker",
+                priceLabel: "Price at push"
             },
             zh: {
                 marketCap: "市值",
@@ -442,9 +452,10 @@
                 latestInsight: "最新观点",
                 riskFactor: "风险提示",
                 disclaimerTitle: "免责声明",
-                disclaimerText: "仅供参考，不构成投资建议",
+                disclaimerText: "推送信息仅供参考，不构成投资建议",
                 copied: "已复制到剪贴板",
-                stockTicker: "股票代码"
+                stockTicker: "股票代码",
+                priceLabel: "推送时价格"
             }
         };
 
@@ -500,6 +511,7 @@
             document.querySelector('.disclaimer-title').textContent = t.disclaimerTitle;
             document.querySelector('.disclaimer-text').textContent = t.disclaimerText;
             document.querySelector('.header-label').textContent = t.stockTicker;
+            document.querySelector('.price-label').textContent = t.priceLabel;
             $('toast').textContent = t.copied;
 
             $('tickerText').textContent = data.ticker;

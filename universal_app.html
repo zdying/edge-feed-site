@@ -247,6 +247,16 @@
             gap: 8px;
         }
 
+        .news-tag {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+            padding: 3px 6px;
+            border-radius: 4px;
+            line-height: 1;
+        }
+
         .section-label {
             font-size: 11px;
             text-transform: uppercase;
@@ -498,7 +508,7 @@
             <!-- News & Analysis -->
             <div class="news-section">
                 <div class="news-header">
-                    <span class="section-label">Latest Insight</span>
+                    <span id="newsTag" class="section-label">Latest Insight</span>
                     <span class="section-label">•</span>
                     <span id="newsTimestamp" class="news-timestamp">--</span>
                 </div>
@@ -555,8 +565,44 @@
     </div>
 
     <script>
-        const VERSION = "20260109-001";
+        const VERSION = "20260109-002";
         const $ = id => document.getElementById(id);
+
+        const TAG_MAP_ZH = {
+            "C1": "收购/合并",
+            "C2": "资产出售",
+            "C3": "临床/药物",
+            "C4": "战略融资",
+            "C5": "战略合作",
+            "C6": "重大合同"
+        };
+        const TAG_MAP_EN = {
+            "C1": "Acquisition/Merger",
+            "C2": "Asset Sale",
+            "C3": "Clinical/Drug",
+            "C4": "Financing",
+            "C5": "Cooperation",
+            "C6": "Major Contract"
+        };
+        const TAG_COLOR_MAP = {
+            "C1": 0x1abc9c,
+            "C2": 0x3498db,
+            "C3": 0x9b59b6,
+            "C4": 0xe67e22,
+            "C5": 0xe74c3c,
+            "C6": 0x34795e
+        };
+
+        function hexToRgba(hex, alpha) {
+            const r = (hex >> 16) & 255;
+            const g = (hex >> 8) & 255;
+            const b = hex & 255;
+            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+        }
+
+        function numberToHexStr(hex) {
+            return "#" + hex.toString(16).padStart(6, '0');
+        }
 
         const translations = {
             en: {
@@ -612,7 +658,7 @@
                     ticker: parts[0], marketCap: parts[1], volume: parts[2],
                     price: parts[3], title: parts[4], analysis: parts[5],
                     risk: parts[6], change: parts[7], timestamp: parts[8],
-                    logoid: parts[9], futuid: parts[10]
+                    logoid: parts[9], futuid: parts[10], categoryCode: parts[11]
                 };
             } catch (e) {
                 console.error("Decoding error:", e);
@@ -636,12 +682,41 @@
             const t = translations[currentLang];
             document.querySelector('.metric-item:nth-child(1) .metric-label').textContent = t.marketCap;
             document.querySelector('.metric-item:nth-child(2) .metric-label').textContent = t.volume;
-            document.querySelector('.news-header .section-label:first-child').textContent = t.latestInsight;
+            // News Header Label Logic below
             document.querySelector('.risk-title').textContent = t.riskFactor;
             document.querySelector('.disclaimer-title').textContent = t.disclaimerTitle;
             document.querySelector('.disclaimer-text').textContent = t.disclaimerText;
             document.querySelector('.header-label').textContent = t.stockTicker;
             document.querySelector('.price-label').textContent = t.priceLabel;
+
+            // News Tag Logic
+            const tagEl = $('newsTag');
+            const code = data.categoryCode;
+            let hasTag = false;
+
+            if (code && TAG_COLOR_MAP[code]) {
+                const map = currentLang === 'zh' ? TAG_MAP_ZH : TAG_MAP_EN;
+                const text = map[code];
+                const colorNum = TAG_COLOR_MAP[code];
+
+                if (text) {
+                    hasTag = true;
+                    tagEl.className = 'news-tag';
+                    tagEl.textContent = text;
+                    const solidColor = numberToHexStr(colorNum);
+                    const bgColor = hexToRgba(colorNum, 0.15); // Low opacity bg
+
+                    tagEl.style.color = solidColor;
+                    tagEl.style.backgroundColor = bgColor;
+                    tagEl.style.border = `1px solid ${hexToRgba(colorNum, 0.3)}`;
+                }
+            }
+
+            if (!hasTag) {
+                tagEl.className = 'section-label';
+                tagEl.textContent = t.latestInsight;
+                tagEl.style = ''; // Clear styles
+            }
 
             // Button Text
             document.querySelector('#btnAnalysis .btn-text').textContent = t.btnAnalysis;
@@ -681,7 +756,7 @@
             const changeVal = data.change.replace('%', '');
             const upDownCls = changeVal * 1 > 0 ? 'text-up' : changeVal * 1 == 0 ? '' : 'text-down';
 
-            priceEl.textContent = data.price;
+            priceEl.textContent = '$' + data.price;
             changeEl.textContent = changeVal + '%';
 
             priceEl.className = 'price ' + upDownCls;

@@ -242,7 +242,8 @@
             font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: var(--accent-teal);
+            color: var(--text-secondary);
+            opacity: 0.8;
             font-weight: 700;
         }
 
@@ -421,12 +422,42 @@
     </div>
 
     <script>
+        const VERSION = "2024-06-27-001";
         const $ = id => document.getElementById(id);
+
+        const translations = {
+            en: {
+                marketCap: "Market Cap",
+                volume: "Volume",
+                latestInsight: "Latest Insight",
+                riskFactor: "Risk Factor",
+                disclaimerTitle: "Disclaimer",
+                disclaimerText: "For reference only. NOT investment advice.",
+                copied: "Copied to clipboard",
+                stockTicker: "Stock Ticker"
+            },
+            zh: {
+                marketCap: "市值",
+                volume: "成交量",
+                latestInsight: "最新观点",
+                riskFactor: "风险提示",
+                disclaimerTitle: "免责声明",
+                disclaimerText: "仅供参考，不构成投资建议",
+                copied: "已复制到剪贴板",
+                stockTicker: "股票代码"
+            }
+        };
+
+        let currentLang = 'en';
 
         function decodeData() {
             try {
                 const params = new URLSearchParams(window.location.search);
                 let q = params.get('q');
+                // Lang param
+                let lang = params.get('lang');
+                currentLang = (lang === 'zh') ? 'zh' : 'en';
+
                 if (!q) throw new Error("No data parameter found");
                 let base64Str = q.replace(/-/g, '+').replace(/_/g, '/');
                 while (base64Str.length % 4) base64Str += '=';
@@ -453,14 +484,23 @@
             const loadingEl = $('loading');
             const cardEl = $('mainCard');
 
-            console.log(data);
-
             if (!data) {
                 loadingEl.classList.add('hidden');
                 $('error').textContent = "Unable to load market data.";
                 $('error').classList.remove('hidden');
                 return;
             }
+
+            // Apply Translations
+            const t = translations[currentLang];
+            document.querySelector('.metric-item:nth-child(1) .metric-label').textContent = t.marketCap;
+            document.querySelector('.metric-item:nth-child(2) .metric-label').textContent = t.volume;
+            document.querySelector('.news-header .section-label:first-child').textContent = t.latestInsight;
+            document.querySelector('.risk-title').textContent = t.riskFactor;
+            document.querySelector('.disclaimer-title').textContent = t.disclaimerTitle;
+            document.querySelector('.disclaimer-text').textContent = t.disclaimerText;
+            document.querySelector('.header-label').textContent = t.stockTicker;
+            $('toast').textContent = t.copied;
 
             $('tickerText').textContent = data.ticker;
 
@@ -478,19 +518,29 @@
             $('volume').textContent = data.volume;
             $('newsTitle').textContent = data.title;
             $('analysis').textContent = data.analysis;
-            $('risk').textContent = data.risk; // Pure text
-            $('newsTimestamp').textContent = new Date(data.timestamp).toLocaleString();
+
+            // Conditional Risk Warning
+            if (!data.risk || data.risk.trim() === '') {
+                document.querySelector('.risk-box').style.display = 'none';
+            } else {
+                document.querySelector('.risk-box').style.display = 'flex';
+                $('risk').textContent = data.risk; // Pure text
+            }
+            $('newsTimestamp').textContent = new Date(1 * data.timestamp).toLocaleString();
 
             const changeEl = $('priceChange');
             const priceEl = $('price');
+            // Remove % if present to avoid double %%
+            const changeVal = data.change.replace('%', '');
+            const upDownCls = changeVal * 1 > 0 ? 'text-up' : changeVal * 1 == 0 ? '' : 'text-down';
 
             priceEl.textContent = data.price;
-            changeEl.textContent = data.change + '%';
+            changeEl.textContent = changeVal + '%';
 
-            priceEl.className = 'price ' + (data.change.includes('+') ? 'text-up' : data.change.includes('-') ? 'text-down' : '');
-            changeEl.className = 'price-change ' + (data.change.includes('+') ? 'text-up' : data.change.includes('-') ? 'text-down' : '');
+            priceEl.className = 'price ' + upDownCls;
+            changeEl.className = 'price-change ' + upDownCls;
 
-            $('pageTimestamp').textContent = "Updated: " + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            $('pageTimestamp').textContent = "Version: " + VERSION;
 
             loadingEl.classList.add('hidden');
             cardEl.classList.remove('hidden');

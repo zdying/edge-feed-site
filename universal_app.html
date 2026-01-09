@@ -8,7 +8,7 @@
     <style>
         :root {
             --bg-color: #0a0a0a;
-            --card-bg: rgba(20, 20, 25, 0.6);
+            --card-bg: rgba(20, 20, 25, 0.3);
             --card-border: rgba(255, 255, 255, 0.1);
             --text-main: #ffffff;
             --text-secondary: #a0a0a0;
@@ -32,7 +32,7 @@
             --disclaimer-border: rgba(225, 29, 72, 0.3);
 
             --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            --glow-color: rgba(45, 212, 191, 0.15);
+            --glow-color: rgba(45, 212, 191, 0.25);
         }
 
         body {
@@ -248,7 +248,7 @@
         }
 
         .news-tag {
-            font-size: 11px;
+            font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             font-weight: 700;
@@ -438,6 +438,25 @@
             /* Make it look like a white icon */
         }
 
+        /* Brand */
+        .brand-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Brand Logo */
+        .brand-logo {
+            max-width: 80px;
+        }
+
+        /* Brand Name */
+        .brand-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
         /* Footer */
         .footer {
             margin-top: 10px;
@@ -519,6 +538,12 @@
                 <div class="risk-box">
                     <div class="risk-title">Risk Factor</div>
                     <div id="risk" class="risk-content">--</div>
+                </div>
+
+                <!-- Brand -->
+                <div class="brand-section">
+                    <span class="brand-label">从提醒由 KairAlert 发送</span>
+                    <img class="brand-logo" src="https://kairalert.pro/assets/kairalert-logo.jpg" />
                 </div>
 
                 <!-- Action Buttons (Analysis | Trade | Settings) -->
@@ -617,7 +642,8 @@
                 priceLabel: "Price at push",
                 btnAnalysis: "Analysis",
                 btnTrade: "Trade",
-                stayTuned: "Stay tuned..."
+                stayTuned: "Stay tuned...",
+                sendByKairAlert: "This alert was sent by KairAlert."
             },
             zh: {
                 marketCap: "市值",
@@ -631,7 +657,8 @@
                 priceLabel: "推送时价格，非实时更新",
                 btnAnalysis: "行情分析",
                 btnTrade: "立即交易",
-                stayTuned: "敬请期待..."
+                stayTuned: "敬请期待...",
+                sendByKairAlert: "此提醒由 KairAlert 发送."
             }
         };
 

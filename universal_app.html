@@ -816,12 +816,14 @@
             // Set Action Links
             // Analysis: ftnn://quote/stockDetail/{futuid}/1
             // Trade: futunn://trade/US/{ticker}/1/0
+
+            // https://futunn.onelink.me/Fe4i?af_force_deeplink=true&af_dp=ftnn://quote/stockDetail/${futuID}/1
             if (data.futuid) {
-                $('btnAnalysis').href = `ftnn://quote/stockDetail/${data.futuid}/1`;
+                $('btnAnalysis').href = `https://futunn.onelink.me/Fe4i?af_force_deeplink=true&af_dp=ftnn://quote/stockDetail/${data.futuid}/1`;
             } else {
                 $('btnAnalysis').style.display = 'none'; // Basic fallback
             }
-            $('btnTrade').href = `futunn://trade/US/${data.ticker}/1/0`;
+            $('btnTrade').href = `https://futunn.onelink.me/Fe4i?af_force_deeplink=true&af_dp=futunn://trade/US/${data.ticker}/1/0`;
 
             loadingEl.classList.add('hidden');
             cardEl.classList.remove('hidden');

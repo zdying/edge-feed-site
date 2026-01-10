@@ -2,857 +2,877 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Market Insight</title>
-    <style>
-        :root {
-            --bg-color: #0a0a0a;
-            --card-bg: rgba(20, 20, 25, 0.3);
-            --card-border: rgba(255, 255, 255, 0.1);
-            --text-main: #ffffff;
-            --text-secondary: #a0a0a0;
-            /* Chinese/Asian Market Style: Red = Up, Green = Down */
-            --market-up: #fb7185;
-            /* Soft Red/Pink */
-            --market-down: #10b981;
-            /* Emerald Green */
-            --accent-teal: #2dd4bf;
-            --accent-red-bg: rgba(225, 29, 72, 0.15);
+  <meta charset="UTF-8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Market Insight</title>
+  <style>
+    :root {
+      --bg-color: #0a0a0a;
+      --card-bg: rgba(20, 20, 25, 0.3);
+      --card-border: rgba(255, 255, 255, 0.1);
+      --text-main: #ffffff;
+      --text-secondary: #a0a0a0;
+      /* Chinese/Asian Market Style: Red = Up, Green = Down */
+      --market-up: #fb7185;
+      /* Soft Red/Pink */
+      --market-down: #10b981;
+      /* Emerald Green */
+      --accent-teal: #2dd4bf;
+      --accent-red-bg: rgba(225, 29, 72, 0.15);
 
-            /* UI Features */
-            --risk-bg: rgba(245, 158, 11, 0.15);
-            /* Yellow/Amber */
-            --risk-text: #f59e0b;
-            --risk-border: rgba(245, 158, 11, 0.3);
+      /* UI Features */
+      --risk-bg: rgba(245, 158, 11, 0.15);
+      /* Yellow/Amber */
+      --risk-text: #f59e0b;
+      --risk-border: rgba(245, 158, 11, 0.3);
 
-            --disclaimer-bg: rgba(225, 29, 72, 0.15);
-            /* Red/Alert */
-            --disclaimer-text: #fb7185;
-            --disclaimer-border: rgba(225, 29, 72, 0.3);
+      --disclaimer-bg: rgba(225, 29, 72, 0.15);
+      /* Red/Alert */
+      --disclaimer-text: #fb7185;
+      --disclaimer-border: rgba(225, 29, 72, 0.3);
 
-            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            --glow-color: rgba(45, 212, 191, 0.25);
-        }
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --glow-color: rgba(45, 212, 191, 0.25);
+    }
 
-        * {
-          box-sizing: border-box;
-        }
+    * {
+      box-sizing: border-box;
+    }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: var(--font-family);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            min-height: 100vh;
-            box-sizing: border-box;
-            background-image: radial-gradient(circle at 50% 0%, var(--glow-color) 0%, transparent 60%);
-            background-attachment: fixed;
-        }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: var(--font-family);
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      box-sizing: border-box;
+      background-image: radial-gradient(circle at 50% 0%, var(--glow-color) 0%, transparent 60%);
+      background-attachment: fixed;
+    }
 
-        .container {
-            width: 100%;
-            max-width: 480px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
+    .container {
+      width: 100%;
+      max-width: 480px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
 
-        /* Glassmorphism Card */
-        .card {
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--card-border);
-            border-radius: 24px;
-            padding: 24px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
+    /* Glassmorphism Card */
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
 
-        /* Header Section */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
+    /* Header Section */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
 
-        .ticker-group {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
+    .ticker-group {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
 
-        .ticker-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+    .ticker-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-        .ticker {
-            max-width: 150px;
-            font-size: 32px;
-            font-weight: 800;
-            margin-top: 3px;
-            letter-spacing: -0.5px;
-            line-height: 1.1;
-            cursor: pointer;
-            position: relative;
-            transition: opacity 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-        }
+    .ticker {
+      max-width: 150px;
+      font-size: 32px;
+      font-weight: 800;
+      margin-top: 3px;
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+      cursor: pointer;
+      position: relative;
+      transition: opacity 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
 
-        .ticker:active {
-            opacity: 0.7;
-        }
+    .ticker:active {
+      opacity: 0.7;
+    }
 
-        .copy-icon {
-            width: 16px;
-            height: 16px;
-            opacity: 0.5;
-            transition: opacity 0.2s;
-            margin-top: 10px;
-        }
+    .copy-icon {
+      width: 16px;
+      height: 16px;
+      opacity: 0.5;
+      transition: opacity 0.2s;
+      margin-top: 10px;
+    }
 
-        .ticker:hover .copy-icon {
-            opacity: 1;
-        }
+    .ticker:hover .copy-icon {
+      opacity: 1;
+    }
 
-        .ticker-logo {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            object-fit: contain;
-            background: #fff;
-            /* Ensure transparency looks okay */
-            display: none;
-            /* Hidden by default until loaded */
-        }
+    .ticker-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: contain;
+      background: #fff;
+      /* Ensure transparency looks okay */
+      display: none;
+      /* Hidden by default until loaded */
+    }
 
-        .ticker-logo.loaded {
-            display: block;
-        }
+    .ticker-logo.loaded {
+      display: block;
+    }
 
-        .header-tips {
-          margin-top: -24px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
+    .header-tips {
+      margin-top: -24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
 
-        /* Toast Notification */
-        .toast {
-            position: fixed;
-            top: 40px;
-            left: 50%;
-            transform: translateX(-50%) translateY(-20px);
-            background: rgba(30, 30, 35, 0.9);
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 50px;
-            font-size: 14px;
-            font-weight: 500;
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            z-index: 1000;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      top: 40px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: rgba(30, 30, 35, 0.9);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 500;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
 
-        .toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
 
-        .price-group {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-        }
+    .price-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
 
-        .price {
-            font-size: 24px;
-            font-weight: 600;
-            text-align: right;
-            letter-spacing: -0.5px;
-            color: var(--text-main);
-        }
+    .price {
+      font-size: 24px;
+      font-weight: 600;
+      text-align: right;
+      letter-spacing: -0.5px;
+      color: var(--text-main);
+    }
 
-        .price-change {
-            font-size: 13px;
-            font-weight: 600;
-        }
+    .price-change {
+      font-size: 13px;
+      font-weight: 600;
+    }
 
-        .text-up {
-            color: var(--market-up);
-        }
+    .text-up {
+      color: var(--market-up);
+    }
 
-        .text-down {
-            color: var(--market-down);
-        }
+    .text-down {
+      color: var(--market-down);
+    }
 
-        .price-label {
-            font-size: 11px;
-            color: var(--text-secondary);
-            opacity: 0.6;
-            margin-top: 2px;
-            text-align: right;
-            font-weight: 400;
-        }
+    .price-label {
+      font-size: 11px;
+      color: var(--text-secondary);
+      opacity: 0.6;
+      margin-top: 2px;
+      text-align: right;
+      font-weight: 400;
+    }
 
-        .header-label {
-            font-size: 13px;
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
+    .header-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
 
-        /* Metrics Grid */
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            padding: 16px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 16px;
-        }
+    /* Metrics Grid */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 16px;
+    }
 
-        .metric-item {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
+    .metric-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
 
-        .metric-label {
-            font-size: 12px;
-            /* text-transform: uppercase; */
-            letter-spacing: 0.5px;
-            color: var(--text-secondary);
-            font-weight: 600;
-        }
+    .metric-label {
+      font-size: 12px;
+      /* text-transform: uppercase; */
+      letter-spacing: 0.5px;
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
 
-        .metric-value {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--text-main);
-        }
+    .metric-value {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
 
-        /* News Section */
-        .news-section {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+    /* News Section */
+    .news-section {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
 
-        .news-header {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+    .news-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-        .news-tag {
-            font-size: 12px;
-            /* text-transform: uppercase; */
-            letter-spacing: 0.5px;
-            font-weight: 700;
-            padding: 3px 6px;
-            border-radius: 4px;
-            line-height: 1;
-        }
+    .news-tag {
+      font-size: 12px;
+      /* text-transform: uppercase; */
+      letter-spacing: 0.5px;
+      font-weight: 700;
+      padding: 3px 6px;
+      border-radius: 4px;
+      line-height: 1;
+    }
 
-        .section-label {
-            font-size: 11px;
-            /* text-transform: uppercase; */
-            letter-spacing: 1px;
-            color: var(--text-secondary);
-            opacity: 0.8;
-            font-weight: 700;
-        }
+    .section-label {
+      font-size: 11px;
+      /* text-transform: uppercase; */
+      letter-spacing: 1px;
+      color: var(--text-secondary);
+      opacity: 0.8;
+      font-weight: 700;
+    }
 
-        .news-timestamp {
-            font-size: 11px;
-            color: var(--text-secondary);
-            opacity: 0.8;
-            font-weight: 500;
-        }
+    .news-timestamp {
+      font-size: 11px;
+      color: var(--text-secondary);
+      opacity: 0.8;
+      font-weight: 500;
+    }
 
-        .news-title {
-            font-size: 18px;
-            font-weight: 700;
-            line-height: 1.4;
-            color: var(--accent-teal);
-            margin: 0;
-        }
+    .news-title {
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.4;
+      color: var(--accent-teal);
+      margin: 0;
+    }
 
-        .news-analysis {
-            font-size: 15px;
-            line-height: 1.6;
-            opacity: 0.9;
-            margin: 0;
-            color: #d4d4d4;
-        }
+    .news-analysis {
+      font-size: 15px;
+      line-height: 1.6;
+      opacity: 0.9;
+      margin: 0;
+      color: #d4d4d4;
+    }
 
-        /* Yellow Risk Box */
-        .risk-box {
-            background: var(--risk-bg);
-            border: 1px solid var(--risk-border);
-            border-radius: 12px;
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            margin-top: 4px;
-        }
+    /* Yellow Risk Box */
+    .risk-box {
+      background: var(--risk-bg);
+      border: 1px solid var(--risk-border);
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 4px;
+    }
 
-        .risk-title {
-            color: var(--risk-text);
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
+    .risk-title {
+      color: var(--risk-text);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
 
-        .risk-content {
-            font-size: 13px;
-            color: #e5e5e5;
-            line-height: 1.4;
-        }
+    .risk-content {
+      font-size: 13px;
+      color: #e5e5e5;
+      line-height: 1.4;
+    }
 
-        /* Red Disclaimer Box */
-        .disclaimer-box {
-            background: var(--disclaimer-bg);
-            border: 1px solid var(--disclaimer-border);
-            border-radius: 16px;
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
+    /* Red Disclaimer Box */
+    .disclaimer-box {
+      background: var(--disclaimer-bg);
+      border: 1px solid var(--disclaimer-border);
+      border-radius: 16px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
 
-        .disclaimer-title {
-            color: var(--disclaimer-text);
-            font-size: 13px;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
+    .disclaimer-title {
+      color: var(--disclaimer-text);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
 
-        .disclaimer-text {
-            font-size: 14px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: transform 0.2s, opacity 0.2s;
-            position: relative;
-            overflow: hidden;
-            margin: 0;
-        }
+    .disclaimer-text {
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.2s, opacity 0.2s;
+      position: relative;
+      overflow: hidden;
+      margin: 0;
+    }
 
-        /* Action Buttons */
-        .actions-grid {
-            display: flex;
-            /* Changed from grid to flex */
-            gap: 12px;
-            margin-top: 16px;
-            margin-bottom: 8px;
-            /* Spacing before disclaimer */
-            width: 100%;
-        }
+    /* Action Buttons */
+    .actions-grid {
+      display: flex;
+      /* Changed from grid to flex */
+      gap: 12px;
+      margin-top: 16px;
+      margin-bottom: 8px;
+      /* Spacing before disclaimer */
+      width: 100%;
+    }
 
-        .action-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 40px;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.2s ease;
-            position: relative;
-            overflow: hidden;
-            letter-spacing: 0.5px;
-            flex: 1;
-            /* Default to flexible width */
-        }
+    .action-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+      letter-spacing: 0.5px;
+      flex: 1;
+      /* Default to flexible width */
+    }
 
-        .action-btn.fixed-width {
-            flex: 0 0 40px;
-            /* Fixed width for Settings */
-            width: 40px;
-        }
+    .action-btn.fixed-width {
+      flex: 0 0 40px;
+      /* Fixed width for Settings */
+      width: 40px;
+    }
 
-        .action-btn:active {
-            transform: scale(0.96);
-        }
+    .action-btn:active {
+      transform: scale(0.96);
+    }
 
-        .btn-glass {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
+    .btn-glass {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
 
-        .btn-glass:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.2);
-            color: #fff;
-        }
+    .btn-glass:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
 
-        /* Softer Teal Style */
-        .btn-primary {
-            background: rgba(45, 212, 191, 0.15);
-            /* Tinted glass */
-            border: 1px solid rgba(45, 212, 191, 0.3);
-            color: var(--accent-teal);
-            box-shadow: 0 4px 12px rgba(20, 184, 166, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
+    /* Softer Teal Style */
+    .btn-primary {
+      background: rgba(45, 212, 191, 0.15);
+      /* Tinted glass */
+      border: 1px solid rgba(45, 212, 191, 0.3);
+      color: var(--accent-teal);
+      box-shadow: 0 4px 12px rgba(20, 184, 166, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
 
-        .btn-primary:hover {
-            background: rgba(45, 212, 191, 0.25);
-            border-color: rgba(45, 212, 191, 0.5);
-            box-shadow: 0 6px 16px rgba(20, 184, 166, 0.2);
-            transform: translateY(-1px);
-        }
+    .btn-primary:hover {
+      background: rgba(45, 212, 191, 0.25);
+      border-color: rgba(45, 212, 191, 0.5);
+      box-shadow: 0 6px 16px rgba(20, 184, 166, 0.2);
+      transform: translateY(-1px);
+    }
 
-        .btn-primary:active {
-            transform: translateY(0) scale(0.98);
-        }
+    .btn-primary:active {
+      transform: translateY(0) scale(0.98);
+    }
 
-        .btn-icon {
-            width: 18px;
-            height: 18px;
-            margin-right: 6px;
-            object-fit: contain;
-            display: block;
-        }
+    .btn-icon {
+      width: 18px;
+      height: 18px;
+      margin-right: 6px;
+      object-fit: contain;
+      display: block;
+    }
 
-        /* Adjust icon margin for icon-only buttons */
-        .action-btn.fixed-width .btn-icon {
-            margin-right: 0;
-            width: 22px;
-            height: 22px;
-            opacity: 0.8;
-            filter: grayscale(100%) brightness(200%);
-            /* Make it look like a white icon */
-        }
+    /* Adjust icon margin for icon-only buttons */
+    .action-btn.fixed-width .btn-icon {
+      margin-right: 0;
+      width: 22px;
+      height: 22px;
+      opacity: 0.8;
+      filter: grayscale(100%) brightness(200%);
+      /* Make it look like a white icon */
+    }
 
-        /* Brand */
-        .brand-section {
-            height: 35px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
+    /* Brand */
+    .brand-section {
+      height: 35px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
 
-        /* Brand Logo */
-        .brand-logo {
-            max-width: 80px;
-        }
+    /* Brand Logo */
+    .brand-logo {
+      max-width: 80px;
+    }
 
-        /* Brand Name */
-        .brand-label {
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            text-decoration: underline;
-        }
+    /* Brand Name */
+    .brand-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-decoration: underline;
+    }
 
-        /* Footer */
-        .footer {
-            margin-top: 10px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
+    /* Footer */
+    .footer {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
 
-        .timestamp {
-            font-size: 11px;
-            color: var(--text-secondary);
-            opacity: 0.5;
-            font-family: monospace;
-        }
+      font-size: 11px;
+      color: var(--text-secondary);
+      opacity: 0.5;
+      font-family: monospace;
+    }
 
-        .state-message {
-            text-align: center;
-            padding: 40px;
-            color: var(--text-secondary);
-        }
+    .state-message {
+      text-align: center;
+      padding: 40px;
+      color: var(--text-secondary);
+    }
 
-        .hidden {
-            display: none !important;
-        }
-    </style>
+    .hidden {
+      display: none !important;
+    }
+  </style>
 </head>
 
 <body>
 
-    <div class="container">
-        <div id="mainCard" class="card hidden">
-            <!-- Header -->
-            <div class="header">
-                <div class="ticker-group">
-                    <div class="ticker-row">
-                        <img id="tickerLogo" class="ticker-logo" alt="" />
-                        <div id="ticker" class="ticker" onclick="copyTicker()">
-                            <span id="tickerText">--</span>
-                            <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    <!-- <span class="header-label">Stock Ticker</span> -->
-                </div>
-                <div class="price-group">
-                    <span class="price" id="price">--</span>
-                    <span class="price-change" id="priceChange">--</span>
-                    <!-- <span class="price-label">--</span> -->
-                </div>
+  <div class="container">
+    <div id="mainCard" class="card hidden">
+      <!-- Header -->
+      <div class="header">
+        <div class="ticker-group">
+          <div class="ticker-row">
+            <img id="tickerLogo" class="ticker-logo" alt="" />
+            <div id="ticker" class="ticker" onclick="copyTicker()">
+              <span id="tickerText">--</span>
+              <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
             </div>
+          </div>
+          <!-- <span class="header-label">Stock Ticker</span> -->
+        </div>
+        <div class="price-group">
+          <span class="price" id="price">--</span>
+          <span class="price-change" id="priceChange">--</span>
+          <!-- <span class="price-label">--</span> -->
+        </div>
+      </div>
 
-            <div class="header-tips">
-                <span class="header-label">Stock Ticker</span>
-                <span class="price-label">Price at push, not real-time</span>
-            </div>
+      <div class="header-tips">
+        <span class="header-label">Stock Ticker</span>
+        <span class="price-label">Price at push, not real-time</span>
+      </div>
 
-            <!-- Metrics -->
-            <div class="metrics-grid">
-                <div class="metric-item">
-                    <span class="metric-label">Market Cap</span>
-                    <span id="marketCap" class="metric-value">--</span>
-                </div>
-                <div class="metric-item">
-                    <span class="metric-label">Volume</span>
-                    <span id="volume" class="metric-value">--</span>
-                </div>
-            </div>
+      <!-- Metrics -->
+      <div class="metrics-grid">
+        <div class="metric-item">
+          <span class="metric-label">Market Cap</span>
+          <span id="marketCap" class="metric-value">--</span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-label">Volume</span>
+          <span id="volume" class="metric-value">--</span>
+        </div>
+      </div>
 
-            <!-- News & Analysis -->
-            <div class="news-section">
-                <div class="news-header">
-                    <span id="newsTag" class="section-label">Latest Insight</span>
-                    <span class="section-label">•</span>
-                    <span id="newsTimestamp" class="news-timestamp">--</span>
-                </div>
-                <h2 id="newsTitle" class="news-title">--</h2>
-                <p id="analysis" class="news-analysis">--</p>
+      <!-- News & Analysis -->
+      <div class="news-section">
+        <div class="news-header">
+          <span id="newsTag" class="section-label">Latest Insight</span>
+          <span class="section-label">•</span>
+          <span id="newsTimestamp" class="news-timestamp">--</span>
+        </div>
+        <h2 id="newsTitle" class="news-title">--</h2>
+        <p id="analysis" class="news-analysis">--</p>
 
-                <!-- Yellow Risk Box -->
-                <div class="risk-box">
-                    <div class="risk-title">Risk Factor</div>
-                    <div id="risk" class="risk-content">--</div>
-                </div>
-
-                <!-- Brand -->
-                <div class="brand-section">
-                    <a class="brand-label" href="https://kairalert.pro/" target="_blank">从提醒由 KairAlert 发送</a>
-                    <img class="brand-logo" src="https://kairalert.pro/assets/kairalert-logo.jpg" />
-                </div>
-
-                <!-- Action Buttons (Analysis | Trade | Settings) -->
-                <div class="actions-grid">
-                    <!-- Analysis (Flex 1) -->
-                    <a href="#" id="btnAnalysis" class="action-btn btn-glass">
-                        <img src="https://www.futunn.com/favicon.ico" class="btn-icon" alt="Futu">
-                        <span class="btn-text">Analysis</span>
-                    </a>
-                    <!-- Trade (Flex 1) -->
-                    <a href="#" id="btnTrade" class="action-btn btn-primary">
-                        <img src="https://www.futunn.com/favicon.ico" class="btn-icon" alt="Futu">
-                        <span class="btn-text">Trade</span>
-                    </a>
-                    <!-- Settings (Fixed) -->
-                    <div id="btnSettings" class="action-btn btn-glass fixed-width" onclick="showSettingsToast()">
-                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="3"></circle>
-                            <path
-                                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
-                            </path>
-                        </svg>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Red Disclaimer Box -->
-            <div class="disclaimer-box">
-                <div class="disclaimer-title">Disclaimer</div>
-                <p class="disclaimer-text">For reference only. NOT investment advice.</p>
-            </div>
-            <!-- (Removed old actions-grid from here) -->
+        <!-- Yellow Risk Box -->
+        <div class="risk-box">
+          <div class="risk-title">Risk Factor</div>
+          <div id="risk" class="risk-content">--</div>
         </div>
 
-        <div id="loading" class="state-message">Loading data...</div>
-        <div id="error" class="state-message hidden" style="color: var(--market-up);"></div>
-
-        <div id="toast" class="toast">Copied to clipboard</div>
-
-        <div class="footer">
-            <span id="pageTimestamp" class="timestamp">--</span>
+        <!-- Brand -->
+        <div class="brand-section">
+          <a class="brand-label" href="https://kairalert.pro/" target="_blank">从提醒由 KairAlert 发送</a>
+          <img class="brand-logo" src="https://kairalert.pro/assets/kairalert-logo.jpg" />
         </div>
+
+        <!-- Action Buttons (Analysis | Trade | Settings) -->
+        <div class="actions-grid">
+          <!-- Analysis (Flex 1) -->
+          <a href="#" id="btnAnalysis" class="action-btn btn-glass">
+            <img src="https://www.futunn.com/favicon.ico" class="btn-icon" alt="Futu">
+            <span class="btn-text">Analysis</span>
+          </a>
+          <!-- Trade (Flex 1) -->
+          <a href="#" id="btnTrade" class="action-btn btn-primary">
+            <img src="https://www.futunn.com/favicon.ico" class="btn-icon" alt="Futu">
+            <span class="btn-text">Trade</span>
+          </a>
+          <!-- Settings (Fixed) -->
+          <div id="btnSettings" class="action-btn btn-glass fixed-width" onclick="showSettingsToast()">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path
+                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+              </path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Red Disclaimer Box -->
+      <div class="disclaimer-box">
+        <div class="disclaimer-title">Disclaimer</div>
+        <p class="disclaimer-text">For reference only. NOT investment advice.</p>
+      </div>
+      <!-- (Removed old actions-grid from here) -->
     </div>
 
-    <script>
-        const VERSION = "20260109-002";
-        const $ = id => document.getElementById(id);
+    <div id="loading" class="state-message">Loading data...</div>
+    <div id="error" class="state-message hidden" style="color: var(--market-up);"></div>
 
-        const TAG_MAP_ZH = {
-            "C1": "收购/合并",
-            "C2": "资产出售",
-            "C3": "临床/药物",
-            "C4": "战略融资",
-            "C5": "战略合作",
-            "C6": "重大合同"
+    <div id="toast" class="toast">Copied to clipboard</div>
+
+    <div class="footer">
+      <span id="version">--</span> | <span id="uid">--</span>
+    </div>
+  </div>
+
+  <script>
+    const VERSION = "20260109-002";
+    const $ = id => document.getElementById(id);
+
+    const TAG_MAP_ZH = {
+      "C1": "收购/合并",
+      "C2": "资产出售",
+      "C3": "临床/药物",
+      "C4": "战略融资",
+      "C5": "战略合作",
+      "C6": "重大合同"
+    };
+    const TAG_MAP_EN = {
+      "C1": "Acquisition/Merger",
+      "C2": "Asset Sale",
+      "C3": "Clinical/Drug",
+      "C4": "Financing",
+      "C5": "Cooperation",
+      "C6": "Major Contract"
+    };
+    const TAG_COLOR_MAP = {
+      "C1": 0x48f4b2,
+      "C2": 0x39a5ec,
+      "C3": 0xb56ad4,
+      "C4": 0xe67e22,
+      "C5": 0xe74c3c,
+      "C6": 0xd6b35b
+    };
+
+    function generateUid() {
+      // 9 digitals
+      return Math.random().toString().slice(2, 11);
+    }
+
+    function initUid() {
+      const uid = localStorage.getItem('uid');
+      if (uid) {
+        // If UID exists, use it
+        console.log("Using existing UID:", uid);
+      } else {
+        // If not, create a new UID
+        const newUid = generateUid();
+        localStorage.setItem('uid', newUid);
+        console.log("Generated new UID:", newUid);
+      }
+    }
+
+    function hexToRgba(hex, alpha) {
+      const r = (hex >> 16) & 255;
+      const g = (hex >> 8) & 255;
+      const b = hex & 255;
+      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    }
+
+    function numberToHexStr(hex) {
+      return "#" + hex.toString(16).padStart(6, '0');
+    }
+
+    const translations = {
+      en: {
+        marketCap: "Market Cap",
+        volume: "Volume",
+        latestInsight: "Latest Insight",
+        riskFactor: "Risk Factor",
+        disclaimerTitle: "Disclaimer",
+        disclaimerText: "For reference only. NOT investment advice.",
+        copied: "Copied to clipboard",
+        stockTicker: "Stock Ticker",
+        priceLabel: "Price at push, not real-time",
+        btnAnalysis: "Analysis",
+        btnTrade: "Trade",
+        stayTuned: "Stay tuned...",
+        sendByKairAlert: "This alert was sent by KairAlert."
+      },
+      zh: {
+        marketCap: "市值",
+        volume: "成交量",
+        latestInsight: "最新观点",
+        riskFactor: "风险提示",
+        disclaimerTitle: "免责声明",
+        disclaimerText: "推送信息仅供参考，不构成投资建议",
+        copied: "已复制到剪贴板",
+        stockTicker: "股票代码",
+        priceLabel: "推送时价格，非实时更新",
+        btnAnalysis: "行情分析",
+        btnTrade: "立即交易",
+        stayTuned: "敬请期待...",
+        sendByKairAlert: "此提醒由 KairAlert 发送."
+      }
+    };
+
+    let currentLang = 'en';
+
+    function decodeData() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        // Lang param
+        let lang = params.get('lang');
+        currentLang = (lang === 'zh') ? 'zh' : 'en';
+
+        let q = params.get('q');
+        if (!q) throw new Error("No data parameter found");
+        let base64Str = q.replace(/-/g, '+').replace(/_/g, '/');
+        while (base64Str.length % 4) base64Str += '=';
+        const binaryStr = atob(base64Str);
+        const bytes = new Uint8Array(binaryStr.length);
+        for (let i = 0; i < binaryStr.length; i++) bytes[i] = binaryStr.charCodeAt(i);
+        const decodedStr = new TextDecoder('utf-8').decode(bytes);
+        const parts = decodedStr.split('|||');
+        if (parts.length < 9) throw new Error("Invalid format");
+        return {
+          ticker: parts[0], marketCap: parts[1], volume: parts[2],
+          price: parts[3], title: parts[4], analysis: parts[5],
+          risk: parts[6], change: parts[7], timestamp: parts[8],
+          logoid: parts[9], futuid: parts[10], categoryCode: parts[11]
         };
-        const TAG_MAP_EN = {
-            "C1": "Acquisition/Merger",
-            "C2": "Asset Sale",
-            "C3": "Clinical/Drug",
-            "C4": "Financing",
-            "C5": "Cooperation",
-            "C6": "Major Contract"
-        };
-        const TAG_COLOR_MAP = {
-            "C1": 0x1abc9c,
-            "C2": 0x3498db,
-            "C3": 0x9b59b6,
-            "C4": 0xe67e22,
-            "C5": 0xe74c3c,
-            "C6": 0x34795e
-        };
+      } catch (e) {
+        console.error("Decoding error:", e);
+        return null;
+      }
+    }
 
-        function hexToRgba(hex, alpha) {
-            const r = (hex >> 16) & 255;
-            const g = (hex >> 8) & 255;
-            const b = hex & 255;
-            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    function render() {
+      const data = decodeData();
+      const loadingEl = $('loading');
+      const cardEl = $('mainCard');
+      const uid = localStorage.getItem('uid');
+
+      if (!data) {
+        loadingEl.classList.add('hidden');
+        $('error').textContent = "Unable to load market data.";
+        $('error').classList.remove('hidden');
+        return;
+      }
+
+      // Apply Translations
+      const t = translations[currentLang];
+      document.querySelector('.metric-item:nth-child(1) .metric-label').textContent = t.marketCap;
+      document.querySelector('.metric-item:nth-child(2) .metric-label').textContent = t.volume;
+      // News Header Label Logic below
+      document.querySelector('.risk-title').textContent = t.riskFactor;
+      document.querySelector('.disclaimer-title').textContent = t.disclaimerTitle;
+      document.querySelector('.disclaimer-text').textContent = t.disclaimerText;
+      document.querySelector('.header-label').textContent = t.stockTicker;
+      document.querySelector('.price-label').textContent = t.priceLabel;
+      document.querySelector('.brand-label').textContent = t.sendByKairAlert;
+
+      $('uid').textContent = uid;
+
+      // News Tag Logic
+      const tagEl = $('newsTag');
+      const code = data.categoryCode;
+      let hasTag = false;
+
+      if (code && TAG_COLOR_MAP[code]) {
+        const map = currentLang === 'zh' ? TAG_MAP_ZH : TAG_MAP_EN;
+        const text = map[code];
+        const colorNum = TAG_COLOR_MAP[code];
+
+        if (text) {
+          hasTag = true;
+          tagEl.className = 'news-tag';
+          tagEl.textContent = text;
+          const solidColor = numberToHexStr(colorNum);
+          const bgColor = hexToRgba(colorNum, 0.25); // Low opacity bg
+
+          tagEl.style.color = solidColor;
+          tagEl.style.backgroundColor = bgColor;
+          tagEl.style.border = `1px solid ${hexToRgba(colorNum, 0.4)}`;
         }
+      }
 
-        function numberToHexStr(hex) {
-            return "#" + hex.toString(16).padStart(6, '0');
-        }
+      if (!hasTag) {
+        tagEl.className = 'section-label';
+        tagEl.textContent = t.latestInsight;
+        tagEl.style = ''; // Clear styles
+      }
 
-        const translations = {
-            en: {
-                marketCap: "Market Cap",
-                volume: "Volume",
-                latestInsight: "Latest Insight",
-                riskFactor: "Risk Factor",
-                disclaimerTitle: "Disclaimer",
-                disclaimerText: "For reference only. NOT investment advice.",
-                copied: "Copied to clipboard",
-                stockTicker: "Stock Ticker",
-                priceLabel: "Price at push, not real-time",
-                btnAnalysis: "Analysis",
-                btnTrade: "Trade",
-                stayTuned: "Stay tuned...",
-                sendByKairAlert: "This alert was sent by KairAlert."
-            },
-            zh: {
-                marketCap: "市值",
-                volume: "成交量",
-                latestInsight: "最新观点",
-                riskFactor: "风险提示",
-                disclaimerTitle: "免责声明",
-                disclaimerText: "推送信息仅供参考，不构成投资建议",
-                copied: "已复制到剪贴板",
-                stockTicker: "股票代码",
-                priceLabel: "推送时价格，非实时更新",
-                btnAnalysis: "行情分析",
-                btnTrade: "立即交易",
-                stayTuned: "敬请期待...",
-                sendByKairAlert: "此提醒由 KairAlert 发送."
-            }
-        };
+      // Button Text
+      document.querySelector('#btnAnalysis .btn-text').textContent = t.btnAnalysis;
+      document.querySelector('#btnTrade .btn-text').textContent = t.btnTrade;
 
-        let currentLang = 'en';
+      $('toast').textContent = t.copied;
 
-        function decodeData() {
-            try {
-                const params = new URLSearchParams(window.location.search);
-                // Lang param
-                let lang = params.get('lang');
-                currentLang = (lang === 'zh') ? 'zh' : 'en';
+      $('tickerText').textContent = data.ticker;
 
-                let q = params.get('q');
-                if (!q) throw new Error("No data parameter found");
-                let base64Str = q.replace(/-/g, '+').replace(/_/g, '/');
-                while (base64Str.length % 4) base64Str += '=';
-                const binaryStr = atob(base64Str);
-                const bytes = new Uint8Array(binaryStr.length);
-                for (let i = 0; i < binaryStr.length; i++) bytes[i] = binaryStr.charCodeAt(i);
-                const decodedStr = new TextDecoder('utf-8').decode(bytes);
-                const parts = decodedStr.split('|||');
-                if (parts.length < 9) throw new Error("Invalid format");
-                return {
-                    ticker: parts[0], marketCap: parts[1], volume: parts[2],
-                    price: parts[3], title: parts[4], analysis: parts[5],
-                    risk: parts[6], change: parts[7], timestamp: parts[8],
-                    logoid: parts[9], futuid: parts[10], categoryCode: parts[11]
-                };
-            } catch (e) {
-                console.error("Decoding error:", e);
-                return null;
-            }
-        }
+      // Set Logo (TradingView)
+      const logoEl = $('tickerLogo');
+      if (data.logoid) {
+        logoEl.src = `https://s3-symbol-logo.tradingview.com/${data.logoid}.svg`;
+        logoEl.onload = () => logoEl.classList.add('loaded');
+        logoEl.onerror = () => logoEl.classList.remove('loaded');
+      } else {
+        logoEl.classList.remove('loaded');
+      }
 
-        function render() {
-            const data = decodeData();
-            const loadingEl = $('loading');
-            const cardEl = $('mainCard');
+      $('marketCap').textContent = data.marketCap;
+      $('volume').textContent = data.volume;
+      $('newsTitle').textContent = data.title;
+      $('analysis').textContent = data.analysis;
 
-            if (!data) {
-                loadingEl.classList.add('hidden');
-                $('error').textContent = "Unable to load market data.";
-                $('error').classList.remove('hidden');
-                return;
-            }
+      // Conditional Risk Warning
+      if (!data.risk || data.risk.trim() === '') {
+        document.querySelector('.risk-box').style.display = 'none';
+      } else {
+        document.querySelector('.risk-box').style.display = 'flex';
+        $('risk').textContent = data.risk; // Pure text
+      }
+      $('newsTimestamp').textContent = new Date(1 * data.timestamp).toLocaleString();
 
-            // Apply Translations
-            const t = translations[currentLang];
-            document.querySelector('.metric-item:nth-child(1) .metric-label').textContent = t.marketCap;
-            document.querySelector('.metric-item:nth-child(2) .metric-label').textContent = t.volume;
-            // News Header Label Logic below
-            document.querySelector('.risk-title').textContent = t.riskFactor;
-            document.querySelector('.disclaimer-title').textContent = t.disclaimerTitle;
-            document.querySelector('.disclaimer-text').textContent = t.disclaimerText;
-            document.querySelector('.header-label').textContent = t.stockTicker;
-            document.querySelector('.price-label').textContent = t.priceLabel;
-            document.querySelector('.brand-label').textContent = t.sendByKairAlert;
+      const changeEl = $('priceChange');
+      const priceEl = $('price');
+      // Remove % if present to avoid double %%
+      const changeVal = data.change.replace('%', '');
+      const upDownCls = changeVal * 1 > 0 ? 'text-up' : changeVal * 1 == 0 ? '' : 'text-down';
 
-            // News Tag Logic
-            const tagEl = $('newsTag');
-            const code = data.categoryCode;
-            let hasTag = false;
+      priceEl.textContent = '$' + data.price;
+      changeEl.textContent = changeVal + '%';
 
-            if (code && TAG_COLOR_MAP[code]) {
-                const map = currentLang === 'zh' ? TAG_MAP_ZH : TAG_MAP_EN;
-                const text = map[code];
-                const colorNum = TAG_COLOR_MAP[code];
+      priceEl.className = 'price ' + upDownCls;
+      changeEl.className = 'price-change ' + upDownCls;
 
-                if (text) {
-                    hasTag = true;
-                    tagEl.className = 'news-tag';
-                    tagEl.textContent = text;
-                    const solidColor = numberToHexStr(colorNum);
-                    const bgColor = hexToRgba(colorNum, 0.15); // Low opacity bg
+      $('version').textContent = "Version: " + VERSION;
 
-                    tagEl.style.color = solidColor;
-                    tagEl.style.backgroundColor = bgColor;
-                    tagEl.style.border = `1px solid ${hexToRgba(colorNum, 0.3)}`;
-                }
-            }
+      // Set Action Links
+      // Analysis: ftnn://quote/stockDetail/{futuid}/1
+      // Trade: futunn://trade/US/{ticker}/1/0
 
-            if (!hasTag) {
-                tagEl.className = 'section-label';
-                tagEl.textContent = t.latestInsight;
-                tagEl.style = ''; // Clear styles
-            }
+      // https://futunn.onelink.me/Fe4i?af_force_deeplink=true&af_dp=ftnn://quote/stockDetail/${futuID}/1
+      if (data.futuid) {
+        $('btnAnalysis').href = `https://futunn.onelink.me/Fe4i?af_force_deeplink=true&af_dp=ftnn://quote/stockDetail/${data.futuid}/1`;
+      } else {
+        $('btnAnalysis').style.display = 'none'; // Basic fallback
+      }
+      $('btnTrade').href = `https://futunn.onelink.me/Fe4i?af_force_deeplink=true&af_dp=futunn://trade/US/${data.ticker}/1/0`;
 
-            // Button Text
-            document.querySelector('#btnAnalysis .btn-text').textContent = t.btnAnalysis;
-            document.querySelector('#btnTrade .btn-text').textContent = t.btnTrade;
+      loadingEl.classList.add('hidden');
+      cardEl.classList.remove('hidden');
+    }
 
-            $('toast').textContent = t.copied;
+    function copyTicker() {
+      const tickerText = $('tickerText').textContent;
+      navigator.clipboard.writeText(tickerText).then(() => {
+        showToast(translations[currentLang].copied);
+      }).catch(err => {
+        console.error('Failed to copy text: ', err);
+      });
+    }
 
-            $('tickerText').textContent = data.ticker;
+    function showSettingsToast() {
+      showToast(translations[currentLang].stayTuned);
+    }
 
-            // Set Logo (TradingView)
-            const logoEl = $('tickerLogo');
-            if (data.logoid) {
-                logoEl.src = `https://s3-symbol-logo.tradingview.com/${data.logoid}.svg`;
-                logoEl.onload = () => logoEl.classList.add('loaded');
-                logoEl.onerror = () => logoEl.classList.remove('loaded');
-            } else {
-                logoEl.classList.remove('loaded');
-            }
+    function showToast(message) {
+      const toast = $('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2000);
+    }
 
-            $('marketCap').textContent = data.marketCap;
-            $('volume').textContent = data.volume;
-            $('newsTitle').textContent = data.title;
-            $('analysis').textContent = data.analysis;
+    initUid();
 
-            // Conditional Risk Warning
-            if (!data.risk || data.risk.trim() === '') {
-                document.querySelector('.risk-box').style.display = 'none';
-            } else {
-                document.querySelector('.risk-box').style.display = 'flex';
-                $('risk').textContent = data.risk; // Pure text
-            }
-            $('newsTimestamp').textContent = new Date(1 * data.timestamp).toLocaleString();
-
-            const changeEl = $('priceChange');
-            const priceEl = $('price');
-            // Remove % if present to avoid double %%
-            const changeVal = data.change.replace('%', '');
-            const upDownCls = changeVal * 1 > 0 ? 'text-up' : changeVal * 1 == 0 ? '' : 'text-down';
-
-            priceEl.textContent = '$' + data.price;
-            changeEl.textContent = changeVal + '%';
-
-            priceEl.className = 'price ' + upDownCls;
-            changeEl.className = 'price-change ' + upDownCls;
-
-            $('pageTimestamp').textContent = "Version: " + VERSION;
-
-            // Set Action Links
-            // Analysis: ftnn://quote/stockDetail/{futuid}/1
-            // Trade: futunn://trade/US/{ticker}/1/0
-
-            // https://futunn.onelink.me/Fe4i?af_force_deeplink=true&af_dp=ftnn://quote/stockDetail/${futuID}/1
-            if (data.futuid) {
-                $('btnAnalysis').href = `https://futunn.onelink.me/Fe4i?af_force_deeplink=true&af_dp=ftnn://quote/stockDetail/${data.futuid}/1`;
-            } else {
-                $('btnAnalysis').style.display = 'none'; // Basic fallback
-            }
-            $('btnTrade').href = `https://futunn.onelink.me/Fe4i?af_force_deeplink=true&af_dp=futunn://trade/US/${data.ticker}/1/0`;
-
-            loadingEl.classList.add('hidden');
-            cardEl.classList.remove('hidden');
-        }
-
-        function copyTicker() {
-            const tickerText = $('tickerText').textContent;
-            navigator.clipboard.writeText(tickerText).then(() => {
-                showToast(translations[currentLang].copied);
-            }).catch(err => {
-                console.error('Failed to copy text: ', err);
-            });
-        }
-
-        function showSettingsToast() {
-            showToast(translations[currentLang].stayTuned);
-        }
-
-        function showToast(message) {
-            const toast = $('toast');
-            toast.textContent = message;
-            toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 2000);
-        }
-
-        document.addEventListener('DOMContentLoaded', render);
-    </script>
+    document.addEventListener('DOMContentLoaded', render);
+  </script>
 </body>
 
 </html>

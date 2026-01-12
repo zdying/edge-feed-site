@@ -1157,6 +1157,15 @@
           app: ['lb://page/stock/detail?id=ST/US/${ticker}', 'lb://page/trade/order?counter_id=ST/US/${ticker}']
         }
       },
+      {
+        id: 'firsttrade',
+        name: 'FirstTrade',
+        logo: 'https://invest.firstrade.com/app/favicon.ico',
+        supports: ['web'],
+        url: {
+          web: ['https://invest.firstrade.com/app/stocks-etf/${ticker}/overview']
+        }
+      }
     ];
 
     const ICONS = {

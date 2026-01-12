@@ -949,10 +949,11 @@
       const brokerId = localStorage.getItem('broker_id') || 'ibkr';
       const brokerInfo = BROKERS.find(broker => broker.id === brokerId);
       const urls = brokerInfo.url.app || brokerInfo.url.web || [];
-      const [detailUrl, tradeUrl] = urls;
 
-      let $detailBtn = $('js-btn-detail');
-      let $tradeBtn = $('js-btn-trade');
+      const $detailBtn = $('js-btn-detail');
+      const $tradeBtn = $('js-btn-trade');
+
+      let [detailUrl, tradeUrl] = urls;
 
       if (detailUrl) {
         detailUrl = replaceUrl(detailUrl, data);

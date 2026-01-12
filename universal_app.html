@@ -954,7 +954,8 @@
       const $tradeBtn = $('js-btn-trade');
 
       if (detailUrl) {
-        $detailBtn.href = replaceUrl(detailUrl, data);
+        detailUrl = replaceUrl(detailUrl, data);
+        $detailBtn.href = detailUrl;
         $detailBtn.querySelector('img').src = brokerInfo.logo;
         $detailBtn.style.display = 'flex';
       } else {
@@ -962,7 +963,8 @@
       }
 
       if (tradeUrl) {
-        $tradeBtn.href = replaceUrl(tradeUrl, data);
+        tradeUrl = replaceUrl(tradeUrl, data);
+        $tradeBtn.href = tradeUrl;
         $tradeBtn.querySelector('img').src = brokerInfo.logo;
         $tradeBtn.style.display = 'flex';
       } else {

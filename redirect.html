@@ -199,11 +199,14 @@
 
             // Determine URL templates
             let templates = [];
+            let isAppLink = false;
 
             if (broker.url.app) {
                 templates = broker.url.app;
+                isAppLink = true;
             } else if (broker.url.web) {
                 templates = broker.url.web;
+                isAppLink = false;
             } else {
                 messageEl.textContent = `Error: No ${type} link for ${broker.name}`;
                 return;
@@ -232,6 +235,12 @@
             // Use location.replace for history handling, or href
             setTimeout(() => {
                 window.location.replace(finalUrl);
+
+                if (isAppLink) {
+                    setTimeout(() => {
+                        window.close();
+                    }, 1000);
+                }
             }, 0);
         }
 

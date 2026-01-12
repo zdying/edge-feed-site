@@ -292,7 +292,7 @@
     }
 
     .news-title {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 700;
       line-height: 1.4;
       color: var(--accent-teal);
@@ -437,7 +437,8 @@
     .btn-icon {
       width: 18px;
       height: 18px;
-      margin-right: 6px;
+      border-radius: 50%;
+      margin-right: 10px;
       object-fit: contain;
       display: block;
     }
@@ -445,8 +446,8 @@
     /* Adjust icon margin for icon-only buttons */
     .action-btn.fixed-width .btn-icon {
       margin-right: 0;
-      width: 22px;
-      height: 22px;
+      width: 20px;
+      height: 20px;
       opacity: 0.8;
       filter: grayscale(100%) brightness(200%);
       /* Make it look like a white icon */
@@ -617,7 +618,7 @@
       height: 32px;
       border-radius: 50%;
       object-fit: cover;
-      background: #fff;
+      background: #000;
     }
 
     .broker-name {
@@ -944,6 +945,43 @@
       return url;
     }
 
+    function updateBrokerButtons(data) {
+      const brokerId = localStorage.getItem('broker_id') || 'ibkr';
+      const brokerInfo = BROKERS.find(broker => broker.id === brokerId);
+      const urls = brokerInfo.url.app || brokerInfo.url.web || [];
+      const [detailUrl, tradeUrl] = urls;
+      const $detailBtn = $('js-btn-detail');
+      const $tradeBtn = $('js-btn-trade');
+
+      if (detailUrl) {
+        $detailBtn.href = replaceUrl(detailUrl, data);
+        $detailBtn.querySelector('img').src = brokerInfo.logo;
+        $detailBtn.style.display = 'flex';
+      } else {
+        $detailBtn.style.display = 'none'; // Basic fallback
+      }
+
+      if (tradeUrl) {
+        $tradeBtn.href = replaceUrl(tradeUrl, data);
+        $tradeBtn.querySelector('img').src = brokerInfo.logo;
+        $tradeBtn.style.display = 'flex';
+      } else {
+        $tradeBtn.style.display = 'none'; // Basic fallback
+      }
+
+      // Set Action Links
+      // Analysis: ftnn://quote/stockDetail/{futu_id}/1
+      // Trade: futunn://trade/US/{ticker}/1/0
+
+      // https://futunn.onelink.me/Fe4i?af_force_deeplink=true&af_dp=ftnn://quote/stockDetail/${futuID}/1
+      // if (data.futu_id) {
+      //   $('js-btn-detail').href = `https://futunn.onelink.me/Fe4i?af_force_deeplink=true&af_dp=ftnn://quote/stockDetail/${data.futu_id}/1`;
+      // } else {
+      //   $('js-btn-detail').style.display = 'none'; // Basic fallback
+      // }
+      // $('js-btn-trade').href = `https://futunn.onelink.me/Fe4i?af_force_deeplink=true&af_dp=futunn://trade/US/${data.ticker}/1/0`;
+    }
+
     function render() {
       const data = decodeData();
       const loadingEl = $('loading');
@@ -1046,38 +1084,7 @@
 
       $('version').textContent = "Version: " + VERSION;
 
-      const brokerId = localStorage.getItem('broker_id') || 'ibkr';
-      const brokerInfo = BROKERS.find(broker => broker.id === brokerId);
-      const urls = brokerInfo.url.app || brokerInfo.url.web || [];
-      const [detailUrl, tradeUrl] = urls;
-      const $detailBtn = $('js-btn-detail');
-      const $tradeBtn = $('js-btn-trade');
-
-      if (detailUrl) {
-        $detailBtn.href = replaceUrl(detailUrl, data);
-        $detailBtn.querySelector('img').src = brokerInfo.logo;
-      } else {
-        $detailBtn.style.display = 'none'; // Basic fallback
-      }
-
-      if (tradeUrl) {
-        $tradeBtn.href = replaceUrl(tradeUrl, data);
-        $tradeBtn.querySelector('img').src = brokerInfo.logo;
-      } else {
-        $tradeBtn.style.display = 'none'; // Basic fallback
-      }
-
-      // Set Action Links
-      // Analysis: ftnn://quote/stockDetail/{futu_id}/1
-      // Trade: futunn://trade/US/{ticker}/1/0
-
-      // https://futunn.onelink.me/Fe4i?af_force_deeplink=true&af_dp=ftnn://quote/stockDetail/${futuID}/1
-      // if (data.futu_id) {
-      //   $('js-btn-detail').href = `https://futunn.onelink.me/Fe4i?af_force_deeplink=true&af_dp=ftnn://quote/stockDetail/${data.futu_id}/1`;
-      // } else {
-      //   $('js-btn-detail').style.display = 'none'; // Basic fallback
-      // }
-      // $('js-btn-trade').href = `https://futunn.onelink.me/Fe4i?af_force_deeplink=true&af_dp=futunn://trade/US/${data.ticker}/1/0`;
+      updateBrokerButtons(data);
 
       loadingEl.classList.add('hidden');
       cardEl.classList.remove('hidden');
@@ -1094,6 +1101,15 @@
 
     // Broker Configuration
     const BROKERS = [
+      {
+        id: 'tradingview',
+        name: 'TradingView',
+        logo: 'https://static.tradingview.com/static/images/favicon.ico',
+        supports: ['web'],
+        url: {
+          web: ['https://www.tradingview.com/symbols/${exchange}-${ticker}/']
+        }
+      },
       {
         id: 'ibkr',
         name: 'IBKR',
@@ -1135,7 +1151,7 @@
       {
         id: 'longbridge',
         name: 'Longbridge',
-        logo: 'https://pub.lbkrs.com/files/202107/35tULHe3n4Pp4EtA/logo.png',
+        logo: 'https://play-lh.googleusercontent.com/vpzamIWbs4g3C2h5mSnQlDaPY2ZeelYI5KdPkar7rOMKSSmqkqM8FIYYzQFaqpZ2LsU-',
         supports: ['app'],
         url: {
           app: ['lb://page/stock/detail?id=ST/US/${ticker}', 'lb://page/trade/order?counter_id=ST/US/${ticker}']
@@ -1158,6 +1174,7 @@
     }
 
     function closeSettingsModal() {
+      updateBrokerButtons();
       $('settingsModal').classList.remove('show');
     }
 

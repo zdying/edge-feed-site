@@ -452,6 +452,14 @@
       /* Make it look like a white icon */
     }
 
+    .external-link-icon {
+      width: 12px;
+      height: 12px;
+      margin-left: 4px;
+      opacity: 0.6;
+      flex-shrink: 0;
+    }
+
     /* Brand */
     .brand-section {
       height: 35px;
@@ -494,6 +502,165 @@
 
     .hidden {
       display: none !important;
+    }
+
+    /* Settings Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(5px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-content {
+      width: 90%;
+      max-width: 360px;
+      background: rgba(30, 30, 35, 0.85);
+      /* Darker glass */
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+      transform: translateY(20px);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .modal-overlay.show .modal-content {
+      transform: translateY(0);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .modal-close {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .modal-close:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .broker-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .broker-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .broker-item:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .broker-item.selected {
+      background: rgba(45, 212, 191, 0.15);
+      border-color: var(--accent-teal);
+      box-shadow: 0 0 12px rgba(45, 212, 191, 0.1);
+    }
+
+    .broker-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .broker-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #fff;
+    }
+
+    .broker-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .broker-meta {
+      display: flex;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .platform-icon {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      font-size: 10px;
+      color: var(--text-secondary);
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .platform-icon svg {
+      width: 10px;
+      height: 10px;
+      opacity: 0.7;
+    }
+
+    .check-icon {
+      color: var(--accent-teal);
+      opacity: 0;
+      /* transform: scale(0.5); */
+      /* transition: all 0.2s; */
+      width: 20px;
+      height: 20px;
+    }
+
+    .broker-item.selected .check-icon {
+      opacity: 1;
+      /* transform: scale(1); */
     }
   </style>
 </head>
@@ -567,17 +734,29 @@
         <!-- Action Buttons (Analysis | Trade | Settings) -->
         <div class="actions-grid">
           <!-- Analysis (Flex 1) -->
-          <a href="#" id="btnAnalysis" class="action-btn btn-glass">
+          <a href="#" id="js-btn-detail" class="action-btn btn-glass">
             <img src="https://www.futunn.com/favicon.ico" class="btn-icon" alt="Futu">
             <span class="btn-text">Analysis</span>
+            <svg class="external-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
           </a>
           <!-- Trade (Flex 1) -->
-          <a href="#" id="btnTrade" class="action-btn btn-primary">
+          <a href="#" id="js-btn-trade" class="action-btn btn-primary">
             <img src="https://www.futunn.com/favicon.ico" class="btn-icon" alt="Futu">
             <span class="btn-text">Trade</span>
+            <svg class="external-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
           </a>
           <!-- Settings (Fixed) -->
-          <div id="btnSettings" class="action-btn btn-glass fixed-width" onclick="showSettingsToast()">
+          <div id="btnSettings" class="action-btn btn-glass fixed-width" onclick="openSettingsModal()">
             <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
               stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="3"></circle>
@@ -605,10 +784,30 @@
     <div class="footer">
       <span id="version">--</span> | <span id="uid">--</span>
     </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal-overlay">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="modal-title">Select Broker</span>
+          <button class="modal-close" onclick="closeSettingsModal()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <div id="brokerList" class="broker-list">
+          <!-- Broker Items will be rendered here -->
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
     const VERSION = "20260109-002";
+
     const $ = id => document.getElementById(id);
 
     const TAG_MAP_ZH = {
@@ -676,9 +875,8 @@
         copied: "Copied to clipboard",
         stockTicker: "Stock Ticker",
         priceLabel: "Price at push, not real-time",
-        btnAnalysis: "Analysis",
+        btnDetail: "Quote",
         btnTrade: "Trade",
-        stayTuned: "Stay tuned...",
         sendByKairAlert: "This alert was sent by KairAlert."
       },
       zh: {
@@ -691,9 +889,8 @@
         copied: "已复制到剪贴板",
         stockTicker: "股票代码",
         priceLabel: "推送时价格，非实时更新",
-        btnAnalysis: "行情分析",
+        btnDetail: "股票行情",
         btnTrade: "立即交易",
-        stayTuned: "敬请期待...",
         sendByKairAlert: "此提醒由 KairAlert 发送."
       }
     };
@@ -718,15 +915,33 @@
         const parts = decodedStr.split('|||');
         if (parts.length < 9) throw new Error("Invalid format");
         return {
-          ticker: parts[0], marketCap: parts[1], volume: parts[2],
-          price: parts[3], title: parts[4], analysis: parts[5],
-          risk: parts[6], change: parts[7], timestamp: parts[8],
-          logoid: parts[9], futuid: parts[10], categoryCode: parts[11]
+          ticker: parts[0],
+          market_cap: parts[1],
+          volume: parts[2],
+          price: parts[3],
+          title: parts[4],
+          analysis: parts[5],
+          risk: parts[6],
+          change: parts[7],
+          timestamp: parts[8],
+          logoid: parts[9],
+          futu_id: parts[10],
+          category_code: parts[11],
+          exchange: parts[12],
+          ibkr_conid: parts[13]
         };
       } catch (e) {
         console.error("Decoding error:", e);
         return null;
       }
+    }
+
+    function replaceUrl(url, data) {
+      for (const key in data) {
+        url = url.replace(new RegExp(`\\$\\{${key}\\}`, 'g'), encodeURIComponent(data[key]));
+      }
+      console.log('final url', url);
+      return url;
     }
 
     function render() {
@@ -758,7 +973,7 @@
 
       // News Tag Logic
       const tagEl = $('newsTag');
-      const code = data.categoryCode;
+      const code = data.category_code;
       let hasTag = false;
 
       if (code && TAG_COLOR_MAP[code]) {
@@ -786,8 +1001,8 @@
       }
 
       // Button Text
-      document.querySelector('#btnAnalysis .btn-text').textContent = t.btnAnalysis;
-      document.querySelector('#btnTrade .btn-text').textContent = t.btnTrade;
+      document.querySelector('#js-btn-detail .btn-text').textContent = t.btnDetail;
+      document.querySelector('#js-btn-trade .btn-text').textContent = t.btnTrade;
 
       $('toast').textContent = t.copied;
 
@@ -803,7 +1018,7 @@
         logoEl.classList.remove('loaded');
       }
 
-      $('marketCap').textContent = data.marketCap;
+      $('marketCap').textContent = data.market_cap;
       $('volume').textContent = data.volume;
       $('newsTitle').textContent = data.title;
       $('analysis').textContent = data.analysis;
@@ -831,17 +1046,38 @@
 
       $('version').textContent = "Version: " + VERSION;
 
+      const brokerId = localStorage.getItem('broker_id');
+      const brokerInfo = BROKERS.find(broker => broker.id === brokerId);
+      const urls = brokerInfo.url.app || brokerInfo.url.web || [];
+      const [detailUrl, tradeUrl] = urls;
+      const $detailBtn = $('js-btn-detail');
+      const $tradeBtn = $('js-btn-trade');
+
+      if (detailUrl) {
+        $detailBtn.href = replaceUrl(detailUrl, data);
+        $detailBtn.querySelector('img').src = brokerInfo.logo;
+      } else {
+        $detailBtn.style.display = 'none'; // Basic fallback
+      }
+
+      if (tradeUrl) {
+        $tradeBtn.href = replaceUrl(tradeUrl, data);
+        $tradeBtn.querySelector('img').src = brokerInfo.logo;
+      } else {
+        $tradeBtn.style.display = 'none'; // Basic fallback
+      }
+
       // Set Action Links
-      // Analysis: ftnn://quote/stockDetail/{futuid}/1
+      // Analysis: ftnn://quote/stockDetail/{futu_id}/1
       // Trade: futunn://trade/US/{ticker}/1/0
 
       // https://futunn.onelink.me/Fe4i?af_force_deeplink=true&af_dp=ftnn://quote/stockDetail/${futuID}/1
-      if (data.futuid) {
-        $('btnAnalysis').href = `https://futunn.onelink.me/Fe4i?af_force_deeplink=true&af_dp=ftnn://quote/stockDetail/${data.futuid}/1`;
-      } else {
-        $('btnAnalysis').style.display = 'none'; // Basic fallback
-      }
-      $('btnTrade').href = `https://futunn.onelink.me/Fe4i?af_force_deeplink=true&af_dp=futunn://trade/US/${data.ticker}/1/0`;
+      // if (data.futu_id) {
+      //   $('js-btn-detail').href = `https://futunn.onelink.me/Fe4i?af_force_deeplink=true&af_dp=ftnn://quote/stockDetail/${data.futu_id}/1`;
+      // } else {
+      //   $('js-btn-detail').style.display = 'none'; // Basic fallback
+      // }
+      // $('js-btn-trade').href = `https://futunn.onelink.me/Fe4i?af_force_deeplink=true&af_dp=futunn://trade/US/${data.ticker}/1/0`;
 
       loadingEl.classList.add('hidden');
       cardEl.classList.remove('hidden');
@@ -856,9 +1092,133 @@
       });
     }
 
-    function showSettingsToast() {
-      showToast(translations[currentLang].stayTuned);
+    // Broker Configuration
+    const BROKERS = [
+      {
+        id: 'ibkr',
+        name: 'IBKR',
+        logo: 'https://www.interactivebrokers.com/campus/wp-content/themes/campus-theme/fav-icons/campus/favicon.png',
+        supports: ['web'],
+        url: {
+          web: ['https://www.interactivebrokers.com/portal/#/quote/${ibkr_conid}']
+        }
+      },
+      {
+        id: 'webull',
+        name: 'WeBull',
+        logo: 'https://www.webull.com/favicon.ico',
+        supports: ['web'],
+        url: {
+          web: ['https://www.webullapp.com/ticker/${exchange}-${ticker}']
+        }
+      },
+      {
+        id: 'futu',
+        name: 'Futu',
+        logo: 'https://www.futunn.com/favicon.ico',
+        supports: ['app'],
+        url: {
+          web: ['https://www.futunn.com/stock/${ticker}-US'],
+          app: ['ftnn://quote/stockDetail/${futu_id}/1', 'futunn://trade/US/${ticker}/10/0']
+        }
+      },
+      {
+        id: 'tiger',
+        name: 'Tiger',
+        logo: 'https://c1.itigergrowtha.com/portal5/static/media/logo.76.ba630aec.png',
+        supports: ['app'],
+        url: {
+          web: ['https://www.itiger.com/stock/${ticker}'],
+          app: ['tigerbrokersusstock://com.tigerbrokers.usstock/main/J/stock?symbol=${ticker}&market=US&secType=STK', 'tigerbrokersusstock://com.tigerbrokers.usstock/main/J/place_order?symbol=${ticker}&market=US&secType=STK&action=BUY']
+        }
+      },
+      {
+        id: 'longbridge',
+        name: 'Longbridge',
+        logo: 'https://pub.lbkrs.com/files/202107/35tULHe3n4Pp4EtA/logo.png',
+        supports: ['app'],
+        url: {
+          app: ['lb://page/stock/detail?id=ST/US/${ticker}', 'lb://page/trade/order?counter_id=ST/US/${ticker}']
+        }
+      },
+    ];
+
+    const ICONS = {
+      web: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>`,
+      app: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>`,
+      check: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`
+    };
+
+    // Settings Modal Logic
+    function openSettingsModal() {
+      renderBrokers();
+      $('settingsModal').classList.add('show');
+      const title = currentLang === 'zh' ? '选择券商' : 'Select Broker';
+      document.querySelector('.modal-title').textContent = title;
     }
+
+    function closeSettingsModal() {
+      $('settingsModal').classList.remove('show');
+    }
+
+    function selectBroker(brokerId) {
+      localStorage.setItem('broker_id', brokerId);
+
+      // Update UI directly without re-rendering
+      const items = document.querySelectorAll('.broker-item');
+      items.forEach(item => {
+        if (item.dataset.id === brokerId) {
+          item.classList.add('selected');
+        } else {
+          item.classList.remove('selected');
+        }
+      });
+    }
+
+    function renderBrokers() {
+      const listEl = $('brokerList');
+      listEl.innerHTML = '';
+      const selectedId = localStorage.getItem('broker_id');
+
+      BROKERS.forEach(broker => {
+        const isSelected = broker.id === selectedId;
+        const item = document.createElement('div');
+        item.className = `broker-item ${isSelected ? 'selected' : ''}`;
+        item.dataset.id = broker.id; // Assign ID for efficient selection
+        item.onclick = () => selectBroker(broker.id);
+
+        let supportsHtml = '';
+        if (broker.supports.includes('web')) {
+          supportsHtml += `<div class="platform-icon">${ICONS.web} Web</div>`;
+        }
+        if (broker.supports.includes('app')) {
+          supportsHtml += `<div class="platform-icon">${ICONS.app} App</div>`;
+        }
+
+        item.innerHTML = `
+          <div class="broker-info">
+              <img src="${broker.logo}" class="broker-logo" alt="${broker.name}">
+              <div>
+                  <div class="broker-name">${broker.name}</div>
+                  <div class="broker-meta">
+                      ${supportsHtml}
+                  </div>
+              </div>
+          </div>
+          <div class="check-icon">
+              ${ICONS.check}
+          </div>
+        `;
+        listEl.appendChild(item);
+      });
+    }
+
+    // Close modal on click outside
+    document.getElementById('settingsModal').addEventListener('click', (e) => {
+      if (e.target.id === 'settingsModal') {
+        closeSettingsModal();
+      }
+    });
 
     function showToast(message) {
       const toast = $('toast');

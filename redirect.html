@@ -164,7 +164,6 @@
                 ibkr_conid: params.get('ibkr_conid') || '',
                 exchange: params.get('exchange') || '',
                 broker_id: localStorage.getItem('broker_id') || 'ibkr',
-                type: params.get('type') || 'web' // 'web' or 'app'
             };
         }
 
@@ -200,12 +199,10 @@
 
             // Determine URL templates
             let templates = [];
-            const type = params.type.toLowerCase();
 
-            if (type === 'app' && broker.url.app) {
+            if (broker.url.app) {
                 templates = broker.url.app;
             } else if (broker.url.web) {
-                // Fallback to web if app requested but not available, or web requested
                 templates = broker.url.web;
             } else {
                 messageEl.textContent = `Error: No ${type} link for ${broker.name}`;
@@ -235,7 +232,7 @@
             // Use location.replace for history handling, or href
             setTimeout(() => {
                 window.location.replace(finalUrl);
-            }, 0);
+            }, 100);
         }
 
         document.addEventListener('DOMContentLoaded', init);

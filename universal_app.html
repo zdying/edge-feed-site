@@ -1046,7 +1046,7 @@
 
       $('version').textContent = "Version: " + VERSION;
 
-      const brokerId = localStorage.getItem('broker_id');
+      const brokerId = localStorage.getItem('broker_id') || 'ibkr';
       const brokerInfo = BROKERS.find(broker => broker.id === brokerId);
       const urls = brokerInfo.url.app || brokerInfo.url.web || [];
       const [detailUrl, tradeUrl] = urls;

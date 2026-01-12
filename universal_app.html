@@ -897,10 +897,10 @@
     };
 
     let currentLang = 'en';
+    const params = new URLSearchParams(window.location.search);
 
     function decodeData() {
       try {
-        const params = new URLSearchParams(window.location.search);
         // Lang param
         let lang = params.get('lang');
         currentLang = (lang === 'zh') ? 'zh' : 'en';
@@ -969,17 +969,15 @@
         $tradeBtn.style.display = 'none'; // Basic fallback
       }
 
-      // Set Action Links
-      // Analysis: ftnn://quote/stockDetail/{futu_id}/1
-      // Trade: futunn://trade/US/{ticker}/1/0
+      let redirect = params.get('r');
 
-      // https://futunn.onelink.me/Fe4i?af_force_deeplink=true&af_dp=ftnn://quote/stockDetail/${futuID}/1
-      // if (data.futu_id) {
-      //   $('js-btn-detail').href = `https://futunn.onelink.me/Fe4i?af_force_deeplink=true&af_dp=ftnn://quote/stockDetail/${data.futu_id}/1`;
-      // } else {
-      //   $('js-btn-detail').style.display = 'none'; // Basic fallback
-      // }
-      // $('js-btn-trade').href = `https://futunn.onelink.me/Fe4i?af_force_deeplink=true&af_dp=futunn://trade/US/${data.ticker}/1/0`;
+      if (redirect) {
+        if (redirect === 'd' && detailUrl) {
+          window.location.href = detailUrl;
+        } else if (redirect === 't' && tradeUrl) {
+          window.location.href = tradeUrl;
+        }
+      }
     }
 
     function render() {

@@ -915,6 +915,7 @@
     };
 
     let currentLang = 'en';
+    let queryData = {};
     const params = new URLSearchParams(window.location.search);
 
     function decodeData() {
@@ -1007,6 +1008,8 @@
       const loadingEl = $('loading');
       const cardEl = $('mainCard');
       const uid = localStorage.getItem('uid');
+
+      queryData = data || {};
 
       if (!data) {
         loadingEl.classList.add('hidden');
@@ -1212,7 +1215,7 @@
     }
 
     function closeSettingsModal() {
-      updateBrokerButtons();
+      updateBrokerButtons(queryData);
       $('settingsModal').classList.remove('show');
     }
 

@@ -5,35 +5,41 @@
   let $faq = $('#js-faq-list');
 
   $faq.addEventListener('click', (e) => {
-    let { target } = e;
-    let next = null;
+    const title = e.target.closest('.title');
+    if (!title) return;
 
-    if (target.classList.contains('title')) {
-      next = target.nextElementSibling;
+    // Toggle current
+    title.classList.toggle('active');
 
-      if (next.classList.contains('active')) {
-        // 收起
-        next.classList.remove('active');
-      } else {
-        // 展开
-        $faq.querySelectorAll('.desc.active').forEach((el) => {
+    // Handle description toggle
+    const desc = title.nextElementSibling;
+    if (desc && desc.classList.contains('desc')) {
+      desc.classList.toggle('active');
+    }
+
+    // Close others
+    if (title.classList.contains('active')) {
+      $faq.querySelectorAll('.title.active').forEach((el) => {
+        if (el !== title) {
           el.classList.remove('active');
-        });
-        next.classList.add('active');
-      }
-
-      $faq.querySelectorAll('.title').forEach((el) => {
-        if (el !== target) {
-          el.classList.remove('active');
+          const siblingDesc = el.nextElementSibling;
+          if (siblingDesc) siblingDesc.classList.remove('active');
         }
       });
-
-      target.classList.toggle('active');
-
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-      e.stopPropagation();
     }
+
+    e.stopPropagation();
+
+    // Scroll into view with delay for transition
+    setTimeout(() => {
+      if (title.classList.contains('active')) {
+        // sticky header offset calculation
+        const yOffset = -80; // Header approx height + padding
+        const y = title.getBoundingClientRect().top + window.scrollY + yOffset;
+
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    }, 300);
   });
 
   // let total = 5;

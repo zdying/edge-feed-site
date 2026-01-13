@@ -964,7 +964,7 @@
     }
 
     function updateBrokerButtons(data) {
-      const brokerId = localStorage.getItem('broker_id') || 'ibkr';
+      const brokerId = localStorage.getItem('broker_id') || BROKERS[0].id;
       const brokerInfo = BROKERS.find(broker => broker.id === brokerId);
       const urls = brokerInfo.url.app || brokerInfo.url.web || [];
 

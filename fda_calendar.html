@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FDA Calendar</title>
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --card-bg: rgba(20, 20, 25, 0.3);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-secondary: #a0a0a0;
+            --accent-teal: #2dd4bf;
+            --accent-green: #10b981;
+            --accent-red: #fb7185;
+            --accent-yellow: #f59e0b;
+            --accent-orange: #e67e22;
+            --accent-purple: #b56ad4;
+
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --glow-color: rgba(45, 212, 191, 0.25);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            background-image: radial-gradient(circle at 50% 0%, var(--glow-color) 0%, transparent 60%);
+            background-attachment: fixed;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Glassmorphism Card */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, var(--accent-teal), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .today-btn {
+            padding: 8px 16px;
+            background: rgba(45, 212, 191, 0.15);
+            border: 1px solid rgba(45, 212, 191, 0.3);
+            border-radius: 12px;
+            color: var(--accent-teal);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .today-btn:hover {
+            background: rgba(45, 212, 191, 0.25);
+            transform: translateY(-1px);
+        }
+
+        .today-btn:active {
+            transform: scale(0.96);
+        }
+
+        /* Month Navigation */
+        .month-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .month-display {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-main);
+            flex: 1;
+            text-align: center;
+        }
+
+        .nav-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--text-main);
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Filter Pills */
+        .filter-section {
+            margin-bottom: 16px;
+        }
+
+        .filter-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: block;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .filter-pill {
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid;
+            user-select: none;
+        }
+
+        .filter-pill.active {
+            box-shadow: 0 0 12px rgba(45, 212, 191, 0.3);
+        }
+
+        .filter-pill.approval {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: rgba(16, 185, 129, 0.3);
+            color: var(--accent-green);
+        }
+
+        .filter-pill.approval.active {
+            background: rgba(16, 185, 129, 0.25);
+            border-color: var(--accent-green);
+        }
+
+        .filter-pill.rejection {
+            background: rgba(251, 113, 133, 0.15);
+            border-color: rgba(251, 113, 133, 0.3);
+            color: var(--accent-red);
+        }
+
+        .filter-pill.rejection.active {
+            background: rgba(251, 113, 133, 0.25);
+            border-color: var(--accent-red);
+        }
+
+        .filter-pill.meeting {
+            background: rgba(45, 212, 191, 0.15);
+            border-color: rgba(45, 212, 191, 0.3);
+            color: var(--accent-teal);
+        }
+
+        .filter-pill.meeting.active {
+            background: rgba(45, 212, 191, 0.25);
+            border-color: var(--accent-teal);
+        }
+
+        .filter-pill.warning {
+            background: rgba(245, 158, 11, 0.15);
+            border-color: rgba(245, 158, 11, 0.3);
+            color: var(--accent-yellow);
+        }
+
+        .filter-pill.warning.active {
+            background: rgba(245, 158, 11, 0.25);
+            border-color: var(--accent-yellow);
+        }
+
+        .filter-pill.pdufa {
+            background: rgba(181, 106, 212, 0.15);
+            border-color: rgba(181, 106, 212, 0.3);
+            color: var(--accent-purple);
+        }
+
+        .filter-pill.pdufa.active {
+            background: rgba(181, 106, 212, 0.25);
+            border-color: var(--accent-purple);
+        }
+
+        /* Calendar Grid */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .calendar-header {
+            text-align: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            padding: 8px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            padding: 4px;
+        }
+
+        .calendar-day:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .calendar-day.other-month {
+            opacity: 0.3;
+            cursor: default;
+        }
+
+        .calendar-day.other-month:hover {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .calendar-day.today {
+            border-color: var(--accent-teal);
+            background: rgba(45, 212, 191, 0.1);
+        }
+
+        .calendar-day.selected {
+            border-color: var(--accent-teal);
+            background: rgba(45, 212, 191, 0.15);
+            box-shadow: 0 0 12px rgba(45, 212, 191, 0.2);
+        }
+
+        .day-number {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .event-dots {
+            position: absolute;
+            bottom: 3px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 2px;
+        }
+
+        .event-dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+        }
+
+        .event-dot.approval {
+            background: var(--accent-green);
+        }
+
+        .event-dot.rejection {
+            background: var(--accent-red);
+        }
+
+        .event-dot.meeting {
+            background: var(--accent-teal);
+        }
+
+        .event-dot.warning {
+            background: var(--accent-yellow);
+        }
+
+        .event-dot.pdufa {
+            background: var(--accent-purple);
+        }
+
+        /* Event Timeline */
+        .events-section {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .event-count {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 8px;
+            border-radius: 6px;
+        }
+
+        .date-group {
+            margin-bottom: 16px;
+        }
+
+        .date-header {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent-teal);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .date-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .event-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 12px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+
+        .event-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .event-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+        }
+
+        .event-card.approval::before {
+            background: var(--accent-green);
+        }
+
+        .event-card.rejection::before {
+            background: var(--accent-red);
+        }
+
+        .event-card.meeting::before {
+            background: var(--accent-teal);
+        }
+
+        .event-card.warning::before {
+            background: var(--accent-yellow);
+        }
+
+        .event-card.pdufa::before {
+            background: var(--accent-purple);
+        }
+
+        .event-type-tag {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .event-type-tag.approval {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--accent-green);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+        }
+
+        .event-type-tag.rejection {
+            background: rgba(251, 113, 133, 0.2);
+            color: var(--accent-red);
+            border: 1px solid rgba(251, 113, 133, 0.4);
+        }
+
+        .event-type-tag.meeting {
+            background: rgba(45, 212, 191, 0.2);
+            color: var(--accent-teal);
+            border: 1px solid rgba(45, 212, 191, 0.4);
+        }
+
+        .event-type-tag.warning {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--accent-yellow);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+        }
+
+        .event-type-tag.pdufa {
+            background: rgba(181, 106, 212, 0.2);
+            color: var(--accent-purple);
+            border: 1px solid rgba(181, 106, 212, 0.4);
+        }
+
+        .event-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .event-description {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .event-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .meta-icon {
+            opacity: 0.7;
+        }
+
+        .ticker-link {
+            color: var(--accent-teal);
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        .ticker-link:hover {
+            opacity: 0.8;
+        }
+
+        .event-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid;
+        }
+
+        .action-btn.primary {
+            background: rgba(45, 212, 191, 0.15);
+            border-color: rgba(45, 212, 191, 0.3);
+            color: var(--accent-teal);
+        }
+
+        .action-btn.primary:hover {
+            background: rgba(45, 212, 191, 0.25);
+            border-color: rgba(45, 212, 191, 0.5);
+        }
+
+        .action-btn.secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .action-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .action-btn:active {
+            transform: scale(0.96);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.3;
+        }
+
+        .empty-text {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Tablet - Small screens (768px - 899px) */
+        @media (min-width: 768px) and (max-width: 899px) {
+            .container {
+                max-width: 100%;
+                flex-direction: row;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .calendar-section {
+                flex: 0 0 340px;
+            }
+
+            .events-section-wrapper {
+                flex: 1;
+                min-width: 0;
+            }
+
+            .calendar-grid {
+                gap: 6px;
+            }
+
+            .calendar-day {
+                padding: 6px 4px;
+            }
+
+            .day-number {
+                font-size: 13px;
+            }
+
+            .event-dot {
+                width: 4px;
+                height: 4px;
+            }
+
+            .page-title {
+                font-size: 22px;
+            }
+
+            .month-display {
+                font-size: 16px;
+            }
+        }
+
+        /* Tablet - Medium screens (900px - 999px) */
+        @media (min-width: 900px) and (max-width: 999px) {
+            .container {
+                max-width: 100%;
+                flex-direction: row;
+                align-items: flex-start;
+                gap: 18px;
+            }
+
+            .calendar-section {
+                flex: 0 0 360px;
+            }
+
+            .events-section-wrapper {
+                flex: 1;
+                min-width: 0;
+            }
+
+            .calendar-grid {
+                gap: 8px;
+            }
+
+            .calendar-day {
+                padding: 6px;
+            }
+
+            .day-number {
+                font-size: 14px;
+            }
+
+            .event-dot {
+                width: 4px;
+                height: 4px;
+            }
+        }
+
+        /* Desktop - Small (1000px - 1199px) */
+        @media (min-width: 1000px) and (max-width: 1199px) {
+            .container {
+                max-width: 100%;
+                flex-direction: row;
+                align-items: flex-start;
+                gap: 20px;
+            }
+
+            .calendar-section {
+                flex: 0 0 400px;
+                position: sticky;
+                top: 20px;
+            }
+
+            .events-section-wrapper {
+                flex: 1;
+                min-width: 0;
+            }
+
+            .calendar-grid {
+                gap: 10px;
+            }
+
+            .calendar-day {
+                padding: 7px;
+            }
+
+            .day-number {
+                font-size: 15px;
+            }
+
+            .event-dot {
+                width: 5px;
+                height: 5px;
+            }
+        }
+
+        /* Desktop - Large (≥1200px) */
+        @media (min-width: 1200px) {
+            .container {
+                max-width: 1200px;
+                flex-direction: row;
+                align-items: flex-start;
+                gap: 24px;
+            }
+
+            .calendar-section {
+                flex: 0 0 450px;
+                position: sticky;
+                top: 20px;
+            }
+
+            .events-section-wrapper {
+                flex: 1;
+                min-width: 0;
+            }
+
+            .calendar-grid {
+                gap: 12px;
+            }
+
+            .calendar-day {
+                padding: 8px;
+            }
+
+            .day-number {
+                font-size: 16px;
+            }
+
+            .event-dot {
+                width: 5px;
+                height: 5px;
+            }
+        }
+
+        /* Extra Small Mobile (320px - 359px) */
+        @media (max-width: 359px) {
+            body {
+                padding: 12px;
+            }
+
+            .container {
+                gap: 12px;
+            }
+
+            .card {
+                padding: 16px;
+                border-radius: 20px;
+            }
+
+            .page-title {
+                font-size: 20px;
+            }
+
+            .today-btn {
+                padding: 6px 12px;
+                font-size: 11px;
+            }
+
+            .month-display {
+                font-size: 15px;
+            }
+
+            .nav-btn {
+                width: 36px;
+                height: 36px;
+            }
+
+            .filter-pill {
+                padding: 5px 10px;
+                font-size: 11px;
+            }
+
+            .calendar-grid {
+                gap: 4px;
+            }
+
+            .calendar-header {
+                font-size: 10px;
+                padding: 6px 0;
+            }
+
+            .calendar-day {
+                padding: 2px;
+                border-radius: 10px;
+            }
+
+            .day-number {
+                font-size: 12px;
+            }
+
+            .event-dot {
+                width: 3px;
+                height: 3px;
+            }
+
+            .event-dots {
+                bottom: 2px;
+                gap: 1px;
+            }
+
+            .section-title {
+                font-size: 13px;
+            }
+
+            .event-count {
+                font-size: 11px;
+                padding: 2px 6px;
+            }
+
+            .event-card {
+                padding: 12px;
+                border-radius: 14px;
+            }
+
+            .event-type-tag {
+                font-size: 9px;
+                padding: 3px 6px;
+            }
+
+            .event-title {
+                font-size: 14px;
+            }
+
+            .event-description {
+                font-size: 12px;
+            }
+
+            .meta-item {
+                font-size: 11px;
+            }
+
+            .action-btn {
+                padding: 7px 10px;
+                font-size: 11px;
+            }
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 24px;
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-secondary);
+            opacity: 0.5;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Calendar Section -->
+        <div class="calendar-section">
+            <div class="card">
+                <!-- Header -->
+                <div class="header">
+                    <h1 class="page-title">FDA Calendar</h1>
+                    <button class="today-btn" onclick="goToToday()">Today</button>
+                </div>
+
+                <!-- Month Navigation -->
+                <div class="month-nav">
+                    <div class="nav-btn" onclick="previousMonth()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </div>
+                    <div class="month-display" id="monthDisplay">January 2026</div>
+                    <div class="nav-btn" onclick="nextMonth()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Filters -->
+                <div class="filter-section">
+                    <span class="filter-label">Event Types</span>
+                    <div class="filter-pills">
+                        <div class="filter-pill pdufa active" data-type="pdufa" onclick="toggleFilter('pdufa')">PDUFA
+                        </div>
+                        <div class="filter-pill approval active" data-type="approval"
+                            onclick="toggleFilter('approval')">Approval</div>
+                        <div class="filter-pill rejection active" data-type="rejection"
+                            onclick="toggleFilter('rejection')">Rejection</div>
+                        <div class="filter-pill meeting active" data-type="meeting" onclick="toggleFilter('meeting')">
+                            Meeting</div>
+                        <div class="filter-pill warning active" data-type="warning" onclick="toggleFilter('warning')">
+                            Warning</div>
+                    </div>
+                </div>
+
+                <!-- Calendar Grid -->
+                <div class="calendar-grid" id="calendarDays">
+                    <div class="calendar-header">Sun</div>
+                    <div class="calendar-header">Mon</div>
+                    <div class="calendar-header">Tue</div>
+                    <div class="calendar-header">Wed</div>
+                    <div class="calendar-header">Thu</div>
+                    <div class="calendar-header">Fri</div>
+                    <div class="calendar-header">Sat</div>
+                    <!-- Days will be generated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Events Section -->
+        <div class="events-section-wrapper">
+            <div class="card">
+                <div class="section-title">
+                    Events
+                    <span class="event-count" id="eventCount">0 events</span>
+                </div>
+                <div class="events-section" id="eventsContainer">
+                    <!-- Events will be generated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample FDA Events Data
+        const fdaEvents = [
+            {
+                id: 1,
+                date: '2026-01-15',
+                type: 'pdufa',
+                title: 'Alzheimer\'s Drug - Biogen',
+                description: 'PDUFA date for new Alzheimer\'s treatment targeting early-stage patients.',
+                company: 'Biogen Inc.',
+                ticker: 'BIIB',
+                drugName: 'Lecanemab'
+            },
+            {
+                id: 2,
+                date: '2026-01-15',
+                type: 'approval',
+                title: 'Cancer Immunotherapy Approved',
+                description: 'FDA approves new immunotherapy for metastatic melanoma.',
+                company: 'Bristol Myers Squibb',
+                ticker: 'BMY',
+                drugName: 'Opdivo Combo'
+            },
+            {
+                id: 3,
+                date: '2026-01-18',
+                type: 'meeting',
+                title: 'Advisory Committee Meeting',
+                description: 'Oncologic Drugs Advisory Committee to review new lung cancer treatment.',
+                company: 'Merck & Co.',
+                ticker: 'MRK',
+                drugName: 'Keytruda Extension'
+            },
+            {
+                id: 4,
+                date: '2026-01-22',
+                type: 'warning',
+                title: 'Warning Letter Issued',
+                description: 'FDA issues warning letter regarding manufacturing violations.',
+                company: 'Generic Pharma Ltd.',
+                ticker: 'GPHA',
+                drugName: 'N/A'
+            },
+            {
+                id: 5,
+                date: '2026-01-25',
+                type: 'rejection',
+                title: 'CRL for Diabetes Drug',
+                description: 'Complete Response Letter issued for new diabetes medication due to safety concerns.',
+                company: 'Novo Nordisk',
+                ticker: 'NVO',
+                drugName: 'Rybelsus V2'
+            },
+            {
+                id: 6,
+                date: '2026-01-28',
+                type: 'pdufa',
+                title: 'Rare Disease Treatment',
+                description: 'PDUFA date for orphan drug treating rare genetic disorder.',
+                company: 'Vertex Pharmaceuticals',
+                ticker: 'VRTX',
+                drugName: 'VX-548'
+            },
+            {
+                id: 7,
+                date: '2026-02-05',
+                type: 'approval',
+                title: 'Gene Therapy Approval',
+                description: 'Revolutionary gene therapy for hemophilia receives FDA approval.',
+                company: 'BioMarin Pharmaceutical',
+                ticker: 'BMRN',
+                drugName: 'Roctavian'
+            },
+            {
+                id: 8,
+                date: '2026-02-10',
+                type: 'meeting',
+                title: 'CBER Advisory Meeting',
+                description: 'Discussion on mRNA vaccine platform updates and future applications.',
+                company: 'Moderna',
+                ticker: 'MRNA',
+                drugName: 'mRNA-1273.214'
+            }
+        ];
+
+        let currentDate = new Date();
+        let selectedDate = null;
+        let activeFilters = new Set(['pdufa', 'approval', 'rejection', 'meeting', 'warning']);
+
+        function initCalendar() {
+            renderCalendar();
+            renderEvents();
+        }
+
+        function renderCalendar() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+
+            // Update month display
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'];
+            document.getElementById('monthDisplay').textContent = `${monthNames[month]} ${year}`;
+
+            // Get first day of month and number of days
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const daysInPrevMonth = new Date(year, month, 0).getDate();
+
+            const calendarDays = document.getElementById('calendarDays');
+
+            // Remove existing day elements but keep headers
+            const existingDays = calendarDays.querySelectorAll('.calendar-day');
+            existingDays.forEach(day => day.remove());
+
+            // Calculate total days needed (dynamically choose 5 or 6 weeks)
+            // If the month can fit in 5 weeks (35 days), use 5 weeks
+            // Otherwise, use 6 weeks (42 days)
+            const daysNeeded = firstDay + daysInMonth;
+            const totalDays = daysNeeded <= 35 ? 35 : 42;
+
+            // Generate calendar days
+            let dayCount = 0;
+
+            // Previous month days
+            for (let i = firstDay - 1; i >= 0; i--) {
+                const day = daysInPrevMonth - i;
+                const dayEl = createDayElement(day, true, year, month - 1);
+                calendarDays.appendChild(dayEl);
+                dayCount++;
+            }
+
+            // Current month days
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayEl = createDayElement(day, false, year, month);
+                calendarDays.appendChild(dayEl);
+                dayCount++;
+            }
+
+            // Next month days (fill remaining slots)
+            const remainingDays = totalDays - dayCount;
+            for (let day = 1; day <= remainingDays; day++) {
+                const dayEl = createDayElement(day, true, year, month + 1);
+                calendarDays.appendChild(dayEl);
+            }
+        }
+
+        function createDayElement(day, isOtherMonth, year, month) {
+            const dayEl = document.createElement('div');
+            dayEl.className = 'calendar-day';
+
+            if (isOtherMonth) {
+                dayEl.classList.add('other-month');
+            }
+
+            const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+
+            // Check if today
+            const today = new Date();
+            if (year === today.getFullYear() && month === today.getMonth() && day === today.getDate() && !isOtherMonth) {
+                dayEl.classList.add('today');
+            }
+
+            // Check if selected
+            if (selectedDate && selectedDate === dateStr) {
+                dayEl.classList.add('selected');
+            }
+
+            // Day number
+            const dayNumber = document.createElement('div');
+            dayNumber.className = 'day-number';
+            dayNumber.textContent = day;
+            dayEl.appendChild(dayNumber);
+
+            // Event dots
+            if (!isOtherMonth) {
+                const events = getEventsForDate(dateStr);
+                if (events.length > 0) {
+                    const dotsContainer = document.createElement('div');
+                    dotsContainer.className = 'event-dots';
+
+                    const uniqueTypes = [...new Set(events.map(e => e.type))];
+                    const displayTypes = uniqueTypes.slice(0, 3);
+
+                    displayTypes.forEach(type => {
+                        const dot = document.createElement('div');
+                        dot.className = `event-dot ${type}`;
+                        dotsContainer.appendChild(dot);
+                    });
+
+                    dayEl.appendChild(dotsContainer);
+                }
+
+                dayEl.onclick = () => selectDate(dateStr);
+            }
+
+            return dayEl;
+        }
+
+        function getEventsForDate(dateStr) {
+            return fdaEvents.filter(event => {
+                return event.date === dateStr && activeFilters.has(event.type);
+            });
+        }
+
+        function selectDate(dateStr) {
+            selectedDate = dateStr;
+            renderCalendar();
+            renderEvents();
+
+            // Scroll to events section on mobile
+            if (window.innerWidth < 1200) {
+                document.querySelector('.events-section-wrapper').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+
+        function renderEvents() {
+            const container = document.getElementById('eventsContainer');
+            const eventCountEl = document.getElementById('eventCount');
+
+            let eventsToShow = fdaEvents.filter(event => activeFilters.has(event.type));
+
+            if (selectedDate) {
+                eventsToShow = eventsToShow.filter(event => event.date === selectedDate);
+            } else {
+                // Show events for current month
+                const year = currentDate.getFullYear();
+                const month = currentDate.getMonth();
+                eventsToShow = eventsToShow.filter(event => {
+                    const eventDate = new Date(event.date);
+                    return eventDate.getFullYear() === year && eventDate.getMonth() === month;
+                });
+            }
+
+            // Update count
+            eventCountEl.textContent = `${eventsToShow.length} event${eventsToShow.length !== 1 ? 's' : ''}`;
+
+            if (eventsToShow.length === 0) {
+                container.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">📅</div>
+            <div class="empty-text">No events found for the selected filters${selectedDate ? ' and date' : ' and period'}.</div>
+          </div>
+        `;
+                return;
+            }
+
+            // Group events by date
+            const groupedEvents = {};
+            eventsToShow.forEach(event => {
+                if (!groupedEvents[event.date]) {
+                    groupedEvents[event.date] = [];
+                }
+                groupedEvents[event.date].push(event);
+            });
+
+            // Sort dates
+            const sortedDates = Object.keys(groupedEvents).sort();
+
+            // Render grouped events
+            container.innerHTML = '';
+            sortedDates.forEach(date => {
+                const dateGroup = document.createElement('div');
+                dateGroup.className = 'date-group';
+
+                const dateHeader = document.createElement('div');
+                dateHeader.className = 'date-header';
+                const dateObj = new Date(date + 'T00:00:00');
+                const formattedDate = dateObj.toLocaleDateString('en-US', {
+                    weekday: 'short',
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric'
+                });
+                dateHeader.innerHTML = `
+          ${formattedDate}
+          <span class="date-label">${groupedEvents[date].length} event${groupedEvents[date].length !== 1 ? 's' : ''}</span>
+        `;
+                dateGroup.appendChild(dateHeader);
+
+                groupedEvents[date].forEach(event => {
+                    const eventCard = createEventCard(event);
+                    dateGroup.appendChild(eventCard);
+                });
+
+                container.appendChild(dateGroup);
+            });
+        }
+
+        function createEventCard(event) {
+            const card = document.createElement('div');
+            card.className = `event-card ${event.type}`;
+
+            const typeNames = {
+                pdufa: 'PDUFA Date',
+                approval: 'Approval',
+                rejection: 'CRL/Rejection',
+                meeting: 'Meeting',
+                warning: 'Warning Letter'
+            };
+
+            card.innerHTML = `
+        <div class="event-type-tag ${event.type}">${typeNames[event.type]}</div>
+        <div class="event-title">${event.title}</div>
+        <div class="event-description">${event.description}</div>
+        <div class="event-meta">
+          <div class="meta-item">
+            <span class="meta-icon">🏢</span>
+            <span>${event.company}</span>
+          </div>
+          ${event.ticker !== 'N/A' ? `
+            <div class="meta-item">
+              <span class="meta-icon">📈</span>
+              <a href="#" class="ticker-link" onclick="handleTickerClick('${event.ticker}'); return false;">${event.ticker}</a>
+            </div>
+          ` : ''}
+          ${event.drugName !== 'N/A' ? `
+            <div class="meta-item">
+              <span class="meta-icon">💊</span>
+              <span>${event.drugName}</span>
+            </div>
+          ` : ''}
+        </div>
+        <div class="event-actions">
+          <div class="action-btn primary" onclick="handleAddReminder(${event.id})">Add Reminder</div>
+          <div class="action-btn secondary" onclick="handleViewDetails(${event.id})">View Details</div>
+        </div>
+      `;
+
+            return card;
+        }
+
+        function toggleFilter(type) {
+            if (activeFilters.has(type)) {
+                activeFilters.delete(type);
+                document.querySelector(`.filter-pill[data-type="${type}"]`).classList.remove('active');
+            } else {
+                activeFilters.add(type);
+                document.querySelector(`.filter-pill[data-type="${type}"]`).classList.add('active');
+            }
+            renderCalendar();
+            renderEvents();
+        }
+
+        function previousMonth() {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            selectedDate = null;
+            renderCalendar();
+            renderEvents();
+        }
+
+        function nextMonth() {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            selectedDate = null;
+            renderCalendar();
+            renderEvents();
+        }
+
+        function goToToday() {
+            currentDate = new Date();
+            const today = new Date();
+            selectedDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+            renderCalendar();
+            renderEvents();
+        }
+
+        function handleTickerClick(ticker) {
+            // This would navigate to the stock details page
+            alert(`Navigate to ${ticker} stock details (integrate with universal_app.html)`);
+        }
+
+        function handleAddReminder(eventId) {
+            const event = fdaEvents.find(e => e.id === eventId);
+            alert(`Reminder added for: ${event.title}\n(Integrate with KairAlert)`);
+        }
+
+        function handleViewDetails(eventId) {
+            const event = fdaEvents.find(e => e.id === eventId);
+            alert(`View details for: ${event.title}\n(Open FDA official page or detailed modal)`);
+        }
+
+        // Initialize calendar on page load
+        document.addEventListener('DOMContentLoaded', initCalendar);
+    </script>
+</body>
+
+</html>

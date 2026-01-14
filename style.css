@@ -142,7 +142,7 @@ body {
 } */
 
 .m-header .logo-image {
-  width: 180px;
+  width: 100px;
   height: auto;
 }
 
@@ -608,7 +608,7 @@ body {
   }
 
   .m-banner .banner-content .title {
-    font-size: 37px;
+    font-size: 35px;
   }
 
   .m-banner .banner-content .title .main-text {
@@ -702,6 +702,10 @@ body {
     font-size: 30px;
   }
 
+  .m-banner .banner-content .title {
+    font-size: 30px;
+  }
+
   .m-header .logo-image {
     width: 120px;
     height: auto;
@@ -753,7 +757,7 @@ body {
   }
 
   .m-banner .banner-content .title {
-    font-size: 18px;
+    font-size: 22px;
   }
 
   .m-banner .banner-content .title .main-text {

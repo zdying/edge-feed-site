@@ -549,6 +549,8 @@
     .modal-content {
       width: 90%;
       max-width: 360px;
+      max-height: 80vh;
+      /* Limit height */
       background: rgba(30, 30, 35, 0.85);
       /* Darker glass */
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -560,6 +562,7 @@
       display: flex;
       flex-direction: column;
       gap: 16px;
+      overflow: hidden;
     }
 
     .modal-overlay.show .modal-content {
@@ -601,6 +604,14 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
+      overflow-y: auto;
+      /* Enable scrolling */
+      overscroll-behavior: contain;
+      /* Prevent body scroll */
+      padding-right: 4px;
+      /* Space for scrollbar */
+      flex: 1;
+      min-height: 0;
     }
 
     .broker-item {
@@ -1124,33 +1135,33 @@
 
     // Broker Configuration
     const BROKERS = [
-      // {
-      //   id: 'tradingview',
-      //   name: 'TradingView',
-      //   logo: 'https://static.tradingview.com/static/images/favicon.ico',
-      //   supports: ['web'],
-      //   url: {
-      //     web: ['https://www.tradingview.com/symbols/${exchange}-${ticker}/']
-      //   }
-      // },
-      // {
-      //   id: 'ibkr',
-      //   name: 'IBKR',
-      //   logo: 'https://www.interactivebrokers.com/campus/wp-content/themes/campus-theme/fav-icons/campus/favicon.png',
-      //   supports: ['web'],
-      //   url: {
-      //     web: ['https://www.interactivebrokers.com/portal/#/quote/${ibkr_conid}']
-      //   }
-      // },
-      // {
-      //   id: 'webull',
-      //   name: 'WeBull',
-      //   logo: 'https://www.webull.com/favicon.ico',
-      //   supports: ['web'],
-      //   url: {
-      //     web: ['https://www.webullapp.com/ticker/${exchange}-${ticker}']
-      //   }
-      // },
+      {
+        id: 'tradingview',
+        name: 'TradingView',
+        logo: 'https://static.tradingview.com/static/images/favicon.ico',
+        supports: ['web'],
+        url: {
+          web: ['https://www.tradingview.com/symbols/${exchange}-${ticker}/']
+        }
+      },
+      {
+        id: 'ibkr',
+        name: 'IBKR',
+        logo: 'https://www.interactivebrokers.com/campus/wp-content/themes/campus-theme/fav-icons/campus/favicon.png',
+        supports: ['web'],
+        url: {
+          web: ['https://www.interactivebrokers.com/portal/#/quote/${ibkr_conid}']
+        }
+      },
+      {
+        id: 'webull',
+        name: 'WeBull',
+        logo: 'https://www.webull.com/favicon.ico',
+        supports: ['web'],
+        url: {
+          web: ['https://www.webullapp.com/ticker/${exchange}-${ticker}']
+        }
+      },
       {
         id: 'bbae',
         name: 'BBAE',

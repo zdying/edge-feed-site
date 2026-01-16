@@ -1381,6 +1381,9 @@
       const colorMarker = '#fb7185'; // market-up (red/pink) for accent or white
 
       ctx.clearRect(0, 0, width, height);
+      // Fill Background (No longer transparent)
+      // ctx.fillStyle = '#141419'; // Dark card bg color
+      // ctx.fillRect(0, 0, width, height);
 
       if (!prices || prices.length === 0) return;
 
@@ -1488,7 +1491,7 @@
       // Draw watermark once image is loaded (or if cached)
       // Draw watermark once image is loaded (or if cached)
       const drawWatermark = () => {
-        const logoWidth = 60; // Target width
+        const logoWidth = 40; // Reduced size (was 60)
         const ratio = logoImg.width / logoImg.height;
         const logoHeight = logoWidth / ratio;
 

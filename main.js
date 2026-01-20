@@ -94,4 +94,21 @@
       isMenuOpen = !isMenuOpen;
     }
   });
+
+  // Carousel Navigation Logic
+  const $carouselContainer = $('#js-carousel-container');
+  const $prevBtn = $('#js-carousel-prev');
+  const $nextBtn = $('#js-carousel-next');
+
+  if ($carouselContainer && $prevBtn && $nextBtn) {
+    const scrollAmount = 390; // Card width + gap (360 + 30)
+
+    $prevBtn.addEventListener('click', () => {
+      $carouselContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    });
+
+    $nextBtn.addEventListener('click', () => {
+      $carouselContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    });
+  }
 })();

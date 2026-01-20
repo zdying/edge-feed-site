@@ -37,6 +37,10 @@ body {
   font-size: 16px;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 .row {
   display: flex;
   flex-direction: row;

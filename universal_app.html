@@ -836,6 +836,77 @@
   </div>
 
   <script>
+    const MarketSmaz = (function () {
+      const dict = [
+        "|||", "M|||", "B|||", "K|||", ". ", ", ", ": ", " - ", "://", "=\"", "</", "\r\n", " ", "$",
+        "nasdaq", "nyse", "inc.", "corp.", "ltd.", "holdings", "group", "company", "technologies", "therapeutics", "pharmaceuticals", "biosciences",
+        "shares", "stock", "quarter", "fiscal", "year", "revenue", "net income", "earnings", "per share", "eps", "guidance", "million", "billion",
+        "financial results", "announces", "reports", "q1", "q2", "q3", "q4", "2024", "2025", "2026", "2027", ".00", ".50",
+        "acquisition", "merger", "to acquire", "definitive agreement", "partnership", "collaboration", "joint venture", "agreement", "closes", "completion of",
+        "phase 1b", "phase 1", "phase 2", "phase 3", "clinical trial", "FDA", "approval", "positive", "topline data", "patient",
+        "dosing", "safety", "efficacy", "NDA", "IND", "treatment", "disease", "cohort", "study", "results", "dose", "registrational", "robust", "profile", "increase", "delayed", "start", "trial",
+        " the ", " of ", " and ", " in ", " to ", " a ", " for ", " with ", " on ", " is ", " that ", " by ", " from ", " as ", " at ", " be ", " this ", " will ", " are ", " which ", " an ", " or ", " not ", " have ", " has ", " was ", " it ", " its ", " also ", " their ",
+        "ing", "tion", "ment", "ent", "ati", "ion", "ter", "nce", "ate", "pro", "ers", "res", "con", "com", "st", "en", "er", "re", "es", "ou", "al", "ic", "ly", "th", "he", "nd", "or", "ar", "te", "ti", "ur", "ll", "ss", "ch", "sh", "ce", "se", "ge", "le", "ed",
+        "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
+        "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+        "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"
+      ];
+
+      if (dict.length > 254) throw new Error("Error: dict length > 254");
+
+      const encoder = new TextEncoder();
+      const decoder = new TextDecoder();
+      const dictBytes = dict.map(str => encoder.encode(str));
+
+      function postProcessToCapital(text) {
+        return text.replace(/(^|\s|\|\|\|)([a-z])/g, (match, prefix, firstLetter) => {
+          return prefix + firstLetter.toUpperCase();
+        });
+      }
+
+      function decompressFromBytes(compressedData) {
+        const outBytes = [];
+        let i = 0;
+        while (i < compressedData.length) {
+          const byte = compressedData[i];
+          if (byte === 254) {
+            outBytes.push(compressedData[i + 1]);
+            i += 2;
+          } else if (byte === 255) {
+            const len = compressedData[i + 1] + 1;
+            for (let k = 0; k < len; k++) outBytes.push(compressedData[i + 2 + k]);
+            i += 2 + len;
+          } else {
+            const wordBytes = dictBytes[byte];
+            for (let k = 0; k < wordBytes.length; k++) outBytes.push(wordBytes[k]);
+            i++;
+          }
+        }
+        return decoder.decode(new Uint8Array(outBytes));
+      }
+
+      function base64UrlToBytes(base64UrlStr) {
+        let base64 = base64UrlStr.replace(/-/g, '+').replace(/_/g, '/');
+        while (base64.length % 4 !== 0) base64 += '=';
+        const binaryString = atob(base64);
+        const bytes = new Uint8Array(binaryString.length);
+        for (let i = 0; i < binaryString.length; i++) bytes[i] = binaryString.charCodeAt(i);
+        return bytes;
+      }
+
+      return {
+        decodeFromUrl: function (urlSafeBase64) {
+          const bytes = base64UrlToBytes(urlSafeBase64);
+          const lowerText = decompressFromBytes(bytes);
+          return postProcessToCapital(lowerText);
+        }
+      };
+    })();
+
+    window.MarketSmaz = MarketSmaz;
+  </script>
+
+  <script>
     const VERSION = "20260109-002";
 
     const $ = id => document.getElementById(id);
@@ -929,6 +1000,25 @@
     let queryData = {};
     const params = new URLSearchParams(window.location.search);
 
+    function _decodeParams(p, q) {
+      if (!q && !p) throw new Error("No data parameter found");
+
+      if (q) {
+        // q: old version
+        let base64Str = q.replace(/-/g, '+').replace(/_/g, '/');
+        while (base64Str.length % 4) base64Str += '=';
+        const binaryStr = atob(base64Str);
+        const bytes = new Uint8Array(binaryStr.length);
+        for (let i = 0; i < binaryStr.length; i++) bytes[i] = binaryStr.charCodeAt(i);
+        const decodedStr = new TextDecoder('utf-8').decode(bytes);
+
+        return decodedStr;
+      } else {
+        // p: new version
+        return MarketSmaz.decodeFromUrl(p);
+      }
+    }
+
     function decodeData() {
       try {
         // Lang param
@@ -936,16 +1026,21 @@
         currentLang = (lang === 'zh') ? 'zh' : 'en';
 
         let q = params.get('q');
-        if (!q) throw new Error("No data parameter found");
-        let base64Str = q.replace(/-/g, '+').replace(/_/g, '/');
-        while (base64Str.length % 4) base64Str += '=';
-        const binaryStr = atob(base64Str);
-        const bytes = new Uint8Array(binaryStr.length);
-        for (let i = 0; i < binaryStr.length; i++) bytes[i] = binaryStr.charCodeAt(i);
-        const decodedStr = new TextDecoder('utf-8').decode(bytes);
+        let p = params.get('p');
+
+
+        // let base64Str = q.replace(/-/g, '+').replace(/_/g, '/');
+        // while (base64Str.length % 4) base64Str += '=';
+        // const binaryStr = atob(base64Str);
+        // const bytes = new Uint8Array(binaryStr.length);
+        // for (let i = 0; i < binaryStr.length; i++) bytes[i] = binaryStr.charCodeAt(i);
+        // const decodedStr = new TextDecoder('utf-8').decode(bytes);
+        let decodedStr = _decodeParams(p, q);
+
         const parts = decodedStr.split('|||');
         if (parts.length < 9) throw new Error("Invalid format");
         return {
+          _v: q ? 'old' : 'new',
           ticker: parts[0],
           market_cap: parts[1],
           volume: parts[2],
@@ -1028,6 +1123,8 @@
         $('error').classList.remove('hidden');
         return;
       }
+
+      document.title = data.title;
 
       // Apply Translations
       const t = translations[currentLang];

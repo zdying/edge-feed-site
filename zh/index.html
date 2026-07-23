@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>实时美股小盘股提醒 | 8 类信号 + 引力流 + 量化实验室 | KairAlert</title>
+  <meta name="description"
+    content="KairAlert 为美股交易者提供实时催化剂提醒，覆盖 FDA、并购、融资、合同订单、合作、SEC 文件、期权异动和大宗交易 8 类信号，并提供引力流和量化实验室研究。">
+  <meta name="keywords" content="美股小盘股提醒,FDA提醒,并购提醒,融资提醒,合同订单提醒,合作公告提醒,SEC文件扫描,期权异动提醒,大宗交易提醒,引力流,引力图,量化研究,量化实验室" />
+  <link rel="canonical" href="https://kairalert.pro/zh/" />
+  <link rel="alternate" hreflang="en" href="https://kairalert.pro/" />
+  <link rel="alternate" hreflang="zh-Hans" href="https://kairalert.pro/zh/" />
+  <link rel="alternate" hreflang="x-default" href="https://kairalert.pro/" />
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://kairalert.pro/zh/">
+  <meta property="og:title" content="实时美股小盘股提醒 | 8 类信号 + 引力流 + 量化实验室 | KairAlert">
+  <meta property="og:description"
+    content="KairAlert 为美股交易者提供实时催化剂提醒，覆盖 FDA、并购、融资、合同订单、合作、SEC 文件、期权异动和大宗交易 8 类信号，并提供引力流和量化实验室研究。">
+  <meta property="og:image" content="https://kairalert.pro/assets/kairalert-banner.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://kairalert.pro/zh/">
+  <meta name="twitter:title" content="实时美股小盘股提醒 | 8 类信号 + 引力流 + 量化实验室 | KairAlert">
+  <meta name="twitter:description"
+    content="KairAlert 为美股交易者提供实时催化剂提醒，覆盖 FDA、并购、融资、合同订单、合作、SEC 文件、期权异动和大宗交易 8 类信号，并提供引力流和量化实验室研究。">
+  <meta name="twitter:image" content="https://kairalert.pro/assets/kairalert-banner.jpg">
+
+  <link rel="icon" type="image/png" href="../assets/logo_circle.png" />
+  <link rel="stylesheet" href="../fonts/style.css">
+  <link rel="stylesheet" href="../style.css?v=20260713-gravity-flow">
+  <link rel="preload" as="image" href="../assets/screenshot/kairalert-home.webp" type="image/webp">
+  <link rel="preload" as="image" href="../assets/screenshot/kairalerts-news.webp" type="image/webp">
+  <link rel="preload" as="image" href="../assets/screenshot/kairalert-fda.webp" type="image/webp">
+  <link rel="preload" as="image" href="../assets/screenshot/kairalert-options.webp" type="image/webp">
+  <link rel="preload" as="image" href="../assets/screenshot/kairalert-blocktrade.webp" type="image/webp">
+  <link rel="preload" as="image" href="../assets/screenshot/kairalert-gravity-map.webp" type="image/webp">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7XGY663R98"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-7XGY663R98');
+  </script>
+</head>
+
+<body>
+
+  <header class="header">
+    <div class="container header-inner">
+      <a href="#" class="logo">
+        <img src="../assets/logo.png" width="80" alt="KairAlert Logo">
+      </a>
+
+      <nav class="desktop-nav">
+        <a href="#home">首页</a>
+        <a href="#why">为什么选择 KairAlert</a>
+        <a href="#gravity-flow">引力流</a>
+        <a href="../quant-lab/">量化实验室</a>
+        <a href="#how-to-start">如何开始</a>
+        <a href="#pricing">价格</a>
+        <a href="#faq">常见问题</a>
+        <a href="../" onclick="localStorage.setItem('site_lang', 'en')">English</a>
+      </nav>
+
+      <div class="social-nav">
+        <a href="https://twitter.com/zdying2024" target="_blank" aria-label="Twitter"><i class="icon-twitter"></i></a>
+        <a href="https://discord.gg/ahbAUYGAw4" target="_blank" aria-label="Discord"><i class="icon-discord"></i></a>
+      </div>
+
+      <button id="js-menu-trigger" class="menu-btn" aria-label="Menu">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="hero section">
+      <div class="container hero-inner grid-2">
+        <div class="hero-content">
+          <h1 class="hero-title">
+            实时美股小盘股提醒：<br>
+            <span class="text-gradient">8 类信号 + 引力流 + 量化实验室</span>
+          </h1>
+          <p class="hero-desc">
+            <strong>别再被噪音拖慢交易。</strong>KairAlert 每日扫描 20,000+ 信息源，并实时推送可能影响股价的催化剂信号，覆盖
+            <span>FDA、并购、融资、合同/订单、合作、SEC 文件、期权异动和大宗交易</span>。同时通过引力流和量化实验室提供数据驱动的研究和交易洞察。
+          </p>
+          <div class="hero-actions">
+            <a href="#how-to-start" class="btn btn-primary js-platform-cta">
+              立即试用
+            </a>
+            <a href="https://discord.com/invite/ahbAUYGAw4" target="_blank" rel="noopener noreferrer"
+              class="btn btn-secondary">
+              <i class="icon-discord"></i> 加入 Discord 群
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-media">
+          <div class="iphone-mockup">
+            <div class="iphone-notch"></div>
+            <div class="hero-carousel" aria-label="KairAlert App 截图轮播">
+              <div class="hero-track">
+                <img class="hero-slide" src="../assets/screenshot/kairalert-home.webp" alt="KairAlert 首页市场提醒截图"
+                  loading="eager" decoding="async" fetchpriority="high">
+                <img class="hero-slide" src="../assets/screenshot/kairalerts-news.webp" alt="KairAlert 新闻提醒截图"
+                  loading="eager" decoding="async">
+                <img class="hero-slide" src="../assets/screenshot/kairalert-fda.webp" alt="KairAlert FDA 催化剂提醒截图"
+                  loading="eager" decoding="async">
+                <img class="hero-slide" src="../assets/screenshot/kairalert-options.webp" alt="KairAlert 期权异动提醒截图"
+                  loading="eager" decoding="async">
+                <img class="hero-slide" src="../assets/screenshot/kairalert-blocktrade.webp" alt="KairAlert 大宗交易提醒截图"
+                  loading="eager" decoding="async">
+                <img class="hero-slide" src="../assets/screenshot/kairalert-gravity-map.webp" alt="KairAlert 重力图截图"
+                  loading="eager" decoding="async">
+                <img class="hero-slide" src="../assets/screenshot/kairalert-home.webp" alt="" loading="eager"
+                  decoding="async" aria-hidden="true">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider container"></div>
+
+    <section id="why" class="features-split section">
+      <div class="container split-container">
+        <div class="split-left">
+          <div class="sticky-content">
+            <h2 class="split-title">覆盖关键市场催化剂的<br><span class="text-gradient">实时提醒</span>
+            </h2>
+            <p class="split-subtitle">一个信息流，覆盖八类高价值信号。把注意力放在真正可能推动小盘股和中盘股波动的事件上。</p>
+          </div>
+        </div>
+        <div class="split-right">
+          <div class="feature-row">
+            <div class="feature-num">01</div>
+            <div class="feature-content">
+              <h3>FDA 批准与临床结果</h3>
+              <p>第一时间跟踪 PDUFA 决定、临床数据读出和监管更新。</p>
+            </div>
+          </div>
+          <div class="feature-row">
+            <div class="feature-num">02</div>
+            <div class="feature-content">
+              <h3>并购与收购</h3>
+              <p>实时捕捉最终协议、要约收购和收购相关头条。</p>
+            </div>
+          </div>
+          <div class="feature-row">
+            <div class="feature-num">03</div>
+            <div class="feature-content">
+              <h3>融资与资本募集</h3>
+              <p>监控增发、私募、债务融资等可能影响价格走势的融资事件。</p>
+            </div>
+          </div>
+          <div class="feature-row">
+            <div class="feature-num">04</div>
+            <div class="feature-content">
+              <h3>合同与订单</h3>
+              <p>发现合同中标和重大订单，尤其是交易规模可能显著影响估值的事件。</p>
+            </div>
+          </div>
+          <div class="feature-row">
+            <div class="feature-num">05</div>
+            <div class="feature-content">
+              <h3>合作与协作</h3>
+              <p>接收战略合作、授权协议和商业协作公告提醒。
+              </p>
+            </div>
+          </div>
+          <div class="feature-row">
+            <div class="feature-num">06</div>
+            <div class="feature-content">
+              <h3>SEC 文件</h3>
+              <p>跟踪 8-K、S-3 等文件驱动的催化剂，不需要手动翻 EDGAR。</p>
+            </div>
+          </div>
+          <div class="feature-row">
+            <div class="feature-num">07</div>
+            <div class="feature-content">
+              <h3>期权异动</h3>
+              <p>跟踪异常期权活动，识别仓位变化和潜在动量机会。</p>
+            </div>
+          </div>
+          <div class="feature-row">
+            <div class="feature-num">08</div>
+            <div class="feature-content">
+              <h3>大宗交易</h3>
+              <p>识别重要大单成交和大额盘口活动，辅助判断机构资金意图。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider container"></div>
+
+    <section id="gravity-flow" class="gravity-flow section">
+      <div class="container split-container">
+        <div class="split-left">
+          <div class="sticky-content">
+            <p class="section-kicker">GravityFlow 引力流</p>
+            <h2 class="split-title">看清价格真正<span class="text-gradient">愿意围绕哪里运动</span></h2>
+            <p class="split-subtitle">
+              引力流是 KairAlert 非常重视的核心量化功能，主要面向 SPY、QQQ、IWM 等头部 ETF，以及 NVDA、AAPL、TSLA、AMD、MU、INTC 等正股和期权都活跃的大盘股。
+            </p>
+          </div>
+        </div>
+
+        <div class="split-right">
+          <div class="gravity-flow-copy prose">
+            <p><strong>它不是预测涨跌，也不是传统支撑阻力。</strong></p>
+            <p>引力流更像一张盘中的价格引力地图：哪些区域更容易被市场反复验证，哪些位置靠近后容易停留、争夺，哪些位置一旦离开后可能释放更大的波动。</p>
+            <p>在日内交易里，它可以帮助你判断当前是一个核心位置反复被承认，还是上下都有牵引的拉扯盘。到了尾盘，它也可以观察价格是否逐渐向某个小区间收敛。</p>
+            <p>在周度观察里，我们会把指数 ETF、核心权重股、半导体链、避险资产和波动相关标的放在一起看，判断市场是偏强、偏弱，还是处在高位拉扯。</p>
+          </div>
+
+          <div class="gravity-flow-points">
+            <div class="gravity-flow-point">
+              <span>01</span>
+              <h3>个股与 ETF 引力图</h3>
+              <p>观察 SPY、QQQ、IWM、NVDA 等活跃标的的关键价格区，识别单核心、拉扯盘和尾盘吸附。</p>
+            </div>
+            <div class="gravity-flow-point">
+              <span>02</span>
+              <h3>周度市场结构</h3>
+              <p>通过市场总览横向比较不同资产组，看指数、权重、板块和波动端是否形成一致方向。</p>
+            </div>
+            <div class="gravity-flow-point">
+              <span>03</span>
+              <h3>交易前的位置感</h3>
+              <p>先知道今天真正值得盯住的位置在哪里，再结合自己的仓位、策略和风险承受能力做判断。</p>
+            </div>
+          </div>
+
+          <div class="gravity-showcase">
+            <figure class="gravity-figure gravity-figure-large">
+              <img src="https://kastatic.pages.dev/imgs/0713-MARKET_OVERVIEW.png" alt="KairAlert 周度市场引力总览图" loading="lazy"
+                decoding="async">
+              <figcaption>
+                <strong>Market Overview</strong>
+                <span>把指数 ETF、权重股、半导体链、避险和波动信号放在同一张图里，看本周市场主结构。</span>
+              </figcaption>
+            </figure>
+
+            <figure class="gravity-figure">
+              <img src="https://kastatic.pages.dev/imgs/0713-NVDA.png" alt="KairAlert NVDA 周度引力结构图" loading="lazy" decoding="async">
+              <figcaption>
+                <strong>NVDA 周度引力结构</strong>
+                <span>和市场总览配套观察核心权重股的关键价格区，以及上方修复区和下方观察区。</span>
+              </figcaption>
+            </figure>
+
+            <figure class="gravity-figure">
+              <img src="https://kastatic.pages.dev/imgs/nvda_0710_gravity_open.webp" alt="KairAlert NVDA 盘中引力图" loading="lazy"
+                decoding="async">
+              <figcaption>
+                <strong>NVDA 盘中引力图</strong>
+                <span>观察活跃大盘股的盘中核心引力位，以及价格靠近关键区域时的停留和拉扯。</span>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider container"></div>
+
+    <section id="quant-lab" class="about section">
+      <div class="container split-container">
+        <div class="split-left">
+          <div class="sticky-content">
+            <h2 class="split-title">走进 <span class="text-gradient">量化实验室</span></h2>
+            <p class="split-subtitle">除了实时提醒，量化实验室是我们面向活跃交易者发布数据研究和实战框架的研究中心。</p>
+          </div>
+        </div>
+        <div class="split-right">
+          <div class="about-content prose">
+            <p><strong>量化实验室是我们的研究中心。</strong></p>
+            <p>我们会发布大数据研究、市场微观结构观察，以及围绕实际交易决策的量化工作流笔记。</p>
+            <p>内容包括催化剂行为分析、信号质量复盘、执行层面的思考，以及内部工具沉淀出的技术总结。</p>
+            <p><a href="../quant-lab/" class="btn btn-secondary">阅读量化实验室文章</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider container"></div>
+
+    <section id="how-to-start" class="start-guide section">
+      <div class="container split-container">
+        <div class="split-left">
+          <div class="sticky-content">
+            <h2 class="split-title">如何<span class="text-gradient">开始使用</span></h2>
+            <p class="split-subtitle">
+              只有 Android 和 iOS 支持实时系统横幅通知。PC 端仅适合浏览，不支持系统级 push banner 提醒。
+            </p>
+          </div>
+        </div>
+
+        <div class="split-right">
+          <div class="start-guide-row">
+            <div class="start-guide-platform">
+              <i class="icon-android" aria-hidden="true"></i>
+              <span>Android</span>
+            </div>
+            <div class="start-guide-content">
+              <h3>打开 KairAlert</h3>
+              <p>请使用 Android 手机打开 Web App 开始试用。如果你在中国大陆需要接收系统级推送，请下载 APK 安装。</p>
+              <div class="start-guide-actions">
+                <a href="https://app.kairalert.pro/" class="btn btn-secondary start-guide-btn js-app-open-link">
+                  <i class="icon-external-link" aria-hidden="true"></i>
+                  打开 KairAlert
+                </a>
+                <a href="https://kastatic.pages.dev/apk/kairalert.apk" class="start-guide-download-link">
+                  <i class="icon-download" aria-hidden="true"></i>
+                  下载 APK
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="start-guide-row">
+            <div class="start-guide-platform">
+              <i class="icon-apple" aria-hidden="true"></i>
+              <span>iOS</span>
+            </div>
+            <div class="start-guide-content">
+              <h3>打开 KairAlert</h3>
+              <p>请在 iPhone 或 iPad 上使用 Safari 打开 Web App 入口，开始试用。</p>
+              <a href="https://app.kairalert.pro/" class="btn btn-secondary start-guide-btn js-app-open-link">
+                <i class="icon-external-link" aria-hidden="true"></i>
+                打开 KairAlert
+              </a>
+            </div>
+          </div>
+
+          <div class="start-guide-row">
+            <div class="start-guide-platform">
+              <i class="icon-monitor" aria-hidden="true"></i>
+              <span>桌面端</span>
+            </div>
+            <div class="start-guide-content">
+              <h3>请切换到手机端</h3>
+              <p>桌面端仅用于浏览。请切换到 Android 或 iOS 使用 KairAlert。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider container"></div>
+
+    <section id="pricing" class="pricing section">
+      <div class="container split-container">
+        <div class="split-left">
+          <div class="sticky-content">
+            <h2 class="split-title">简单、<span class="text-gradient">透明的价格</span></h2>
+            <p class="split-subtitle">没有隐藏费用。KairAlert 面向认真捕捉下一次突破机会的交易者，把预算投入到真正的信息优势上。</p>
+          </div>
+        </div>
+
+        <div class="split-right">
+          <div class="pricing-grid">
+
+            <!-- PRO Card -->
+            <div class="pricing-card">
+              <div class="pricing-card-header">
+                <div class="pricing-tier-label">PRO</div>
+                <div class="pricing-price">
+                  <span class="pricing-price-amount">$199.9</span>
+                  <span class="pricing-price-period">/年</span>
+                </div>
+                <div class="pricing-price-monthly">约 $16.66 / 月</div>
+              </div>
+              <ul class="pricing-features">
+                <li class="pricing-feature included">
+                  <span class="pricing-check">✓</span>
+                  <span>云端数据同步</span>
+                </li>
+                <li class="pricing-feature included">
+                  <span class="pricing-check">✓</span>
+                  <span>新闻提醒</span>
+                </li>
+                <li class="pricing-feature included">
+                  <span class="pricing-check">✓</span>
+                  <span>异动股票</span>
+                </li>
+                <li class="pricing-feature included">
+                  <span class="pricing-check">✓</span>
+                  <span>量化实验室</span>
+                </li>
+                <li class="pricing-feature excluded">
+                  <span class="pricing-cross">×</span>
+                  <span>大宗交易</span>
+                </li>
+                <li class="pricing-feature excluded">
+                  <span class="pricing-cross">×</span>
+                  <span>期权异动</span>
+                </li>
+                <li class="pricing-feature excluded">
+                  <span class="pricing-cross">×</span>
+                  <span>FDA 日历</span>
+                </li>
+                <li class="pricing-feature excluded">
+                  <span class="pricing-cross">×</span>
+                  <span>SEC 文件</span>
+                </li>
+                <li class="pricing-feature excluded">
+                  <span class="pricing-cross">×</span>
+                  <span>优先提醒</span>
+                </li>
+                <li class="pricing-feature excluded">
+                  <span class="pricing-cross">×</span>
+                  <span>所有未来功能</span>
+                </li>
+              </ul>
+              <a href="#how-to-start" class="btn btn-secondary pricing-btn js-platform-cta">立即试用</a>
+            </div>
+
+            <!-- PRO+ Card -->
+            <div class="pricing-card pricing-card--featured">
+              <div class="pricing-card-header">
+                <div class="pricing-tier-label">
+                  PRO+
+                  <span class="pricing-badge">最受欢迎</span>
+                </div>
+                <div class="pricing-price">
+                  <span class="pricing-price-amount">$599.9</span>
+                  <span class="pricing-price-period">/年</span>
+                </div>
+                <div class="pricing-price-monthly">约 $49.99 / 月</div>
+              </div>
+              <ul class="pricing-features">
+                <li class="pricing-feature included">
+                  <span class="pricing-check">✓</span>
+                  <span>云端数据同步</span>
+                </li>
+                <li class="pricing-feature included">
+                  <span class="pricing-check">✓</span>
+                  <span>新闻提醒</span>
+                </li>
+                <li class="pricing-feature included">
+                  <span class="pricing-check">✓</span>
+                  <span>异动股票</span>
+                </li>
+                <li class="pricing-feature included">
+                  <span class="pricing-check">✓</span>
+                  <span>量化实验室</span>
+                </li>
+                <li class="pricing-feature included">
+                  <span class="pricing-check">✓</span>
+                  <span>大宗交易</span>
+                </li>
+                <li class="pricing-feature included">
+                  <span class="pricing-check">✓</span>
+                  <span>期权异动</span>
+                </li>
+                <li class="pricing-feature included">
+                  <span class="pricing-check">✓</span>
+                  <span>FDA 日历</span>
+                </li>
+                <li class="pricing-feature included">
+                  <span class="pricing-check">✓</span>
+                  <span>SEC 文件</span>
+                </li>
+                <li class="pricing-feature included">
+                  <span class="pricing-check">✓</span>
+                  <span>优先提醒</span>
+                </li>
+                <li class="pricing-feature included">
+                  <span class="pricing-check">✓</span>
+                  <span>所有未来功能</span>
+                </li>
+              </ul>
+              <a href="#how-to-start" class="btn btn-primary pricing-btn js-platform-cta">立即试用</a>
+            </div>
+
+          </div>
+
+          <p class="pricing-contact">
+            准备订阅？请通过
+            <a href="mailto:support@kairalert.pro">support@kairalert.pro</a>
+            或
+            <a href="https://discord.gg/ahbAUYGAw4" target="_blank" rel="noopener noreferrer">Discord</a>
+            联系我们开始使用。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider container"></div>
+
+    <section id="about" class="about section">
+      <div class="container split-container">
+        <div class="split-left">
+          <div class="sticky-content">
+            <h2 class="split-title">由交易者发起，<br><span class="text-gradient">由工程师打磨。</span></h2>
+            <p class="split-subtitle">我们受够了昂贵又嘈杂的新闻源。KairAlert 只专注一件事：过滤噪音，找到真正可交易的催化剂。</p>
+          </div>
+        </div>
+        <div class="split-right">
+          <div class="about-content prose">
+            <p><strong>我们曾经被噪音淹没。</strong></p>
+            <p>作为全职日内交易者，我们曾经为“高级”新闻源和 squawk box 花费数千美元，最后发现一个很痛的事实：
+              <strong>99% 的突发新闻都没有交易价值。</strong>等我们手动从噪音里筛出一个真正可交易的 FDA 催化剂时，行情往往已经走完。
+            </p>
+            <p>所以我们决定停止抱怨，开始写代码。凭借工程背景，我们把 KairAlert 做成了一套内部工具，核心执念只有一个：
+              <strong>过滤。</strong>
+            </p>
+            <blockquote>
+              “KairAlert 不只是我们卖的产品。<strong>我们自己也用它交易自己的账户。</strong>我们做它，是因为我们真的需要它。”
+            </blockquote>
+            <p>我们的专有 <strong>AI 引擎</strong> 7x24 小时监控大量数据源，包括：</p>
+            <ul>
+              <li><strong>SEC 文件：</strong>直接跟踪 SEC EDGAR 数据源，包括 8-K、S-3、Form 4。</li>
+              <li><strong>FDA 日历与事件：</strong>跟踪 PDUFA 日期、临床试验结果和审批动态。
+              </li>
+              <li><strong>新闻稿线路：</strong>实时扫描主流新闻稿发布渠道，捕捉突发公告。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider container"></div>
+
+    <section id="faq" class="faq section">
+      <div class="container split-container">
+        <div class="split-left">
+          <div class="sticky-content">
+            <h2 class="split-title">常见问题</h2>
+            <p class="split-subtitle">了解 KairAlert 如何工作、数据来源是什么，以及它如何帮助你更高效地捕捉美股小盘股信息。</p>
+          </div>
+        </div>
+        <div class="split-right">
+          <div class="faq-list" id="js-faq-list">
+
+            <details class="faq-item" open>
+              <summary class="faq-header">
+                <span>KairAlert 覆盖哪些信号和量化工具？</span>
+                <svg class="chevron" fill="none" height="24" stroke="currentColor" stroke-width="1.5"
+                  viewBox="0 0 24 24" width="24">
+                  <path d="M6 9l6 6 6-6"></path>
+                </svg>
+              </summary>
+              <div class="faq-body">
+                KairAlert 覆盖八类实时信号：FDA 更新、并购、融资、合同/订单、合作、SEC 文件、期权异动和大宗交易。同时提供引力流和量化实验室，用于观察头部 ETF、活跃大盘股和市场结构。
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary class="faq-header">
+                <span>引力流适合看哪些标的？</span>
+                <svg class="chevron" fill="none" height="24" stroke="currentColor" stroke-width="1.5"
+                  viewBox="0 0 24 24" width="24">
+                  <path d="M6 9l6 6 6-6"></path>
+                </svg>
+              </summary>
+              <div class="faq-body">
+                引力流主要面向 SPY、QQQ、IWM 这类头部 ETF，以及 NVDA、AAPL、TSLA、AMD、MU、INTC
+                等正股和期权都比较活跃的大盘股。它用于观察关键价格区、单核心、拉扯盘和周度市场结构，不构成任何投资建议。
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary class="faq-header">
+                <span>交易美股小盘股时，KairAlert 适合解决什么问题？</span>
+                <svg class="chevron" fill="none" height="24" stroke="currentColor" stroke-width="1.5"
+                  viewBox="0 0 24 24" width="24">
+                  <path d="M6 9l6 6 6-6"></path>
+                </svg>
+              </summary>
+              <div class="faq-body">
+                KairAlert 专门面向小盘股独特的波动特征设计。不同于普通新闻聚合器，它每天过滤 20,000+ 信息源，帮助你快速识别 FDA、并购、融资、合同/订单、合作、SEC
+                文件、期权异动和大宗交易中的潜在高价值事件。
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary class="faq-header">
+                <span>如何更早发现 FDA 相关股票异动？</span>
+                <svg class="chevron" fill="none" height="24" stroke="currentColor" stroke-width="1.5"
+                  viewBox="0 0 24 24" width="24">
+                  <path d="M6 9l6 6 6-6"></path>
+                </svg>
+              </summary>
+              <div class="faq-body">
+                使用 KairAlert 的实时 FDA 扫描能力。我们的 AI 会 7x24 小时监控 PDUFA 日期和临床试验结果，捕捉
+                <strong>批准和拒绝</strong> 两类事件。一旦消息发布，系统会尽快推送提醒，帮助你更快应对波动。<br><br><em>注意：FDA
+                  事件交易风险很高，结果具有二元性，可能造成股价快速下跌。</em>
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary class="faq-header">
+                <span>KairAlert 和传统新闻网站有什么不同？</span>
+                <svg class="chevron" fill="none" height="24" stroke="currentColor" stroke-width="1.5"
+                  viewBox="0 0 24 24" width="24">
+                  <path d="M6 9l6 6 6-6"></path>
+                </svg>
+              </summary>
+              <div class="faq-body">
+                <p>大多数传统新闻网站关注的是“新闻本身”。它们在分类、核心摘要、股票匹配和过滤上较弱，也很难把真正有价值的消息精准推送给用户。</p>
+                <br>
+                <p>使用传统新闻网站或券商 App 时，用户通常需要主动拉取某只股票或整个市场的全部新闻，再手动分类和筛选。面对成千上万家上市公司，要快速主动找到关键的一手信息几乎不现实。</p>
+                <br>
+                <p>KairAlert 做的是相反的事情：尽可能多地接入新闻，匹配到对应
+                  ticker，再由算法判断是否值得提醒。如果被判定为高价值信息，就被动推送给用户。对交易者来说，这意味着你收到的是预先过滤过的高价值消息，可以显著节省时间，提高捕捉关键信息的效率。</p>
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary class="faq-header">
+                <span>KairAlert 每天会推送多少条提醒？</span>
+                <svg class="chevron" fill="none" height="24" stroke="currentColor" stroke-width="1.5"
+                  viewBox="0 0 24 24" width="24">
+                  <path d="M6 9l6 6 6-6"></path>
+                </svg>
+              </summary>
+              <div class="faq-body">
+                每天数量不固定，取决于上游信息量和算法筛选结果。可能是 0 条，也可能是几十条。
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary class="faq-header">
+                <span>KairAlert 适合什么交易风格？</span>
+                <svg class="chevron" fill="none" height="24" stroke="currentColor" stroke-width="1.5"
+                  viewBox="0 0 24 24" width="24">
+                  <path d="M6 9l6 6 6-6"></path>
+                </svg>
+              </summary>
+              <div class="faq-body">
+                <p>KairAlert 面向新闻、资金流和盘面结构变化带来的短线波动，尤其适合超短线、快进快出的交易场景，很多交易可能在几分钟内完成。</p>
+                <br>
+                <p>实时提醒主要关注小盘股（市值低于 10 亿美元），覆盖 FDA、并购、融资、合同/订单、合作、SEC 文件、期权异动和大宗交易八类实时信号；引力流则主要面向头部 ETF
+                  和活跃大盘股，用来观察关键价格区和市场结构。</p>
+                <br>
+                <p class="text-sm opacity-muted">免责声明：KairAlert 是新闻聚合和过滤工具，其信息流中的任何内容都不构成投资建议。超短线交易风险极高，请基于自己的判断做决策。</p>
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary class="faq-header">
+                <span>如何联系你们？</span>
+                <svg class="chevron" fill="none" height="24" stroke="currentColor" stroke-width="1.5"
+                  viewBox="0 0 24 24" width="24">
+                  <path d="M6 9l6 6 6-6"></path>
+                </svg>
+              </summary>
+              <div class="faq-body">
+                <p>你可以通过以下方式联系我们：</p>
+                <ol>
+                  <li>Email: <a
+                      href="mailto:support@kairalert.pro?subject=Request%20for%20KairAlert%20Free%20Trial">support@kairalert.pro</a>
+                  </li>
+                  <li>Twitter: <a href="https://twitter.com/zdying2024" target="_blank">@zdying2024</a></li>
+                  <li>Discord: <a href="https://discord.gg/ahbAUYGAw4" target="_blank">加入社区</a></li>
+                </ol>
+              </div>
+            </details>
+
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <section class="cta-bottom section">
+    <div class="container text-center">
+      <h2>准备好捕捉下一次突破了吗？</h2>
+      <a href="#how-to-start" class="btn btn-primary btn-large js-platform-cta">
+        立即试用
+      </a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-social">
+        <a href="https://twitter.com/zdying2024" target="_blank" aria-label="Twitter">
+          <i class="icon-twitter"></i>
+        </a>
+        <a href="https://discord.gg/ahbAUYGAw4" target="_blank" aria-label="Discord">
+          <i class="icon-discord"></i>
+        </a>
+        <a href="mailto:support@kairalert.pro?subject=Request%20for%20KairAlert%20Free%20Trial" target="_blank"
+          aria-label="Email">
+          <i class="icon-mail"></i>
+        </a>
+      </div>
+
+      <div class="footer-disclaimer max-w-md">
+        <p>
+          <strong>免责声明：</strong>KairAlert 是数据聚合和新闻提醒工具。所有内容仅供
+          <strong>信息参考，不构成投资建议</strong>。股票交易，尤其是小盘股和低价股交易，具有极高风险。历史表现不代表未来结果。做出任何投资决策前，请咨询合格的金融顾问。
+        </p>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 KairAlert. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="../privacy.html">隐私政策</a>
+          <span class="sep">|</span>
+          <span>支持邮箱：<a href="mailto:support@kairalert.pro">support@kairalert.pro</a></span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div id="android-push-dialog" class="site-dialog-overlay" aria-hidden="true">
+    <div class="site-dialog" role="dialog" aria-modal="true" aria-labelledby="android-push-dialog-title">
+      <div class="site-dialog-title">
+        <span id="android-push-dialog-title">Android 推送提示</span>
+      </div>
+      <div class="site-dialog-body">
+        在中国大陆，Web App 可能无法稳定收到系统级推送。如果你需要接收系统推送提醒，请下载 APK 安装。
+      </div>
+      <div class="site-dialog-actions">
+        <a href="https://kastatic.pages.dev/apk/kairalert.apk" class="site-dialog-btn site-dialog-btn-ghost">下载 APK</a>
+        <a href="https://app.kairalert.pro/" class="site-dialog-btn site-dialog-btn-confirm">继续打开</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="../main.js"></script>
+  <script>
+    (() => {
+      // Mobile menu toggle
+      const menuTrigger = document.getElementById('js-menu-trigger');
+      const nav = document.querySelector('.desktop-nav');
+      if (menuTrigger && nav) {
+        const closeMenu = () => {
+          nav.classList.remove('open');
+          menuTrigger.setAttribute('aria-expanded', 'false');
+        };
+
+        menuTrigger.addEventListener('click', () => {
+          const isOpen = nav.classList.toggle('open');
+          menuTrigger.setAttribute('aria-expanded', String(isOpen));
+        });
+
+        nav.querySelectorAll('a').forEach((link) => {
+          link.addEventListener('click', closeMenu);
+        });
+      }
+
+      // CTA scrolls to start guide section
+      const ctaButtons = document.querySelectorAll('.js-platform-cta');
+      const startGuideSection = document.getElementById('how-to-start');
+      const androidDialog = document.getElementById('android-push-dialog');
+      const appOpenLinks = document.querySelectorAll('.js-app-open-link');
+      const appUrl = 'https://app.kairalert.pro/';
+      const userAgent = navigator.userAgent || '';
+      const isAndroid = /Android/i.test(userAgent);
+      const isIOS = /iPhone|iPad|iPod/i.test(userAgent);
+      const openAndroidDialog = () => {
+        if (!androidDialog) return;
+        androidDialog.classList.add('visible');
+        androidDialog.setAttribute('aria-hidden', 'false');
+      };
+      const closeAndroidDialog = () => {
+        if (!androidDialog) return;
+        androidDialog.classList.remove('visible');
+        androidDialog.setAttribute('aria-hidden', 'true');
+      };
+
+      if (androidDialog) {
+        androidDialog.addEventListener('click', (event) => {
+          if (event.target === androidDialog) {
+            closeAndroidDialog();
+          }
+        });
+      }
+
+      const openAppWithPlatformNotice = () => {
+        if (isAndroid) {
+          openAndroidDialog();
+          return;
+        }
+        window.location.href = appUrl;
+      };
+
+      appOpenLinks.forEach((link) => {
+        link.addEventListener('click', (event) => {
+          event.preventDefault();
+          openAppWithPlatformNotice();
+        });
+      });
+
+      ctaButtons.forEach((button) => {
+        button.addEventListener('click', (event) => {
+          event.preventDefault();
+          if (isAndroid) {
+            openAndroidDialog();
+            return;
+          }
+          if (isIOS) {
+            window.location.href = appUrl;
+            return;
+          }
+          if (startGuideSection) {
+            startGuideSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+    })();
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "KairAlert",
+      "operatingSystem": "Android, iOS",
+      "applicationCategory": "FinanceApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "KairAlert 为美股交易者提供实时催化剂提醒，覆盖 FDA、并购、融资、合同订单、合作、SEC 文件、期权异动和大宗交易，并提供引力流和量化实验室研究。"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "KairAlert 覆盖哪些信号和量化工具？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "KairAlert 覆盖八类实时信号：FDA 更新、并购、融资、合同/订单、合作、SEC 文件、期权异动和大宗交易。同时提供引力流和量化实验室，用于观察头部 ETF、活跃大盘股和市场结构。"
+        }
+      }, {
+        "@type": "Question",
+        "name": "引力流适合看哪些标的？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "引力流主要面向 SPY、QQQ、IWM 这类头部 ETF，以及 NVDA、AAPL、TSLA、AMD、MU、INTC 等正股和期权都比较活跃的大盘股。它用于观察关键价格区、单核心、拉扯盘和周度市场结构，不构成任何投资建议。"
+        }
+      }, {
+        "@type": "Question",
+        "name": "如何更早发现 FDA 相关股票异动？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "使用 KairAlert 的实时 FDA 扫描能力。我们的 AI 会 7x24 小时监控 PDUFA 日期和临床试验结果，捕捉批准和拒绝两类事件。一旦消息发布，系统会尽快推送提醒，帮助你更快应对波动。注意：FDA 事件交易风险很高，结果具有二元性，可能造成股价快速下跌。"
+        }
+      }, {
+        "@type": "Question",
+        "name": "KairAlert 和传统新闻网站有什么不同？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "传统新闻网站通常需要用户主动搜索和手动过滤。KairAlert 使用 AI 对新闻进行分类、匹配和筛选，并把高价值信息被动推送给用户，从而节省时间。"
+        }
+      }, {
+        "@type": "Question",
+        "name": "KairAlert 每天会推送多少条提醒？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "每天数量不固定，取决于上游信息量和算法筛选结果。可能是 0 条，也可能是几十条。"
+        }
+      }, {
+        "@type": "Question",
+        "name": "KairAlert 适合什么交易风格？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "KairAlert 面向新闻、资金流和盘面结构变化带来的短线波动，实时提醒主要关注小盘股，提供八类实时信号；引力流则主要面向头部 ETF 和活跃大盘股，用于观察关键价格区和市场结构。"
+        }
+      }, {
+        "@type": "Question",
+        "name": "如何联系你们？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "你可以通过 Email（support@kairalert.pro）、Twitter（@zdying2024）或 Discord 社区联系我们。"
+        }
+      }]
+    }
+  ]
+}
+  </script>
+</body>
+
+</html>

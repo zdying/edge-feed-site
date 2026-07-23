@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>KairAlert 量化实验室文章</title>
+  <meta name="description" content="KairAlert 量化实验室发布的数据研究、信号复盘、市场微观结构观察和交易框架文章。">
+  <link rel="canonical" href="https://kairalert.pro/quant-lab/">
+  <link rel="icon" type="image/png" href="../assets/logo_circle.png">
+  <link rel="stylesheet" href="../style.css?v=20260713-dialog-buttons">
+  <style>
+    .quant-static-page{background:#070707;color:#fff;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;margin:0;min-height:100vh;}
+    .quant-static-header{position:sticky;top:0;z-index:20;background:rgba(7,7,7,.84);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.08);}
+    .quant-static-nav{max-width:860px;margin:0 auto;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:20px;}
+    .quant-static-logo{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-weight:800;}
+    .quant-static-logo img{width:34px;height:34px;border-radius:8px;}
+    .quant-static-links{display:flex;gap:16px;align-items:center;font-size:14px;}
+    .quant-static-links a{color:rgba(255,255,255,.72);text-decoration:none;}
+    .quant-static-main{max-width:860px;margin:0 auto;padding:52px 20px 72px;}
+    .quant-static-kicker{display:inline-flex;margin-bottom:18px;padding:7px 10px;border:1px solid rgba(45,212,191,.3);border-radius:999px;background:rgba(45,212,191,.1);color:#5eead4;font-size:12px;font-weight:800;}
+    .quant-static-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
+    .quant-static-tags .quant-static-kicker{margin-bottom:0;}
+    .quant-static-title{margin:0;color:#fff;font-size:clamp(30px,5vw,52px);line-height:1.12;font-weight:850;letter-spacing:0;}
+    .quant-static-subtitle{margin:18px 0 0;max-width:720px;color:rgba(226,232,240,.76);font-size:18px;line-height:1.65;}
+    .quant-static-meta{margin-top:20px;color:rgba(160,160,160,.78);font-size:13px;font-weight:650;}
+    .quant-static-card{margin-top:34px;padding-top:26px;border-top:1px solid rgba(255,255,255,.08);}
+    .quant-list{display:grid;gap:0;margin-top:38px;border-top:1px solid rgba(255,255,255,.1);}
+    .quant-list-card{display:block;padding:24px 0;border-bottom:1px solid rgba(255,255,255,.1);color:#fff;text-decoration:none;}
+    .quant-list-card:hover h2{color:#5eead4;}
+    .quant-list-meta{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin-top:12px;}
+    .quant-list-date{color:rgba(226,232,240,.58);font-size:13px;font-weight:750;line-height:1;}
+    .quant-list-tags{display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
+    .quant-list-tag{display:inline-flex;max-width:100%;padding:5px 8px;border:1px solid rgba(45,212,191,.26);border-radius:999px;background:rgba(45,212,191,.08);color:#5eead4;font-size:12px;font-weight:800;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .quant-list-body{min-width:0;}
+    .quant-list-card h2{margin:0;font-size:22px;line-height:1.35;letter-spacing:0;transition:color .16s ease;}
+    .quant-list-card p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin:9px 0 0;color:rgba(226,232,240,.68);font-size:15px;line-height:1.65;}
+    .md-root{display:flex;flex-direction:column;align-items:stretch;}
+    .md-block{margin-bottom:18px;}
+    .md-spacer{height:14px;}
+    .md-h1{color:#fff;font-size:21px;font-weight:820;line-height:1.4;}
+    .md-h2{position:relative;padding-left:13px;color:#fff;font-size:17px;font-weight:800;line-height:1.5;}
+    .md-h2::before{position:absolute;top:.24em;bottom:.22em;left:0;width:3px;border-radius:999px;background:linear-gradient(180deg,#3b82f6,#2dd4bf);content:"";}
+    .md-h3{color:#fff;font-size:15px;font-weight:760;line-height:1.5;}
+    .md-para,.md-blockquote,.md-ul,.md-ol{color:rgba(226,232,240,.86);font-size:17px;line-height:1.85;}
+    .md-para{margin:0;}
+    .md-bold{color:rgba(255,255,255,.96);font-weight:760;}
+    .md-colored{font-weight:760;}
+    .md-italic{font-style:italic;}
+    .md-del{text-decoration:line-through;opacity:.65;}
+    .md-link{color:#60a5fa;font-weight:650;text-decoration:underline;text-underline-offset:2px;}
+    .md-code{padding:2px 6px;border:1px solid rgba(255,255,255,.08);border-radius:6px;background:rgba(15,23,42,.7);color:#a5f3fc;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.85em;}
+    .md-pre{margin:0;overflow-x:auto;border:1px solid rgba(148,163,184,.12);border-radius:12px;background:rgba(2,6,23,.62);}
+    .md-codeblock{display:block;padding:15px 16px;color:#e2e8f0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;line-height:1.6;white-space:pre;}
+    .md-table-wrap{overflow-x:auto;border:1px solid rgba(255,255,255,.08);border-radius:12px;background:rgba(255,255,255,.04);}
+    .md-table{width:100%;border-collapse:collapse;table-layout:fixed;}
+    .md-table thead tr{background:rgba(96,165,250,.12);}
+    .md-table th,.md-table td{padding:10px 12px;text-align:left;font-size:13px;}
+    .md-table th{color:#fff;font-weight:750;}
+    .md-table td{color:rgba(226,232,240,.74);font-weight:500;}
+    .md-table td+td,.md-table th+th{border-left:1px solid rgba(255,255,255,.08);}
+    .md-table tbody tr+tr td{border-top:1px solid rgba(255,255,255,.08);}
+    .md-image-wrap{overflow:hidden;border-radius:12px;text-align:center;}
+    .md-image-wrap img{display:block;width:auto;max-width:100%;max-height:720px;margin:0 auto;object-fit:contain;}
+    .md-image-alt{display:block;padding:8px 10px;color:rgba(160,160,160,.82);font-size:12px;line-height:1.4;}
+    .md-chart-placeholder{display:block;min-height:84px;padding:16px;border:1px dashed rgba(45,212,191,.25);border-radius:12px;background:rgba(45,212,191,.055);color:rgba(226,232,240,.72);font-size:13px;text-align:center;}
+    .md-chart-placeholder>span{display:block;padding:24px 16px;}
+    .md-blockquote{margin:0;padding:14px 16px;border:1px solid rgba(96,165,250,.16);border-left:3px solid rgba(96,165,250,.72);border-radius:12px;background:rgba(96,165,250,.075);font-style:italic;}
+    .md-hr{border:0;border-top:1px solid rgba(255,255,255,.09);margin:8px 0;}
+    @media (max-width:640px){.quant-static-links{display:none}.quant-static-main{padding-top:34px}.md-para,.md-blockquote,.md-ul,.md-ol{font-size:16px}.quant-static-card{margin-top:26px}}
+  </style>
+  <script type="module" src="../assets/quant-charts.js"></script>
+  
+</head>
+<body class="quant-static-page">
+  
+  <header class="quant-static-header">
+    <nav class="quant-static-nav">
+      <a class="quant-static-logo" href="../zh/"><img src="../assets/logo_circle.png" alt="">KairAlert</a>
+      <div class="quant-static-links"><a href="../zh/">官网</a><a href="../">English</a></div>
+    </nav>
+  </header>
+  <main class="quant-static-main">
+    <span class="quant-static-kicker">Quant Lab</span>
+    <h1 class="quant-static-title">量化实验室</h1>
+    <p class="quant-static-subtitle">数据研究、信号复盘、市场微观结构观察，以及面向主动交易者的实战框架。</p>
+    <section class="quant-list"><a class="quant-list-card" href="./%E6%9C%AC%E5%91%A8%E5%B8%82%E5%9C%BA%E6%80%8E%E4%B9%88%E7%9C%8B%EF%BC%9F%E4%B8%8A%E5%91%A8%E9%A3%8E%E9%99%A9%E5%85%91%E7%8E%B0%E5%90%8E%EF%BC%8C%E5%B8%82%E5%9C%BA%E8%BF%9B%E5%85%A5%E4%BF%AE%E5%A4%8D%E6%8B%89%E6%89%AF-2026-07-20/">
+      <div class="quant-list-body">
+        <h2>本周市场怎么看？上周风险兑现后，市场进入修复拉扯 - 2026-07-20</h2>
+        <p>从指数 ETF、核心权重、半导体链、避险和波动信号观察本周市场结构。</p>
+        <div class="quant-list-meta">
+          <span class="quant-list-date">2026-07-20</span>
+          <span class="quant-list-tags"><span class="quant-list-tag">引力流指标</span><span class="quant-list-tag">市场周报</span></span>
+        </div>
+      </div>
+    </a>
+<a class="quant-list-card" href="./%E6%9C%AC%E5%91%A8%E5%B8%82%E5%9C%BA%E6%80%8E%E4%B9%88%E7%9C%8B%EF%BC%9F%E5%BC%95%E5%8A%9B%E6%B5%81%E7%9C%8B%E5%88%B0%E7%9A%84%E6%98%AF%E2%80%9C%E9%9C%87%E8%8D%A1%E5%81%8F%E5%BC%B1%E2%80%9D-2026-07-13/">
+      <div class="quant-list-body">
+        <h2>本周市场怎么看？引力流看到的是“震荡偏弱” - 2026-07-13</h2>
+        <p>从指数 ETF、核心权重、半导体链、避险和波动信号观察本周市场结构。</p>
+        <div class="quant-list-meta">
+          <span class="quant-list-date">2026-07-13</span>
+          <span class="quant-list-tags"><span class="quant-list-tag">引力流指标</span><span class="quant-list-tag">市场周报</span></span>
+        </div>
+      </div>
+    </a>
+<a class="quant-list-card" href="./nvda%E7%A0%B4200%E4%B8%BA%E4%BD%95%E6%AD%A2%E8%B7%8C%EF%BC%9F%E8%81%8A%E8%81%8A%E5%BC%95%E5%8A%9B%E6%B5%81%E9%87%8C%E7%9A%84200-205%E6%A0%B8%E5%BF%83%E5%8C%BA/">
+      <div class="quant-list-body">
+        <h2>NVDA破200为何止跌？聊聊引力流里的200-205核心区</h2>
+        <p>NVDA 盘中跌破 200 后为什么没有继续下行？用 KairAlert 引力图复盘 200-205 核心区的验证过程。</p>
+        <div class="quant-list-meta">
+          <span class="quant-list-date">2026-07-10</span>
+          <span class="quant-list-tags"><span class="quant-list-tag">引力流指标</span><span class="quant-list-tag">技术分析</span></span>
+        </div>
+      </div>
+    </a>
+<a class="quant-list-card" href="./%E4%B8%8D%E6%98%AF%E6%AF%8F%E5%A4%A9%E9%83%BD%E6%9C%89710%EF%BC%9A%E8%81%8A%E8%81%8A%E5%BC%95%E5%8A%9B%E6%B5%81%E9%87%8C%E7%9A%84%E5%8D%95%E6%A0%B8%E5%BF%83%E5%92%8C%E6%8B%89%E6%89%AF%E7%9B%98/">
+      <div class="quant-list-body">
+        <h2>不是每天都有710：聊聊引力流里的单核心和拉扯盘</h2>
+        <p>不是每天都有单一核心引力位。用 7 月 8 日 QQQ 和 IWM 的盘中结构，解释单核心与拉扯盘的区别。</p>
+        <div class="quant-list-meta">
+          <span class="quant-list-date">2026-07-09</span>
+          <span class="quant-list-tags"><span class="quant-list-tag">引力流指标</span><span class="quant-list-tag">技术分析</span></span>
+        </div>
+      </div>
+    </a>
+<a class="quant-list-card" href="./qqq-%E6%98%A8%E5%A4%A9%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%80%E7%9B%B4%E7%BB%95%E7%9D%80-710-%E8%B5%B0%EF%BC%9F%E8%81%8A%E8%81%8A%E6%88%91%E6%9C%80%E8%BF%91%E5%9C%A8%E7%9C%8B%E7%9A%84%E4%B8%80%E4%B8%AA%E2%80%9C%E5%BC%95%E5%8A%9B%E4%BD%8D%E2%80%9D%E6%8C%87%E6%A0%87/">
+      <div class="quant-list-body">
+        <h2>QQQ 昨天为什么一直绕着 710 走？聊聊我最近在看的一个“引力位”指标</h2>
+        <p>用 QQQ 0DTE 盘中回放解释 710 为什么成为当天反复验证的核心引力位。</p>
+        <div class="quant-list-meta">
+          <span class="quant-list-date">2026-07-08</span>
+          <span class="quant-list-tags"><span class="quant-list-tag">引力流指标</span><span class="quant-list-tag">技术分析</span></span>
+        </div>
+      </div>
+    </a>
+<a class="quant-list-card" href="./%E7%BE%8E%E8%82%A1%E9%81%8D%E5%9C%B0%E6%98%AF%E2%80%9C%E5%9E%83%E5%9C%BE%E2%80%9D%EF%BC%8C%E4%BD%86%E6%88%91%E4%BB%AC%E5%B8%8C%E6%9C%9B%E6%8D%A1%E5%87%BA%E9%82%A3-1percent-%E7%9A%84%E9%BB%84%E9%87%91/">
+      <div class="quant-list-body">
+        <h2>美股遍地是“垃圾”，但我们希望捡出那 1% 的黄金</h2>
+        <p>KairAlert 如何从新闻、监管文件和资金流向中筛出少数真正有价值的市场信号。</p>
+        <div class="quant-list-meta">
+          <span class="quant-list-date">2026-05-09</span>
+          <span class="quant-list-tags"><span class="quant-list-tag">交易框架</span></span>
+        </div>
+      </div>
+    </a>
+<a class="quant-list-card" href="./kairalert-%E7%AE%80%E4%BB%8B/">
+      <div class="quant-list-body">
+        <h2>KairAlert 简介</h2>
+        <p>KairAlert 是一款面向美股超短线交易者的 AI Alpha 信号引擎，覆盖新闻催化剂、FDA 日历、SEC 文件、期权异动、大宗交易和引力图等实时信号与量化工具。</p>
+        <div class="quant-list-meta">
+          <span class="quant-list-date">2026-01-01</span>
+          <span class="quant-list-tags"><span class="quant-list-tag">KairAlert</span><span class="quant-list-tag">产品介绍</span></span>
+        </div>
+      </div>
+    </a></section>
+  </main>
+</body>
+</html>

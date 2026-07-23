@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>KairAlert 简介 | KairAlert 量化实验室</title>
+  <meta name="description" content="KairAlert 是一款面向美股超短线交易者的 AI Alpha 信号引擎，覆盖新闻催化剂、FDA 日历、SEC 文件、期权异动、大宗交易和引力图等实时信号与量化工具。">
+  <link rel="canonical" href="https://kairalert.pro/quant-lab/kairalert-%E7%AE%80%E4%BB%8B/">
+  <link rel="icon" type="image/png" href="../../assets/logo_circle.png">
+  <link rel="stylesheet" href="../../style.css?v=20260713-dialog-buttons">
+  <style>
+    .quant-static-page{background:#070707;color:#fff;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;margin:0;min-height:100vh;}
+    .quant-static-header{position:sticky;top:0;z-index:20;background:rgba(7,7,7,.84);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.08);}
+    .quant-static-nav{max-width:860px;margin:0 auto;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:20px;}
+    .quant-static-logo{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-weight:800;}
+    .quant-static-logo img{width:34px;height:34px;border-radius:8px;}
+    .quant-static-links{display:flex;gap:16px;align-items:center;font-size:14px;}
+    .quant-static-links a{color:rgba(255,255,255,.72);text-decoration:none;}
+    .quant-static-main{max-width:860px;margin:0 auto;padding:52px 20px 72px;}
+    .quant-static-kicker{display:inline-flex;margin-bottom:18px;padding:7px 10px;border:1px solid rgba(45,212,191,.3);border-radius:999px;background:rgba(45,212,191,.1);color:#5eead4;font-size:12px;font-weight:800;}
+    .quant-static-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
+    .quant-static-tags .quant-static-kicker{margin-bottom:0;}
+    .quant-static-title{margin:0;color:#fff;font-size:clamp(30px,5vw,52px);line-height:1.12;font-weight:850;letter-spacing:0;}
+    .quant-static-subtitle{margin:18px 0 0;max-width:720px;color:rgba(226,232,240,.76);font-size:18px;line-height:1.65;}
+    .quant-static-meta{margin-top:20px;color:rgba(160,160,160,.78);font-size:13px;font-weight:650;}
+    .quant-static-card{margin-top:34px;padding-top:26px;border-top:1px solid rgba(255,255,255,.08);}
+    .quant-list{display:grid;gap:0;margin-top:38px;border-top:1px solid rgba(255,255,255,.1);}
+    .quant-list-card{display:block;padding:24px 0;border-bottom:1px solid rgba(255,255,255,.1);color:#fff;text-decoration:none;}
+    .quant-list-card:hover h2{color:#5eead4;}
+    .quant-list-meta{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin-top:12px;}
+    .quant-list-date{color:rgba(226,232,240,.58);font-size:13px;font-weight:750;line-height:1;}
+    .quant-list-tags{display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
+    .quant-list-tag{display:inline-flex;max-width:100%;padding:5px 8px;border:1px solid rgba(45,212,191,.26);border-radius:999px;background:rgba(45,212,191,.08);color:#5eead4;font-size:12px;font-weight:800;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .quant-list-body{min-width:0;}
+    .quant-list-card h2{margin:0;font-size:22px;line-height:1.35;letter-spacing:0;transition:color .16s ease;}
+    .quant-list-card p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin:9px 0 0;color:rgba(226,232,240,.68);font-size:15px;line-height:1.65;}
+    .md-root{display:flex;flex-direction:column;align-items:stretch;}
+    .md-block{margin-bottom:18px;}
+    .md-spacer{height:14px;}
+    .md-h1{color:#fff;font-size:21px;font-weight:820;line-height:1.4;}
+    .md-h2{position:relative;padding-left:13px;color:#fff;font-size:17px;font-weight:800;line-height:1.5;}
+    .md-h2::before{position:absolute;top:.24em;bottom:.22em;left:0;width:3px;border-radius:999px;background:linear-gradient(180deg,#3b82f6,#2dd4bf);content:"";}
+    .md-h3{color:#fff;font-size:15px;font-weight:760;line-height:1.5;}
+    .md-para,.md-blockquote,.md-ul,.md-ol{color:rgba(226,232,240,.86);font-size:17px;line-height:1.85;}
+    .md-para{margin:0;}
+    .md-bold{color:rgba(255,255,255,.96);font-weight:760;}
+    .md-colored{font-weight:760;}
+    .md-italic{font-style:italic;}
+    .md-del{text-decoration:line-through;opacity:.65;}
+    .md-link{color:#60a5fa;font-weight:650;text-decoration:underline;text-underline-offset:2px;}
+    .md-code{padding:2px 6px;border:1px solid rgba(255,255,255,.08);border-radius:6px;background:rgba(15,23,42,.7);color:#a5f3fc;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.85em;}
+    .md-pre{margin:0;overflow-x:auto;border:1px solid rgba(148,163,184,.12);border-radius:12px;background:rgba(2,6,23,.62);}
+    .md-codeblock{display:block;padding:15px 16px;color:#e2e8f0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;line-height:1.6;white-space:pre;}
+    .md-table-wrap{overflow-x:auto;border:1px solid rgba(255,255,255,.08);border-radius:12px;background:rgba(255,255,255,.04);}
+    .md-table{width:100%;border-collapse:collapse;table-layout:fixed;}
+    .md-table thead tr{background:rgba(96,165,250,.12);}
+    .md-table th,.md-table td{padding:10px 12px;text-align:left;font-size:13px;}
+    .md-table th{color:#fff;font-weight:750;}
+    .md-table td{color:rgba(226,232,240,.74);font-weight:500;}
+    .md-table td+td,.md-table th+th{border-left:1px solid rgba(255,255,255,.08);}
+    .md-table tbody tr+tr td{border-top:1px solid rgba(255,255,255,.08);}
+    .md-image-wrap{overflow:hidden;border-radius:12px;text-align:center;}
+    .md-image-wrap img{display:block;width:auto;max-width:100%;max-height:720px;margin:0 auto;object-fit:contain;}
+    .md-image-alt{display:block;padding:8px 10px;color:rgba(160,160,160,.82);font-size:12px;line-height:1.4;}
+    .md-chart-placeholder{display:block;min-height:84px;padding:16px;border:1px dashed rgba(45,212,191,.25);border-radius:12px;background:rgba(45,212,191,.055);color:rgba(226,232,240,.72);font-size:13px;text-align:center;}
+    .md-chart-placeholder>span{display:block;padding:24px 16px;}
+    .md-blockquote{margin:0;padding:14px 16px;border:1px solid rgba(96,165,250,.16);border-left:3px solid rgba(96,165,250,.72);border-radius:12px;background:rgba(96,165,250,.075);font-style:italic;}
+    .md-hr{border:0;border-top:1px solid rgba(255,255,255,.09);margin:8px 0;}
+    @media (max-width:640px){.quant-static-links{display:none}.quant-static-main{padding-top:34px}.md-para,.md-blockquote,.md-ul,.md-ol{font-size:16px}.quant-static-card{margin-top:26px}}
+  </style>
+  <script type="module" src="../../assets/quant-charts.js"></script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"KairAlert 简介","description":"KairAlert 是一款面向美股超短线交易者的 AI Alpha 信号引擎，覆盖新闻催化剂、FDA 日历、SEC 文件、期权异动、大宗交易和引力图等实时信号与量化工具。","author":{"@type":"Organization","name":"KairAlert"},"publisher":{"@type":"Organization","name":"KairAlert"},"keywords":["KairAlert","产品介绍"],"datePublished":"2026-01-01","dateModified":"2026-01-01","mainEntityOfPage":"https://kairalert.pro/quant-lab/kairalert-%E7%AE%80%E4%BB%8B/"}</script>
+</head>
+<body class="quant-static-page">
+  
+  <header class="quant-static-header">
+    <nav class="quant-static-nav">
+      <a class="quant-static-logo" href="../../zh/"><img src="../../assets/logo_circle.png" alt="">KairAlert</a>
+      <div class="quant-static-links"><a href="../">量化实验室</a><a href="../../zh/">官网</a></div>
+    </nav>
+  </header>
+  <main class="quant-static-main">
+    <div class="quant-static-tags"><span class="quant-static-kicker">KairAlert</span><span class="quant-static-kicker">产品介绍</span></div>
+    <h1 class="quant-static-title">KairAlert 简介</h1>
+    
+    <div class="quant-static-meta">2026-01-01 · KairAlert</div>
+    <article class="quant-static-card md-root"><div class="md-block"><div class="md-h2">什么是 KairAlert？</div></div><div class="md-block"><p class="md-para">KairAlert 是一款专为美股超短线交易者打造的、基于 AI、大数据和算法的 <span class="md-bold">Alpha 信号引擎</span>。它一方面专注于低价、低市值股票的市场新闻和交易信号，另一方面也提供面向头部 ETF 和活跃大盘股的量化工具，帮助用户观察盘中结构和关键价格区。</p></div><div class="md-block"><p class="md-para">在新闻源头获取到新闻后，KairAlert 会通过多层复杂算法对新闻进行分类和过滤，最终将算法认为有价值的新闻推送给用户。</p></div><div class="md-block"><p class="md-para">推送截图如下：</p></div><div class="md-block"><div class="md-image-wrap"><img src="https://kastatic.pages.dev/screenshot/kairalerts-news.webp" alt="KairAlert 新闻提醒详情" loading="lazy"><span class="md-image-alt">KairAlert 新闻提醒详情</span></div></div><div class="md-block"><p class="md-para">KairAlert 会为您清晰地展示事件类型、核心摘要、匹配的股票代码和基本信息，让您在 1 秒内抓住决策所需的所有信息。</p></div><div class="md-block"><p class="md-para">使用老虎或者富途的用户，还能点击直达对应个股行情页面。</p></div><div class="md-block"><hr class="md-hr"></div><div class="md-block"><div class="md-h2">我们为什么开发 KairAlert？</div></div><div class="md-block"><p class="md-para">每天市场上都有大量新闻，各种渠道的新闻数量加起来基本都在 2 万条以上。但这其中真正有价值的新闻并不多，并不是所有新闻都可能造成股价的大幅波动。</p></div><div class="md-block"><p class="md-para">用户通常会面临以下几个痛点：</p></div><div class="md-block"><ol class="md-ol"><li>新闻太多，没有足够多的时间去看这么多新闻。</li><li>无法过滤低价值新闻。</li><li>单一新闻渠道新闻不全，多渠道切换特别不方便。</li></ol></div><div class="md-block"><p class="md-para">KairAlert 正是为了解决这些问题而生。</p></div><div class="md-block"><p class="md-para">KairAlert 会从很多渠道获取信息，然后通过多层复杂算法进行分类、分析、过滤、匹配目标股票、获取股票基本信息等流程，过滤掉那些低价值新闻，只把算法认为有价值的新闻推送给用户。</p></div><div class="md-block"><p class="md-para">KairAlert 的“多层复杂算法”不仅仅是关键词过滤。它融合了 AI 技术和 NER 技术，能真正读懂新闻的核心事件，例如识别 FDA 批准、区分利好融资和有毒融资，并能自动聚合不同来源的重复报道，确保推送到你手中的是第一手、最高价值的事件本身。</p></div><div class="md-block"><hr class="md-hr"></div><div class="md-block"><div class="md-h2">KairAlert 相比传统新闻网站有什么特殊之处？</div></div><div class="md-block"><p class="md-para">传统新闻网站大多主要专注于新闻本身，对新闻的分类、核心内容总结、股票匹配、筛选和推送等功能比较弱，无法将新闻精准地推送到用户。</p></div><div class="md-block"><p class="md-para">用户使用传统新闻网站或者券商 App 时，属于主动获取个股或者市场的全部新闻，然后手动分类、过滤。美股上市公司有大几千个，用户也很难快速、主动地获取到第一手信息。</p></div><div class="md-block"><p class="md-para">KairAlert 则相反。</p></div><div class="md-block"><p class="md-para">它会尽可能多地抓取新闻并匹配个股，如果算法判断有价值，就主动推送给用户。对用户来说，这是被动接收有价值新闻，系统自动分类、过滤，大幅节省时间，提升高价值新闻获取效率。</p></div><div class="md-block"><hr class="md-hr"></div><div class="md-block"><div class="md-h2">KairAlert 每天会推送多少条新闻？</div></div><div class="md-block"><p class="md-para">每天数量不定，取决于上游新闻源头产生的数量和算法筛选结果。</p></div><div class="md-block"><p class="md-para">从 0 到几十条都有可能。</p></div><div class="md-block"><hr class="md-hr"></div><div class="md-block"><div class="md-h2">KairAlert 适用于什么样的交易？</div></div><div class="md-block"><p class="md-para">KairAlert 适用于交易新闻、资金流和盘面结构变化带来的短线波动，尤其是快进快出、超短线交易。大部分交易可能在几分钟之内完成。</p></div><div class="md-block"><p class="md-para">在新闻信号上，KairAlert 主要专注于小市值，也就是 10 亿美元以内个股的新闻和交易信号。目前主要覆盖的类型包括：</p></div><div class="md-block"><ol class="md-ol"><li>FDA 批准、临床结果和 FDA 日历</li><li>合并 / 收购</li><li>融资</li><li>合同 / 订单</li><li>战略合作</li><li>SEC 文件</li><li>期权异动</li><li>大宗交易</li></ol></div><div class="md-block"><div class="md-image-wrap"><img src="https://kastatic.pages.dev/screenshot/kairalert-fda.webp" alt="KairAlert FDA 日历" loading="lazy"><span class="md-image-alt">KairAlert FDA 日历</span></div></div><div class="md-block"><div class="md-image-wrap"><img src="https://kastatic.pages.dev/screenshot/kairalert-options.webp" alt="KairAlert 期权异动" loading="lazy"><span class="md-image-alt">KairAlert 期权异动</span></div></div><div class="md-block"><div class="md-image-wrap"><img src="https://kastatic.pages.dev/screenshot/kairalert-blocktrade.webp" alt="KairAlert 大单交易" loading="lazy"><span class="md-image-alt">KairAlert 大单交易</span></div></div><div class="md-block"><p class="md-para">当然，不同信号的用法并不完全一样。比如：</p></div><div class="md-block"><ol class="md-ol"><li>新闻催化剂更适合看突发事件带来的瞬时波动。</li><li>融资要看结构，不是所有融资都是利空，也不是所有融资都值得参与。</li><li>SEC 文件更适合提前避雷，或者观察管理层和机构动作。</li><li>期权异动和大宗交易更偏资金行为，需要结合盘面一起看。</li></ol></div><div class="md-block"><p class="md-para">除了这些实时信号之外，<span class="md-bold">引力图是 KairAlert 非常重视的核心功能之一</span>。</p></div><div class="md-block"><p class="md-para">它主要面向 SPY、QQQ、IWM 这类头部 ETF，以及 NVDA、AAPL、TSLA、AMD、MU、INTC 等正股和期权都比较活跃的大盘股。因为这类标的成交更充分，盘中结构更清楚，引力图给出的关键价格区也更有参考价值。</p></div><div class="md-block"><div class="md-image-wrap"><img src="https://kastatic.pages.dev/screenshot/kairalert-gravity-map.webp" alt="KairAlert 引力图" loading="lazy"><span class="md-image-alt">KairAlert 引力图</span></div></div><div class="md-block"><p class="md-para">你可以把引力图理解成一张盘中的“价格引力地图”。它不是告诉你某只股票一定涨或一定跌，也不是传统意义上的支撑阻力线，而是帮助你观察：当前价格附近，哪些区域更容易被市场反复验证，哪些位置靠近后容易出现停留、争夺，哪些位置一旦离开后可能带来更大的波动。</p></div><div class="md-block"><p class="md-para">比如在日内交易里，有些标的会出现很清楚的核心引力位，价格一整天都围绕一个区域反复运动；有些标的则上下都有牵引，属于更容易来回拉扯的盘面。引力图的价值，是先帮你看清当前到底是“单核心”，还是“拉扯盘”，再结合自己的交易计划做判断。</p></div><div class="md-block"><p class="md-para">在周度观察里，引力图也可以用来横向比较指数 ETF、核心权重股、半导体链、避险资产和波动相关标的，判断市场是偏强、偏弱，还是处在高位拉扯。对做短线、0DTE 或指数/大盘股交易的用户来说，这种位置感尤其重要。它不能替你下单，但可以减少盲目追涨杀跌，让你更快知道：今天真正需要盯住的位置在哪里。</p></div><div class="md-block"><blockquote class="md-blockquote">免责声明：KairAlert 是一款新闻聚合与筛选工具，所有内容不构成任何投资建议。超短线交易风险极高，请根据您自己的判断进行决策。</blockquote></div><div class="md-block"><hr class="md-hr"></div><div class="md-block"><div class="md-h2">KairAlert 收费吗？</div></div><div class="md-block"><p class="md-para">KairAlert 目前已经正式上线。</p></div><div class="md-block"><p class="md-para">我们希望您能先零风险、低门槛地体验，所以目前提供 <span class="md-bold">14 天免费试用</span>。您可以先完整体验核心功能，再决定是否继续使用。</p></div><div class="md-block"><p class="md-para">如果您在试用过程中发现任何问题，或者有任何功能建议，也欢迎随时反馈给我们。KairAlert 仍然会继续快速迭代，我们也希望把它打磨得更优秀、更实用。</p></div><div class="md-block"><p class="md-para">为了给您提供真正的 <span class="md-bold">Edge</span>，KairAlert 必须在几个核心领域进行持续投入：</p></div><div class="md-block"><ol class="md-ol"><li>需要维护众多新闻渠道以及海量市场交易数据，这需要大量人力投入和财力投入。绝大部分新闻渠道、数据源都需要付费。</li><li>为了保证获取尽可能全面的新闻、更低延迟的推送和稳定的服务，需要不断优化算法策略和大数据模型，这离不开持续的研发投入。</li><li>KairAlert 能够 7x24 小时持续运行，并实时处理海量数据，离不开大量云计算、云服务、云存储和高性能算力等资源。</li><li>新功能迭代升级、问题修复等，也需要持续研发投入。</li></ol></div><div class="md-block"><p class="md-para">因此，KairAlert 后续会以订阅方式持续提供服务。具体套餐和价格，请以官网或 App 内展示为准。</p></div><div class="md-block"><hr class="md-hr"></div><div class="md-block"><div class="md-h2">KairAlert 现在已经有哪些功能？</div></div><div class="md-block"><p class="md-para">目前已经上线的功能主要包括：</p></div><div class="md-block"><ol class="md-ol"><li><span class="md-bold">实时新闻提醒</span>：覆盖 FDA、并购、融资、合同 / 订单、战略合作等新闻催化剂。</li><li><span class="md-bold">FDA 日历</span>：跟踪 FDA 相关日期、事件状态和结果。</li><li><span class="md-bold">SEC 文件监控</span>：监控 SEC 文件内容，推送有潜在价值的事件，例如 Form 6-K、Form 8-K、Form 4。</li><li><span class="md-bold">期权异动</span>：观察期权资金热力、Call / Put 情绪和重点标的。</li><li><span class="md-bold">大宗交易</span>：推送有潜在机会的大单交易数据。</li><li><span class="md-bold">引力图</span>：面向头部 ETF 和活跃大盘股，用价格引力地图展示关键价格区，帮助用户观察价格更容易停留、拉扯或释放波动的位置。</li><li><span class="md-bold">量化实验室</span>：发布一些我们自己正在看的数据研究、指标复盘和交易框架。</li></ol></div><div class="md-block"><p class="md-para">未来我们还会继续围绕“更快、更准、更少噪音”这个方向迭代。对我来说，KairAlert 不是要把所有数据都堆给用户，而是尽量把真正值得看的东西提前筛出来。</p></div><div class="md-block"><hr class="md-hr"></div><div class="md-block"><div class="md-h2">如何申请试用 KairAlert？</div></div><div class="md-block"><p class="md-para">KairAlert 目前已经正式上线，并提供 14 天免费试用。您可以通过以下方式开始：</p></div><div class="md-block"><ol class="md-ol"><li><span class="md-bold">直接访问官网</span>：<a class="md-link" href="https://kairalert.pro" target="_blank" rel="noopener noreferrer">https://kairalert.pro</a>，点击“立即试用”。</li><li><span class="md-bold">加入 Discord 社区</span>：如果您想先看看社区和更新，也可以加入我们的 Discord：<a class="md-link" href="https://discord.com/invite/ahbAUYGAw4" target="_blank" rel="noopener noreferrer">KairAlert Discord</a>。</li><li><span class="md-bold">联系我们</span>：如果您在试用或使用过程中遇到问题，可以发送邮件至 <a class="md-link" href="mailto:support@kairalert.pro" target="_blank" rel="noopener noreferrer">support@kairalert.pro</a>。</li></ol></div><div class="md-block"><hr class="md-hr"></div><div class="md-block"><div class="md-h2">Discord 还会用来做什么？</div></div><div class="md-block"><p class="md-para">现在 KairAlert 已经正式上线，主要功能会集中在产品里。</p></div><div class="md-block"><p class="md-para">Discord 更适合作为社区和沟通渠道：</p></div><div class="md-block"><ol class="md-ol"><li>发布产品更新和功能说明。</li><li>收集用户反馈和问题。</li><li>讨论一些值得关注的市场事件。</li><li>帮助新用户更快理解 KairAlert 的使用方式。</li></ol></div><div class="md-block"><p class="md-para">如果只是接收提醒和查看信号，建议优先使用 KairAlert 产品本身；如果想交流、反馈和跟进更新，可以加入 Discord。</p></div></article>
+  </main>
+</body>
+</html>

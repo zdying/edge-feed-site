@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>NVDA破200为何止跌？聊聊引力流里的200-205核心区 | KairAlert 量化实验室</title>
+  <meta name="description" content="NVDA 盘中跌破 200 后为什么没有继续下行？用 KairAlert 引力图复盘 200-205 核心区的验证过程。">
+  <link rel="canonical" href="https://kairalert.pro/quant-lab/nvda%E7%A0%B4200%E4%B8%BA%E4%BD%95%E6%AD%A2%E8%B7%8C%EF%BC%9F%E8%81%8A%E8%81%8A%E5%BC%95%E5%8A%9B%E6%B5%81%E9%87%8C%E7%9A%84200-205%E6%A0%B8%E5%BF%83%E5%8C%BA/">
+  <link rel="icon" type="image/png" href="../../assets/logo_circle.png">
+  <link rel="stylesheet" href="../../style.css?v=20260713-dialog-buttons">
+  <style>
+    .quant-static-page{background:#070707;color:#fff;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;margin:0;min-height:100vh;}
+    .quant-static-header{position:sticky;top:0;z-index:20;background:rgba(7,7,7,.84);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.08);}
+    .quant-static-nav{max-width:860px;margin:0 auto;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:20px;}
+    .quant-static-logo{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-weight:800;}
+    .quant-static-logo img{width:34px;height:34px;border-radius:8px;}
+    .quant-static-links{display:flex;gap:16px;align-items:center;font-size:14px;}
+    .quant-static-links a{color:rgba(255,255,255,.72);text-decoration:none;}
+    .quant-static-main{max-width:860px;margin:0 auto;padding:52px 20px 72px;}
+    .quant-static-kicker{display:inline-flex;margin-bottom:18px;padding:7px 10px;border:1px solid rgba(45,212,191,.3);border-radius:999px;background:rgba(45,212,191,.1);color:#5eead4;font-size:12px;font-weight:800;}
+    .quant-static-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
+    .quant-static-tags .quant-static-kicker{margin-bottom:0;}
+    .quant-static-title{margin:0;color:#fff;font-size:clamp(30px,5vw,52px);line-height:1.12;font-weight:850;letter-spacing:0;}
+    .quant-static-subtitle{margin:18px 0 0;max-width:720px;color:rgba(226,232,240,.76);font-size:18px;line-height:1.65;}
+    .quant-static-meta{margin-top:20px;color:rgba(160,160,160,.78);font-size:13px;font-weight:650;}
+    .quant-static-card{margin-top:34px;padding-top:26px;border-top:1px solid rgba(255,255,255,.08);}
+    .quant-list{display:grid;gap:0;margin-top:38px;border-top:1px solid rgba(255,255,255,.1);}
+    .quant-list-card{display:block;padding:24px 0;border-bottom:1px solid rgba(255,255,255,.1);color:#fff;text-decoration:none;}
+    .quant-list-card:hover h2{color:#5eead4;}
+    .quant-list-meta{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin-top:12px;}
+    .quant-list-date{color:rgba(226,232,240,.58);font-size:13px;font-weight:750;line-height:1;}
+    .quant-list-tags{display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
+    .quant-list-tag{display:inline-flex;max-width:100%;padding:5px 8px;border:1px solid rgba(45,212,191,.26);border-radius:999px;background:rgba(45,212,191,.08);color:#5eead4;font-size:12px;font-weight:800;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .quant-list-body{min-width:0;}
+    .quant-list-card h2{margin:0;font-size:22px;line-height:1.35;letter-spacing:0;transition:color .16s ease;}
+    .quant-list-card p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin:9px 0 0;color:rgba(226,232,240,.68);font-size:15px;line-height:1.65;}
+    .md-root{display:flex;flex-direction:column;align-items:stretch;}
+    .md-block{margin-bottom:18px;}
+    .md-spacer{height:14px;}
+    .md-h1{color:#fff;font-size:21px;font-weight:820;line-height:1.4;}
+    .md-h2{position:relative;padding-left:13px;color:#fff;font-size:17px;font-weight:800;line-height:1.5;}
+    .md-h2::before{position:absolute;top:.24em;bottom:.22em;left:0;width:3px;border-radius:999px;background:linear-gradient(180deg,#3b82f6,#2dd4bf);content:"";}
+    .md-h3{color:#fff;font-size:15px;font-weight:760;line-height:1.5;}
+    .md-para,.md-blockquote,.md-ul,.md-ol{color:rgba(226,232,240,.86);font-size:17px;line-height:1.85;}
+    .md-para{margin:0;}
+    .md-bold{color:rgba(255,255,255,.96);font-weight:760;}
+    .md-colored{font-weight:760;}
+    .md-italic{font-style:italic;}
+    .md-del{text-decoration:line-through;opacity:.65;}
+    .md-link{color:#60a5fa;font-weight:650;text-decoration:underline;text-underline-offset:2px;}
+    .md-code{padding:2px 6px;border:1px solid rgba(255,255,255,.08);border-radius:6px;background:rgba(15,23,42,.7);color:#a5f3fc;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.85em;}
+    .md-pre{margin:0;overflow-x:auto;border:1px solid rgba(148,163,184,.12);border-radius:12px;background:rgba(2,6,23,.62);}
+    .md-codeblock{display:block;padding:15px 16px;color:#e2e8f0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;line-height:1.6;white-space:pre;}
+    .md-table-wrap{overflow-x:auto;border:1px solid rgba(255,255,255,.08);border-radius:12px;background:rgba(255,255,255,.04);}
+    .md-table{width:100%;border-collapse:collapse;table-layout:fixed;}
+    .md-table thead tr{background:rgba(96,165,250,.12);}
+    .md-table th,.md-table td{padding:10px 12px;text-align:left;font-size:13px;}
+    .md-table th{color:#fff;font-weight:750;}
+    .md-table td{color:rgba(226,232,240,.74);font-weight:500;}
+    .md-table td+td,.md-table th+th{border-left:1px solid rgba(255,255,255,.08);}
+    .md-table tbody tr+tr td{border-top:1px solid rgba(255,255,255,.08);}
+    .md-image-wrap{overflow:hidden;border-radius:12px;text-align:center;}
+    .md-image-wrap img{display:block;width:auto;max-width:100%;max-height:720px;margin:0 auto;object-fit:contain;}
+    .md-image-alt{display:block;padding:8px 10px;color:rgba(160,160,160,.82);font-size:12px;line-height:1.4;}
+    .md-chart-placeholder{display:block;min-height:84px;padding:16px;border:1px dashed rgba(45,212,191,.25);border-radius:12px;background:rgba(45,212,191,.055);color:rgba(226,232,240,.72);font-size:13px;text-align:center;}
+    .md-chart-placeholder>span{display:block;padding:24px 16px;}
+    .md-blockquote{margin:0;padding:14px 16px;border:1px solid rgba(96,165,250,.16);border-left:3px solid rgba(96,165,250,.72);border-radius:12px;background:rgba(96,165,250,.075);font-style:italic;}
+    .md-hr{border:0;border-top:1px solid rgba(255,255,255,.09);margin:8px 0;}
+    @media (max-width:640px){.quant-static-links{display:none}.quant-static-main{padding-top:34px}.md-para,.md-blockquote,.md-ul,.md-ol{font-size:16px}.quant-static-card{margin-top:26px}}
+  </style>
+  <script type="module" src="../../assets/quant-charts.js"></script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"NVDA破200为何止跌？聊聊引力流里的200-205核心区","description":"NVDA 盘中跌破 200 后为什么没有继续下行？用 KairAlert 引力图复盘 200-205 核心区的验证过程。","author":{"@type":"Organization","name":"KairAlert"},"publisher":{"@type":"Organization","name":"KairAlert"},"keywords":["引力流指标","技术分析"],"datePublished":"2026-07-10","dateModified":"2026-07-10","mainEntityOfPage":"https://kairalert.pro/quant-lab/nvda%E7%A0%B4200%E4%B8%BA%E4%BD%95%E6%AD%A2%E8%B7%8C%EF%BC%9F%E8%81%8A%E8%81%8A%E5%BC%95%E5%8A%9B%E6%B5%81%E9%87%8C%E7%9A%84200-205%E6%A0%B8%E5%BF%83%E5%8C%BA/"}</script>
+</head>
+<body class="quant-static-page">
+  
+  <header class="quant-static-header">
+    <nav class="quant-static-nav">
+      <a class="quant-static-logo" href="../../zh/"><img src="../../assets/logo_circle.png" alt="">KairAlert</a>
+      <div class="quant-static-links"><a href="../">量化实验室</a><a href="../../zh/">官网</a></div>
+    </nav>
+  </header>
+  <main class="quant-static-main">
+    <div class="quant-static-tags"><span class="quant-static-kicker">引力流指标</span><span class="quant-static-kicker">技术分析</span></div>
+    <h1 class="quant-static-title">NVDA破200为何止跌？聊聊引力流里的200-205核心区</h1>
+    
+    <div class="quant-static-meta">2026-07-10 · KairAlert</div>
+    <article class="quant-static-card md-root"><div class="md-block"><p class="md-para">最近在研究KairAlert的引力图，前面写了两篇文章，得到了大家的认可，今天结合盘中走势和引力图继续给大家分享。</p></div><div class="md-block"><p class="md-para">前两篇文章，如果还没有度过，你一定不要错过，循序渐进阅读，每篇都有不同场景的解析，让会更加全面了解引力图思维。</p></div><div class="md-block"><p class="md-para"><a class="md-link" href="https://kairalert.pro/quant-lab/qqq-昨天为什么一直绕着-710-走？聊聊我最近在看的一个“引力位”指标/" target="_blank" rel="noopener noreferrer">QQQ 昨天为什么一直绕着 710 走？聊聊这个“引力位”指标</a></p></div><div class="md-block"><p class="md-para"><a class="md-link" href="https://kairalert.pro/quant-lab/不是每天都有710：聊聊引力流里的单核心和拉扯盘/" target="_blank" rel="noopener noreferrer">不是每天都有710：聊聊引力流里的单核心和拉扯盘</a></p></div><div class="md-block"><p class="md-para">如果有任何疑问，或者对引力思维感兴趣的，可以加入我们的牛牛交流群：<a class="md-link" href="https://snsim.futunn.com/share/server/N719a?_ftsdk=1773968079359162&amp;_fttime=1783666042&amp;chain_id=cASbbbfyvHuwr1.1l5159u&amp;global_content=%7B%22promote_id%22%3A13766%2C%22sub_promote_id%22%3A1%2C%22f%22%3A%22nn%2Faccount%2Fsetting%22%7D&amp;lang=zh-cn" target="_blank" rel="noopener noreferrer">邀请你加入聊天 KairAlert</a></p></div><div class="md-block"><p class="md-para"><span class="md-bold">郑重声明：文章只是技术分析，纯属个人观点，不作为任何投资建议。</span></p></div><div class="md-block"><p class="md-para">下面正是开始分享：</p></div><div class="md-block"><p class="md-para">从标题看你也知道了，今天主角是 NVDA，昨天<span class="md-bold">NVDA</span>的案例，我觉得挺适合拿出来给大伙儿聊一下。</p></div><div class="md-block"><p class="md-para">它最后没有大涨，甚至盘中还一度大跌到200，但却并没有继续往下。如果只看价格，可能会觉得200破了，后面要小心啦；但如果结合引力图看，200其实是一个很突出的关键位置，205才是上访最有潜力的位置。</p></div><div class="md-block"><p class="md-para">更完整一点说：<span class="md-bold">引力图先给出205这个目标，同时200也很突出；后面1分钟K线在200附近反复留下下影线，等于是验证了这个位置。</span></p></div><div class="md-block"><div class="md-image-wrap"><img src="https://kastatic.pages.dev/imgs/nvda_0710_gravity_open.webp?s=ka" alt="刚开盘时NVDA的引力分布" loading="lazy"><span class="md-image-alt">刚开盘时NVDA的引力分布</span></div></div><div class="md-block"><p class="md-para"><span class="md-colored" style="color:#7A7A7A">（这里插播一点别的话题：有很多人跟我反馈，看不懂之前图中的几条竖线，那个其实是内部测试的，你们不用看，我已经去掉了！现在就清爽多了，</span><span class="md-bold">好的指标，不用太复杂！越简单越好</span><span class="md-colored" style="color:#7A7A7A">～～）</span></p></div><div class="md-block"><p class="md-para">所以我后来会比较坚定地说，205目标不变。这不是收盘以后看着图倒推。昨天盘中我就发过几次。</p></div><div class="md-block"><p class="md-para">09:47左右，我发了一句：<span class="md-bold">“这两天回205应该问题不大吧。冲！”</span></p></div><div class="md-block"><p class="md-para">10:43左右，又发了一张引力图：<span class="md-bold">“205目标不变。”</span></p></div><div class="md-block"><p class="md-para">到12:47，再看盘面已经开始慢慢往上走，我又补了一句：<span class="md-bold">“正在有序推进，加油啊，205！”</span></p></div><div class="md-block"><div class="md-image-wrap"><img src="https://kastatic.pages.dev/imgs/nvda_0710_posts_205_target.webp?s=ka" alt="昨天盘中的帖子，205目标始终不变" loading="lazy"><span class="md-image-alt">昨天盘中的帖子，205目标始终不变</span></div></div><div class="md-block"><p class="md-para">然后，然后我就没有熬夜，睡觉去了，早上起来一看，<span class="md-bold">NVDA最高到204.585</span>，基本就是摸到205门口，达到了我的预期，这就是引力图的威力！</p></div><div class="md-block"><div class="md-image-wrap"><img src="https://kastatic.pages.dev/imgs/nvda_0710_intraday_205.webp?s=ka" alt="NVDA盘中走势图，守住200后，一路上攻接近205目标" loading="lazy"><span class="md-image-alt">NVDA盘中走势图，守住200后，一路上攻接近205目标</span></div></div><div class="md-block"><div class="md-h2">一开始看的不是K线，是引力图</div></div><div class="md-block"><p class="md-para">我是如何判断要去205的？其实答案很明确，上面的截图已经说明了一切：</p></div><div class="md-block"><p class="md-para"><span class="md-bold">我最开始看的不是K线，也不是任何其他的指标，而是 KairAlert的引力图。</span></p></div><div class="md-block"><p class="md-para">昨天NVDA图上最明显的位置是<span class="md-bold">205</span>。这个位置从早盘开始就很突出，说明它不是我随便瞎拍脑袋拍出来的目标，而是引力图上提示的当天市场很容易反复关注的位置。</p></div><div class="md-block"><p class="md-para">但还有一个细节也很重要：<span class="md-bold">200同样是一个明显的高点。</span></p></div><div class="md-block"><p class="md-para">205是上方最值得盯的位置，而200是下方非常关键的观察点。价格如果回到200附近，不能只当成普通整数关口看，而要看它会不会被市场在这里顶起来，形成有效的支撑。</p></div><div class="md-block"><div class="md-image-wrap"><img src="https://kastatic.pages.dev/imgs/nvda_0710_gravity_200_205.webp?s=ka" alt="股价跌到200附近，但引力依然保持在205最高，200附近也很突出" loading="lazy"><span class="md-image-alt">股价跌到200附近，但引力依然保持在205最高，200附近也很突出</span></div></div><div class="md-block"><div class="md-h2">跌到200附近以后，关键是看市场的反应</div></div><div class="md-block"><p class="md-para">10点以后，NVDA确实往下猛攻了一段。大概10:15附近，价格一度到<span class="md-bold">199.52</span>。10:30左右，又在<span class="md-bold">199.98</span>附近。单看价格，这里很容易让人觉得200破了，是不是要继续往下走。</p></div><div class="md-block"><p class="md-para">但如果结合引力图，情况可能会有所不同。为什么？？</p></div><div class="md-block"><p class="md-para">因为200本来就是图上提示过的关键位置。价格来到这里，真正要观察的是：<span class="md-colored" style="color:#F14845">它是直接打穿、打开下方空间，还是打下去以后又被拉回来？</span></p></div><div class="md-block"><p class="md-para">然后，我们再结合K线看，1分钟K线给了比较清楚的答案。</p></div><div class="md-block"><p class="md-para">你看右下角那一排完美的、整齐的、跟排线一样的下影线，价格几次往下试，但都没有顺利往下走。每次打低以后，又被拉回到200上方附近。（<span class="md-colored" style="color:#4CB85D">这真是我目前见过最完美的下影线排列了，真跟排线一样整齐</span>。）</p></div><div class="md-block"><p class="md-para">这时候K线的意义不是“单独发出买入信号”，而是：<span class="md-bold">它完美验证了引力图里200这个位置确实有效。</span></p></div><div class="md-block"><div class="md-image-wrap"><img src="https://kastatic.pages.dev/imgs/nvda_0710_intraday_200_wicks.webp?s=ka" alt="200附近有一排比较整齐的下影线" loading="lazy"><span class="md-image-alt">200附近有一排比较整齐的下影线</span></div></div><div class="md-block"><div class="md-h2">为什么后来我更坚定看205？</div></div><div class="md-block"><p class="md-para">原因很简单：<span class="md-colored" style="color:#F14845">引力图里，205还是最明显的位置，始终没变</span>，而且引力值在不断增加，那后面往205方向推进的概率就会变高，<span class="md-colored" style="color:#F14845">同时200这个关键位又被盘面K线完美验证了。</span></p></div><div class="md-block"><p class="md-para">所以我后来才会说：“205目标不变”。</p></div><div class="md-block"><p class="md-para">当然，这不是说价格会一根线拉到205，也不是说价格一定要100%到达205，更不是说看到引力图就可以无脑追。中间它也有震荡，也有反复，<span class="md-colored" style="color:#F14845">引力图的指引也并非100%</span>。</p></div><div class="md-block"><p class="md-para">但昨天这个盘面比较舒服的地方在于：引力图先告诉你，205和200都很重要；然后价格到了200附近，K线又帮你确认，这个位置确实不是随便过去的。两个东西合在一起，判断就会比只看K线或者只看价格更有底气。</p></div><div class="md-block"><p class="md-para"><span class="md-colored" style="color:#F14845">如果没有引力图，200附近那几根下影线可能只是普通的短线反弹，到底可能要去哪里，你还真不一定之知道。但有了引力图以后，上方205这个位置一直摆在那里，这会让你更有底气去判断后面可能会到达205附近。</span></p></div><div class="md-block"><p class="md-para">205，它一直都在那里等你～</p></div><div class="md-block"><div class="md-h2">其他几个股票/ETF昨日的情况</div></div><div class="md-block"><p class="md-para">不止NVDA，昨天几个活跃标的也挺有意思，我简单说几句，不展开太多：</p></div><div class="md-block"><p class="md-para">SPY：中午以后核心位置明显往750-751收敛，13:30以后基本就贴着751附近走，最后收在751.72。这个就是很典型的<span class="md-bold">尾盘吸附</span>，盘中越到后面越清楚。</p></div><div class="md-block"><p class="md-para">QQQ：早盘主要围绕720拉扯，下午以后核心慢慢上移到724附近，最后收在723.2。它不像NVDA那样是200验证后去205，更像是盘中核心区一步步往上抬。</p></div><div class="md-block"><p class="md-para">MU：1000这个位置很有代表性。早盘冲到1027以后，后面大部分时间引力图里1000都很突出，尾盘价格也一路回到1000附近，15:30已经到1002.23。这个案例适合看“远离以后又被拉回核心位”。</p></div><div class="md-block"><p class="md-para">SNDK：这个票波动大，早盘核心还在1750/1800一带，后面逐渐切到1900，再到2000。价格也从1815一路冲到1950附近，说明强势票里，引力区有时候不是固定不动，而是会跟着盘面一起上移。</p></div><div class="md-block"><p class="md-para">AMD：550这个位置也很清楚。早盘冲高到556以后，后面多次回到550附近，13:30甚至几乎贴着550走。它没有NVDA那么戏剧化，但很适合说明：有些位置不是用来追涨的，而是用来判断价格会不会反复回来看一眼。</p></div></article>
+  </main>
+</body>
+</html>

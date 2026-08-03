@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>本周市场怎么看？上周风险兑现后，市场进入修复拉扯 - 2026-07-20 | KairAlert 量化实验室</title>
+  <meta name="description" content="从指数 ETF、核心权重、半导体链、避险和波动信号观察本周市场结构。">
+  <link rel="canonical" href="https://kairalert.pro/quant-lab/%E6%9C%AC%E5%91%A8%E5%B8%82%E5%9C%BA%E6%80%8E%E4%B9%88%E7%9C%8B%EF%BC%9F%E4%B8%8A%E5%91%A8%E9%A3%8E%E9%99%A9%E5%85%91%E7%8E%B0%E5%90%8E%EF%BC%8C%E5%B8%82%E5%9C%BA%E8%BF%9B%E5%85%A5%E4%BF%AE%E5%A4%8D%E6%8B%89%E6%89%AF-2026-07-20/">
+  <link rel="icon" type="image/png" href="../../assets/logo_circle.png">
+  <link rel="stylesheet" href="../../style.css?v=20260713-dialog-buttons">
+  <style>
+    .quant-static-page{background:#070707;color:#fff;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;margin:0;min-height:100vh;}
+    .quant-static-header{position:sticky;top:0;z-index:20;background:rgba(7,7,7,.84);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.08);}
+    .quant-static-nav{max-width:860px;margin:0 auto;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:20px;}
+    .quant-static-logo{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-weight:800;}
+    .quant-static-logo img{width:34px;height:34px;border-radius:8px;}
+    .quant-static-links{display:flex;gap:16px;align-items:center;font-size:14px;}
+    .quant-static-links a{color:rgba(255,255,255,.72);text-decoration:none;}
+    .quant-static-main{max-width:860px;margin:0 auto;padding:52px 20px 72px;}
+    .quant-static-kicker{display:inline-flex;margin-bottom:18px;padding:7px 10px;border:1px solid rgba(45,212,191,.3);border-radius:999px;background:rgba(45,212,191,.1);color:#5eead4;font-size:12px;font-weight:800;}
+    .quant-static-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
+    .quant-static-tags .quant-static-kicker{margin-bottom:0;}
+    .quant-static-title{margin:0;color:#fff;font-size:clamp(30px,5vw,52px);line-height:1.12;font-weight:850;letter-spacing:0;}
+    .quant-static-subtitle{margin:18px 0 0;max-width:720px;color:rgba(226,232,240,.76);font-size:18px;line-height:1.65;}
+    .quant-static-meta{margin-top:20px;color:rgba(160,160,160,.78);font-size:13px;font-weight:650;}
+    .quant-static-card{margin-top:34px;padding-top:26px;border-top:1px solid rgba(255,255,255,.08);}
+    .quant-list{display:grid;gap:0;margin-top:38px;border-top:1px solid rgba(255,255,255,.1);}
+    .quant-list-card{display:block;padding:24px 0;border-bottom:1px solid rgba(255,255,255,.1);color:#fff;text-decoration:none;}
+    .quant-list-card:hover h2{color:#5eead4;}
+    .quant-list-meta{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin-top:12px;}
+    .quant-list-date{color:rgba(226,232,240,.58);font-size:13px;font-weight:750;line-height:1;}
+    .quant-list-tags{display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
+    .quant-list-tag{display:inline-flex;max-width:100%;padding:5px 8px;border:1px solid rgba(45,212,191,.26);border-radius:999px;background:rgba(45,212,191,.08);color:#5eead4;font-size:12px;font-weight:800;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .quant-list-body{min-width:0;}
+    .quant-list-card h2{margin:0;font-size:22px;line-height:1.35;letter-spacing:0;transition:color .16s ease;}
+    .quant-list-card p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin:9px 0 0;color:rgba(226,232,240,.68);font-size:15px;line-height:1.65;}
+    .md-root{display:flex;flex-direction:column;align-items:stretch;}
+    .md-block{margin-bottom:18px;}
+    .md-spacer{height:14px;}
+    .md-h1{color:#fff;font-size:21px;font-weight:820;line-height:1.4;}
+    .md-h2{position:relative;padding-left:13px;color:#fff;font-size:17px;font-weight:800;line-height:1.5;}
+    .md-h2::before{position:absolute;top:.24em;bottom:.22em;left:0;width:3px;border-radius:999px;background:linear-gradient(180deg,#3b82f6,#2dd4bf);content:"";}
+    .md-h3{color:#fff;font-size:15px;font-weight:760;line-height:1.5;}
+    .md-para,.md-blockquote,.md-ul,.md-ol{color:rgba(226,232,240,.86);font-size:17px;line-height:1.85;}
+    .md-para{margin:0;}
+    .md-bold{color:rgba(255,255,255,.96);font-weight:760;}
+    .md-colored{font-weight:760;}
+    .md-italic{font-style:italic;}
+    .md-del{text-decoration:line-through;opacity:.65;}
+    .md-link{color:#60a5fa;font-weight:650;text-decoration:underline;text-underline-offset:2px;}
+    .md-code{padding:2px 6px;border:1px solid rgba(255,255,255,.08);border-radius:6px;background:rgba(15,23,42,.7);color:#a5f3fc;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.85em;}
+    .md-pre{margin:0;overflow-x:auto;border:1px solid rgba(148,163,184,.12);border-radius:12px;background:rgba(2,6,23,.62);}
+    .md-codeblock{display:block;padding:15px 16px;color:#e2e8f0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;line-height:1.6;white-space:pre;}
+    .md-table-wrap{overflow-x:auto;border:1px solid rgba(255,255,255,.08);border-radius:12px;background:rgba(255,255,255,.04);}
+    .md-table{width:100%;border-collapse:collapse;table-layout:fixed;}
+    .md-table thead tr{background:rgba(96,165,250,.12);}
+    .md-table th,.md-table td{padding:10px 12px;text-align:left;font-size:13px;}
+    .md-table th{color:#fff;font-weight:750;}
+    .md-table td{color:rgba(226,232,240,.74);font-weight:500;}
+    .md-table td+td,.md-table th+th{border-left:1px solid rgba(255,255,255,.08);}
+    .md-table tbody tr+tr td{border-top:1px solid rgba(255,255,255,.08);}
+    .md-image-wrap{overflow:hidden;border-radius:12px;text-align:center;}
+    .md-image-wrap img{display:block;width:auto;max-width:100%;max-height:720px;margin:0 auto;object-fit:contain;}
+    .md-image-alt{display:block;padding:8px 10px;color:rgba(160,160,160,.82);font-size:12px;line-height:1.4;}
+    .md-chart-placeholder{display:block;min-height:84px;padding:16px;border:1px dashed rgba(45,212,191,.25);border-radius:12px;background:rgba(45,212,191,.055);color:rgba(226,232,240,.72);font-size:13px;text-align:center;}
+    .md-chart-placeholder>span{display:block;padding:24px 16px;}
+    .md-blockquote{margin:0;padding:14px 16px;border:1px solid rgba(96,165,250,.16);border-left:3px solid rgba(96,165,250,.72);border-radius:12px;background:rgba(96,165,250,.075);font-style:italic;}
+    .md-hr{border:0;border-top:1px solid rgba(255,255,255,.09);margin:8px 0;}
+    @media (max-width:640px){.quant-static-links{display:none}.quant-static-main{padding-top:34px}.md-para,.md-blockquote,.md-ul,.md-ol{font-size:16px}.quant-static-card{margin-top:26px}}
+  </style>
+  <script type="module" src="../../assets/quant-charts.js"></script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"本周市场怎么看？上周风险兑现后，市场进入修复拉扯 - 2026-07-20","description":"从指数 ETF、核心权重、半导体链、避险和波动信号观察本周市场结构。","author":{"@type":"Organization","name":"KairAlert"},"publisher":{"@type":"Organization","name":"KairAlert"},"keywords":["引力流指标","市场周报"],"datePublished":"2026-07-20","dateModified":"2026-07-20","mainEntityOfPage":"https://kairalert.pro/quant-lab/%E6%9C%AC%E5%91%A8%E5%B8%82%E5%9C%BA%E6%80%8E%E4%B9%88%E7%9C%8B%EF%BC%9F%E4%B8%8A%E5%91%A8%E9%A3%8E%E9%99%A9%E5%85%91%E7%8E%B0%E5%90%8E%EF%BC%8C%E5%B8%82%E5%9C%BA%E8%BF%9B%E5%85%A5%E4%BF%AE%E5%A4%8D%E6%8B%89%E6%89%AF-2026-07-20/"}</script>
+</head>
+<body class="quant-static-page">
+  
+  <header class="quant-static-header">
+    <nav class="quant-static-nav">
+      <a class="quant-static-logo" href="../../zh/"><img src="../../assets/logo_circle.png" alt="">KairAlert</a>
+      <div class="quant-static-links"><a href="../">量化实验室</a><a href="../../zh/">官网</a></div>
+    </nav>
+  </header>
+  <main class="quant-static-main">
+    <div class="quant-static-tags"><span class="quant-static-kicker">引力流指标</span><span class="quant-static-kicker">市场周报</span></div>
+    <h1 class="quant-static-title">本周市场怎么看？上周风险兑现后，市场进入修复拉扯 - 2026-07-20</h1>
+    
+    <div class="quant-static-meta">2026-07-20 · KairAlert</div>
+    <article class="quant-static-card md-root"><div class="md-block"><div class="md-h2">先回顾一下上周</div></div><div class="md-block"><p class="md-para">上周文章判断 7月13日 这一周是 <span class="md-bold">“震荡偏弱、不是崩盘、但上攻不顺”</span>，实际走出来基本符合。</p></div><div class="md-block"><p class="md-para">SPY 从 754.95 跌到 743.29，失守了文中提到的 750；QQQ 没站回 730，反而跌穿 720，收在 695.33；NVDA 也从 210.96 回到 202.81，盘中验证了 200 附近；SMH/SOXX 的弱势更明显，半导体 ETF 不但没修复，反而成了主要压力源。</p></div><div class="md-block"><p class="md-para">上周判断比较准的地方是：<span class="md-bold">QQQ/IWM 承压、NVDA 拉扯偏弱、半导体 ETF 偏弱、VIX/波动增强。</span></p></div><div class="md-block"><p class="md-para">偏差主要有两个。AAPL 实际明显走强，更像是在半导体和 AI 基建链降温时，被资金当成大权重避风港来抱。AVGO 和 INTC 原本看作半导体里的强点，这个只对了一半。它们当时确实比 SMH、SOXX、NVDA、TSM 强，但后面半导体变成板块整体杀跌，强点也被拖下去了。</p></div><div class="md-block"><p class="md-para">所以复盘一句话：</p></div><div class="md-block"><p class="md-para"><span class="md-bold">市场方向判断正确，风险位置抓得不错；但对 AAPL 和半导体内部强弱延续性估计偏乐观，实际半导体杀得比预期更重。</span></p></div><div class="md-block"><hr class="md-hr"></div><div class="md-block"><div class="md-h2">本周主结构：修复，但不是强反转</div></div><div class="md-block"><p class="md-para">用 7月17日 收盘后的周度引力结构看，本周市场不是继续单边看空，而是进入 <span class="md-bold">修复反弹里的拉扯盘</span>。</p></div><div class="md-block"><p class="md-para">总结构从上周的震荡偏弱，变成了轻微偏强。指数 ETF 不算特别强，但已经没有上周那么明显的下压；核心权重股反而给出比较多支撑。问题还是半导体：个股有修复，但 SMH 仍然很弱。</p></div><div class="md-block"><div class="md-image-wrap"><img src="https://kastatic.pages.dev/imgs/0717_MARKET_OVERVIEW.png" alt="周度市场总览图 - 市场从上周偏弱转为修复拉扯，核心权重偏强，半导体仍分化。" loading="lazy"><span class="md-image-alt">周度市场总览图 - 市场从上周偏弱转为修复拉扯，核心权重偏强，半导体仍分化。</span></div></div><div class="md-block"><hr class="md-hr"></div><div class="md-block"><div class="md-h2">指数：SPY看750，QQQ看700</div></div><div class="md-block"><p class="md-para">SPY 现在在 743 附近，上方先看 745、750、755，下方看 740。只要 740 不破，指数就还有修复空间；如果能重新站回 750，结构会明显缓和。</p></div><div class="md-block"><div class="md-image-wrap"><img src="https://kastatic.pages.dev/imgs/0717_SPY.png" alt="SPY周度引力结构图 - 750是本周修复能否展开的关键位置。" loading="lazy"><span class="md-image-alt">SPY周度引力结构图 - 750是本周修复能否展开的关键位置。</span></div></div><div class="md-block"><p class="md-para">QQQ 现在在 695 附近，上方看 700、705、710，下方看 690、685、680。这里最关键的是 700。站回 700，科技股会有修复；站不回去，就还是弱反弹。</p></div><div class="md-block"><div class="md-image-wrap"><img src="https://kastatic.pages.dev/imgs/0717_QQQ.png" alt="QQQ周度引力结构图 - 700是本周修复能否展开的关键位置。" loading="lazy"><span class="md-image-alt">QQQ周度引力结构图 - 700是本周修复能否展开的关键位置。</span></div></div><div class="md-block"><hr class="md-hr"></div><div class="md-block"><div class="md-h2">权重股：托底力量比上周好</div></div><div class="md-block"><p class="md-para">权重股这边比上周好。MSFT、AMZN、META、GOOGL、TSLA 都偏上，说明市场不是没有托底力量。</p></div><div class="md-block"><p class="md-para">NVDA 也从偏弱变成接近平衡，重点看 205 和 210；如果能重新站回 205，短线压力会缓一些。</p></div><div class="md-block"><p class="md-para">AAPL 反而要小心一点。它上周太强，现在结构变成偏下，333 附近如果守不住，可能回看 330、325。也就是说，AAPL 还能不能继续当避风港，是本周很重要的变量。</p></div><div class="md-block"><div class="md-image-wrap"><img src="https://kastatic.pages.dev/imgs/0717_NVDA.png" alt="NVDA周度引力结构图 - 从偏弱转为接近平衡，重点看205/210修复。" loading="lazy"><span class="md-image-alt">NVDA周度引力结构图 - 从偏弱转为接近平衡，重点看205/210修复。</span></div></div><div class="md-block"><hr class="md-hr"></div><div class="md-block"><div class="md-h2">半导体：还不能说真正修复</div></div><div class="md-block"><p class="md-para">半导体还是最麻烦的地方。</p></div><div class="md-block"><p class="md-para">SMH 现在下方引力很重，556 附近，上方要先看 565，再看 590；下方看 550、547、530。只要 SMH 站不回 565，半导体就很难说真正修复。</p></div><div class="md-block"><p class="md-para">AVGO、INTC 有反弹结构，但这次不能单独看它们，还是要先看 SMH/SOXX 能不能稳住。上周已经证明，个股强点如果遇到板块整体杀跌，也会被拖下去。</p></div><div class="md-block"><div class="md-image-wrap"><img src="https://kastatic.pages.dev/imgs/0717_SMH.png" alt="SMH周度引力结构图 - 半导体ETF仍是主要弱点，565是短线修复观察位。" loading="lazy"><span class="md-image-alt">SMH周度引力结构图 - 半导体ETF仍是主要弱点，565是短线修复观察位。</span></div></div><div class="md-block"><hr class="md-hr"></div><div class="md-block"><div class="md-h2">VIX：20还是风险线</div></div><div class="md-block"><p class="md-para">VIX 现在在 18.88，上方看 20，下方看 18、17。</p></div><div class="md-block"><p class="md-para">如果 VIX 回到 18 以下，市场修复会顺一点；如果重新靠近 20，同时 QQQ 站不回 700，那本周还是容易反复震。</p></div><div class="md-block"><div class="md-image-wrap"><img src="https://kastatic.pages.dev/imgs/0717_VIX.png" alt="VIX周度引力结构图 - 20仍是本周波动是否继续放大的关键区。" loading="lazy"><span class="md-image-alt">VIX周度引力结构图 - 20仍是本周波动是否继续放大的关键区。</span></div></div><div class="md-block"><hr class="md-hr"></div><div class="md-block"><div class="md-h2">我会盯这几个位置</div></div><div class="md-block"><p class="md-para">SPY 看 740 和 750。740 不破，还有修复空间；750 收回，结构缓和。</p></div><div class="md-block"><p class="md-para">QQQ 看 700。站回 700，科技股修复才更像样；站不回，就是弱反弹。</p></div><div class="md-block"><p class="md-para">NVDA 看 205 和 210。205 是第一道修复位，210 是更强确认。</p></div><div class="md-block"><p class="md-para">SMH 看 565。站不回 565，半导体还不能说止住。</p></div><div class="md-block"><p class="md-para">VIX 看 20。重新靠近 20，市场波动会继续放大。</p></div><div class="md-block"><hr class="md-hr"></div><div class="md-block"><div class="md-h2">结论</div></div><div class="md-block"><p class="md-para">所以这周我的结论是：</p></div><div class="md-block"><p class="md-para"><span class="md-bold">市场有修复机会，但不是干净的强反转。指数和权重股比上周好，半导体还没完全止住。</span></p></div></article>
+  </main>
+</body>
+</html>
